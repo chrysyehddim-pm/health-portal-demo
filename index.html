@@ -3,94 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Health Web MVP</title>
+    <title>Happy Health 專區</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* 確保在電腦上看也是手機大小 */
-        body { background-color: #f3f4f6; }
-        .mobile-container { max-width: 414px; margin: 0 auto; background-color: #ffffff; min-height: 100vh; box-shadow: 0 0 15px rgba(0,0,0,0.1); }
+        body { background-color: #f9fafb; }
+        .mobile-container { max-width: 414px; margin: 0 auto; background-color: #f9fafb; min-height: 100vh; box-shadow: 0 0 15px rgba(0,0,0,0.1); }
     </style>
 </head>
 <body>
 
 <div class="mobile-container relative pb-20">
-    <header class="bg-green-700 text-white p-4 sticky top-0 z-10 shadow-md">
+    <header class="bg-white text-gray-800 p-4 sticky top-0 z-10 shadow-sm border-b">
         <div class="flex justify-between items-center">
-            <div class="text-sm opacity-80"><i class="fas fa-chevron-left mr-2"></i> 返回 HG App</div>
+            <div class="text-sm text-green-600"><i class="fas fa-chevron-left mr-1"></i> 返回首頁</div>
             <div class="font-bold text-lg">Happy Health 專區</div>
-            <div><i class="fas fa-bell"></i></div>
+            <div class="text-gray-400"><i class="fas fa-share-alt"></i></div>
         </div>
     </header>
 
     <div class="bg-yellow-50 p-3 text-xs text-gray-600 border-b border-yellow-200">
         <i class="fas fa-info-circle text-yellow-500 mr-1"></i> 
-        <strong>系統串接說明：</strong> HG App 透過 URL 帶入參數 
-        <code class="bg-yellow-100 px-1 rounded text-red-600">?hg_id=user123&token=abc</code>
+        <strong>PM 備註 (僅供內部對焦)：</strong> 進入此頁時，App 需於 URL 帶入參數 <code class="bg-yellow-100 px-1 rounded text-red-600">?hg_id=xxx</code> 供後續派點對位使用。
     </div>
 
-    <div class="p-4">
-        <div class="bg-gradient-to-r from-green-600 to-green-500 rounded-xl p-4 text-white shadow-lg">
-            <div class="flex items-center mb-4">
-                <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-green-600 text-xl font-bold mr-3">
-                    <i class="fas fa-user"></i>
-                </div>
-                <div>
-                    <h2 class="text-lg font-bold">早安，HG 會員</h2>
-                    <p class="text-xs opacity-80">HG ID: user123</p>
-                </div>
+    <div class="px-4 py-6 bg-white mb-2">
+        <h1 class="text-2xl font-bold text-gray-800 mb-2">啟動你的大腦防護網</h1>
+        <p class="text-gray-500 text-sm mb-4">完成今日專屬的健康檢測與鍛鍊任務，即可獲得 HG 點數獎勵！累積健康，還能賺取點數。</p>
+        <div class="w-full h-32 bg-green-50 rounded-xl border border-green-100 flex items-center justify-center text-green-300">
+            <i class="fas fa-heartbeat text-5xl"></i>
             </div>
-            <div class="bg-white/20 rounded-lg p-2 flex justify-between items-center">
-                <span class="text-sm">健康積分 (Happy Score)</span>
-                <span class="text-xl font-bold text-yellow-300"><i class="fas fa-coins mr-1"></i> 350</span>
-            </div>
-        </div>
     </div>
 
-    <div class="px-4 py-2">
-        <h3 class="font-bold text-gray-800 mb-3 text-lg">今日健康任務</h3>
+    <div class="px-4 py-4">
+        <h3 class="font-bold text-gray-800 mb-4 flex items-center">
+            <i class="fas fa-calendar-check text-green-600 mr-2"></i> 今日挑戰任務
+        </h3>
         
-        <a href="https://chrysyehddim-pm.github.io/ad8test/" target="_blank" class="block bg-white border border-gray-200 rounded-xl p-4 mb-3 shadow-sm hover:shadow-md transition">
+        <a href="https://chrysyehddim-pm.github.io/ad8test/" target="_blank" class="block bg-white rounded-2xl p-4 mb-4 shadow-sm border border-gray-100 hover:border-green-300 transition">
             <div class="flex items-center">
-                <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center text-2xl mr-4">
+                <div class="w-14 h-14 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center text-2xl mr-4">
                     <i class="fas fa-store"></i>
                 </div>
                 <div class="flex-1">
-                    <h4 class="font-bold text-gray-800">幸福柑仔店</h4>
-                    <p class="text-xs text-gray-500 mt-1">極早期失智篩檢 (AD8)</p>
+                    <h4 class="font-bold text-gray-800 text-base">幸福柑仔店</h4>
+                    <p class="text-xs text-gray-500 mt-1 line-clamp-1">極早期失智篩檢 (AD8)</p>
                 </div>
-                <div class="text-right">
-                    <span class="bg-yellow-100 text-yellow-700 text-xs px-2 py-1 rounded-full font-bold">+50 Pts</span>
+                <div class="text-right flex flex-col items-end">
+                    <span class="bg-green-100 text-green-700 text-xs px-3 py-1 rounded-full font-bold mb-1">+50 點</span>
+                    <span class="text-xs text-gray-400 font-medium">去完成 <i class="fas fa-chevron-right text-[10px]"></i></span>
                 </div>
             </div>
         </a>
 
-        <a href="https://chrysyehddim-pm.github.io/memory/" target="_blank" class="block bg-white border border-gray-200 rounded-xl p-4 mb-3 shadow-sm hover:shadow-md transition">
+        <a href="https://chrysyehddim-pm.github.io/memory/" target="_blank" class="block bg-white rounded-2xl p-4 mb-4 shadow-sm border border-gray-100 hover:border-green-300 transition">
             <div class="flex items-center">
-                <div class="w-12 h-12 bg-teal-100 text-teal-600 rounded-lg flex items-center justify-center text-2xl mr-4">
+                <div class="w-14 h-14 bg-teal-50 text-teal-500 rounded-full flex items-center justify-center text-2xl mr-4">
                     <i class="fas fa-brain"></i>
                 </div>
                 <div class="flex-1">
-                    <h4 class="font-bold text-gray-800">生活記憶力訓練</h4>
-                    <p class="text-xs text-gray-500 mt-1">大腦活化鍛鍊</p>
+                    <h4 class="font-bold text-gray-800 text-base">生活記憶力訓練</h4>
+                    <p class="text-xs text-gray-500 mt-1 line-clamp-1">日常用品記憶大考驗</p>
                 </div>
-                <div class="text-right">
-                    <span class="bg-yellow-100 text-yellow-700 text-xs px-2 py-1 rounded-full font-bold">+20 Pts</span>
+                <div class="text-right flex flex-col items-end">
+                    <span class="bg-green-100 text-green-700 text-xs px-3 py-1 rounded-full font-bold mb-1">+20 點</span>
+                    <span class="text-xs text-gray-400 font-medium">去完成 <i class="fas fa-chevron-right text-[10px]"></i></span>
                 </div>
             </div>
         </a>
 
-        <a href="https://chrysyehddim-pm.github.io/Squat-Game-PoC/" target="_blank" class="block bg-white border border-gray-200 rounded-xl p-4 mb-3 shadow-sm hover:shadow-md transition">
+        <a href="https://chrysyehddim-pm.github.io/Squat-Game-PoC/" target="_blank" class="block bg-white rounded-2xl p-4 mb-4 shadow-sm border border-gray-100 hover:border-green-300 transition">
             <div class="flex items-center">
-                <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center text-2xl mr-4">
+                <div class="w-14 h-14 bg-purple-50 text-purple-500 rounded-full flex items-center justify-center text-2xl mr-4">
                     <i class="fas fa-child"></i>
                 </div>
                 <div class="flex-1">
-                    <h4 class="font-bold text-gray-800">金幣深蹲王</h4>
-                    <p class="text-xs text-gray-500 mt-1">AI 鏡頭核心肌群訓練</p>
+                    <h4 class="font-bold text-gray-800 text-base">金幣深蹲王</h4>
+                    <p class="text-xs text-gray-500 mt-1 line-clamp-1">AI 鏡頭核心肌群訓練</p>
                 </div>
-                <div class="text-right">
-                    <span class="bg-yellow-100 text-yellow-700 text-xs px-2 py-1 rounded-full font-bold">+30 Pts</span>
+                <div class="text-right flex flex-col items-end">
+                    <span class="bg-green-100 text-green-700 text-xs px-3 py-1 rounded-full font-bold mb-1">+30 點</span>
+                    <span class="text-xs text-gray-400 font-medium">去完成 <i class="fas fa-chevron-right text-[10px]"></i></span>
                 </div>
             </div>
         </a>
