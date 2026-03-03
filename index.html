@@ -3,12 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Health 專區</title>
+    <title>Happy Health 健康挑戰</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         body { background-color: #f9fafb; }
-        .mobile-container { max-width: 414px; margin: 0 auto; background-color: #f9fafb; min-height: 100vh; box-shadow: 0 0 15px rgba(0,0,0,0.1); }
+        .mobile-container { max-width: 414px; margin: 0 auto; background-color: #f9fafb; min-height: 100vh; box-shadow: 0 0 15px rgba(0,0,0,0.1); overflow-x: hidden; }
+        /* 隱藏與顯示的動畫過渡 */
+        .fade-in { animation: fadeIn 0.5s ease-in-out forwards; }
+        .hidden-view { display: none; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
@@ -16,79 +20,163 @@
 <div class="mobile-container relative pb-20">
     <header class="bg-white text-gray-800 p-4 sticky top-0 z-10 shadow-sm border-b">
         <div class="flex justify-between items-center">
-            <div class="text-sm text-green-600"><i class="fas fa-chevron-left mr-1"></i> 返回首頁</div>
-            <div class="font-bold text-lg">Happy Health 專區</div>
-            <div class="text-gray-400"><i class="fas fa-share-alt"></i></div>
+            <div class="text-sm text-green-600"><i class="fas fa-chevron-left mr-1"></i> 返回 HG 首頁</div>
+            <div class="font-bold text-lg">健康挑戰專區</div>
+            <div class="text-gray-400"><i class="fas fa-ellipsis-h"></i></div>
         </div>
     </header>
 
-    <div class="bg-yellow-50 p-3 text-xs text-gray-600 border-b border-yellow-200">
-        <i class="fas fa-info-circle text-yellow-500 mr-1"></i> 
-        <strong>PM 備註 (僅供內部對焦)：</strong> 進入此頁時，App 需於 URL 帶入參數 <code class="bg-yellow-100 px-1 rounded text-red-600">?hg_id=xxx</code> 供後續派點對位使用。
-    </div>
-
-    <div class="px-4 py-6 bg-white mb-2">
-        <h1 class="text-2xl font-bold text-gray-800 mb-2">啟動你的大腦防護網</h1>
-        <p class="text-gray-500 text-sm mb-4">完成今日專屬的健康檢測與鍛鍊任務，即可獲得 HG 點數獎勵！累積健康，還能賺取點數。</p>
-        <div class="w-full h-32 bg-green-50 rounded-xl border border-green-100 flex items-center justify-center text-green-300">
-            <i class="fas fa-heartbeat text-5xl"></i>
+    <div id="view-terms" class="px-5 py-8 bg-white min-h-[85vh] fade-in">
+        <div class="text-center mb-6">
+            <div class="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-4xl mx-auto mb-4">
+                <i class="fas fa-shield-alt"></i>
             </div>
+            <h1 class="text-2xl font-bold text-gray-800">智慧健康服務授權</h1>
+            <p class="text-gray-500 text-sm mt-2">為了提供您最專屬的健康任務與體驗，我們需要您的授權同意。</p>
+        </div>
+
+        <div class="bg-gray-50 rounded-xl p-5 border border-gray-200 mb-8 space-y-4">
+            <h3 class="font-bold text-gray-700 text-sm border-b pb-2">我們將會取用與紀錄：</h3>
+            <ul class="text-sm text-gray-600 space-y-3">
+                <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-0.5 mr-2"></i>
+                    <span><strong>匯入基本資料：</strong>同意將您的 HAPPY GO 註冊資料（姓名、性別、出生年月日）匯入至健康服務中。</span>
+                </li>
+                <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-0.5 mr-2"></i>
+                    <span><strong>健康數據分析：</strong>同意本服務蒐集您於遊戲與檢測任務中產生之分數（如 AD8 量表、大腦鍛鍊），以利未來 AI 推薦系統使用。</span>
+                </li>
+            </ul>
+        </div>
+
+        <button onclick="agreeAndStart()" class="w-full bg-green-600 text-white font-bold py-3.5 rounded-xl shadow-lg hover:bg-green-700 transition active:scale-95 text-lg">
+            我同意並開始挑戰
+        </button>
+        <p class="text-center text-xs text-gray-400 mt-4">點擊代表您已詳閱並同意隱私權政策</p>
     </div>
 
-    <div class="px-4 py-4">
-        <h3 class="font-bold text-gray-800 mb-4 flex items-center">
-            <i class="fas fa-calendar-check text-green-600 mr-2"></i> 今日挑戰任務
-        </h3>
+
+    <div id="view-dashboard" class="hidden-view">
         
-        <a href="https://chrysyehddim-pm.github.io/ad8test/" target="_blank" class="block bg-white rounded-2xl p-4 mb-4 shadow-sm border border-gray-100 hover:border-green-300 transition">
-            <div class="flex items-center">
-                <div class="w-14 h-14 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center text-2xl mr-4">
-                    <i class="fas fa-store"></i>
-                </div>
-                <div class="flex-1">
-                    <h4 class="font-bold text-gray-800 text-base">幸福柑仔店</h4>
-                    <p class="text-xs text-gray-500 mt-1 line-clamp-1">極早期失智篩檢 (AD8)</p>
-                </div>
-                <div class="text-right flex flex-col items-end">
-                    <span class="bg-green-100 text-green-700 text-xs px-3 py-1 rounded-full font-bold mb-1">+50 點</span>
-                    <span class="text-xs text-gray-400 font-medium">去完成 <i class="fas fa-chevron-right text-[10px]"></i></span>
-                </div>
-            </div>
-        </a>
+        <div class="bg-gradient-to-r from-yellow-100 to-yellow-50 p-3 text-xs text-yellow-800 border-b border-yellow-200 flex items-center shadow-inner">
+            <i class="fas fa-bullhorn text-yellow-600 text-lg mr-2"></i> 
+            <span><strong>封測積分狂飆中！</strong>現在累積健康積分，未來可於即將上線的【獨立健康 APP】兌換專屬超值好禮！</span>
+        </div>
 
-        <a href="https://chrysyehddim-pm.github.io/memory/" target="_blank" class="block bg-white rounded-2xl p-4 mb-4 shadow-sm border border-gray-100 hover:border-green-300 transition">
-            <div class="flex items-center">
-                <div class="w-14 h-14 bg-teal-50 text-teal-500 rounded-full flex items-center justify-center text-2xl mr-4">
-                    <i class="fas fa-brain"></i>
+        <div class="px-4 py-5 bg-white mb-2">
+            <div class="flex justify-between items-center mb-4">
+                <h1 class="text-xl font-bold text-gray-800">早安，準備好活化大腦了嗎？</h1>
+            </div>
+            <div class="w-full bg-gradient-to-br from-green-600 to-teal-500 rounded-2xl p-4 text-white shadow-md relative overflow-hidden">
+                <div class="absolute -right-4 -top-4 opacity-20 text-6xl"><i class="fas fa-coins"></i></div>
+                <p class="text-sm opacity-90 mb-1">我的健康積分 (預挖礦累積)</p>
+                <div class="flex items-baseline">
+                    <span class="text-3xl font-bold mr-2">1,250</span>
+                    <span class="text-sm">Pts</span>
                 </div>
-                <div class="flex-1">
-                    <h4 class="font-bold text-gray-800 text-base">生活記憶力訓練</h4>
-                    <p class="text-xs text-gray-500 mt-1 line-clamp-1">日常用品記憶大考驗</p>
-                </div>
-                <div class="text-right flex flex-col items-end">
-                    <span class="bg-green-100 text-green-700 text-xs px-3 py-1 rounded-full font-bold mb-1">+20 點</span>
-                    <span class="text-xs text-gray-400 font-medium">去完成 <i class="fas fa-chevron-right text-[10px]"></i></span>
+                <div class="mt-3 pt-3 border-t border-white/20 text-xs">
+                    <i class="fas fa-lock mr-1"></i> 兌換商城籌備中，敬請期待新 App 上線！
                 </div>
             </div>
-        </a>
+        </div>
 
-        <a href="https://chrysyehddim-pm.github.io/Squat-Game-PoC/" target="_blank" class="block bg-white rounded-2xl p-4 mb-4 shadow-sm border border-gray-100 hover:border-green-300 transition">
-            <div class="flex items-center">
-                <div class="w-14 h-14 bg-purple-50 text-purple-500 rounded-full flex items-center justify-center text-2xl mr-4">
-                    <i class="fas fa-child"></i>
-                </div>
-                <div class="flex-1">
-                    <h4 class="font-bold text-gray-800 text-base">金幣深蹲王</h4>
-                    <p class="text-xs text-gray-500 mt-1 line-clamp-1">AI 鏡頭核心肌群訓練</p>
-                </div>
-                <div class="text-right flex flex-col items-end">
-                    <span class="bg-green-100 text-green-700 text-xs px-3 py-1 rounded-full font-bold mb-1">+30 點</span>
-                    <span class="text-xs text-gray-400 font-medium">去完成 <i class="fas fa-chevron-right text-[10px]"></i></span>
-                </div>
+        <div class="px-4 py-3">
+            
+            <div class="mb-6">
+                <h3 class="font-bold text-gray-800 mb-3 flex items-center text-sm">
+                    <i class="fas fa-stethoscope text-red-500 mr-2"></i> 半年定期篩檢 (建議完成)
+                </h3>
+                
+                <a href="https://chrysyehddim-pm.github.io/ad8test/" target="_blank" class="block bg-white rounded-2xl p-4 shadow-sm border border-gray-100 hover:border-green-300 transition">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-red-50 text-red-500 rounded-full flex items-center justify-center text-xl mr-3 shadow-inner">
+                            <i class="fas fa-store"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-gray-800 text-sm">幸福柑仔店</h4>
+                            <p class="text-xs text-gray-500 mt-0.5">極早期失智篩檢 (AD8)</p>
+                        </div>
+                        <div class="text-right flex flex-col items-end">
+                            <span class="bg-green-100 text-green-700 text-xs px-2.5 py-1 rounded-full font-bold mb-1">+50 點</span>
+                            <span class="text-[10px] text-gray-400">半年限領一次</span>
+                        </div>
+                    </div>
+                </a>
             </div>
-        </a>
+
+            <div class="mb-4">
+                <h3 class="font-bold text-gray-800 mb-3 flex items-center text-sm">
+                    <i class="fas fa-calendar-check text-blue-500 mr-2"></i> 每日大腦鍛鍊 (0/3)
+                </h3>
+                
+                <a href="#" class="block bg-white rounded-2xl p-4 mb-3 shadow-sm border border-gray-100 hover:border-blue-300 transition">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center text-xl mr-3 shadow-inner">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-gray-800 text-sm">眼明手快</h4>
+                            <p class="text-xs text-gray-500 mt-0.5">專注力訓練</p>
+                        </div>
+                        <div class="text-right flex flex-col items-end">
+                            <span class="bg-yellow-100 text-yellow-700 text-xs px-2.5 py-1 rounded-full font-bold mb-1">+10 點</span>
+                            <span class="text-[10px] text-blue-500 font-bold">去挑戰 <i class="fas fa-play ml-0.5"></i></span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="#" class="block bg-white rounded-2xl p-4 mb-3 shadow-sm border border-gray-100 hover:border-purple-300 transition">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-purple-50 text-purple-500 rounded-full flex items-center justify-center text-xl mr-3 shadow-inner">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-gray-800 text-sm">反應大考驗</h4>
+                            <p class="text-xs text-gray-500 mt-0.5">執行力訓練</p>
+                        </div>
+                        <div class="text-right flex flex-col items-end">
+                            <span class="bg-yellow-100 text-yellow-700 text-xs px-2.5 py-1 rounded-full font-bold mb-1">+10 點</span>
+                            <span class="text-[10px] text-blue-500 font-bold">去挑戰 <i class="fas fa-play ml-0.5"></i></span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="#" class="block bg-white rounded-2xl p-4 mb-3 shadow-sm border border-gray-100 hover:border-orange-300 transition">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-orange-50 text-orange-500 rounded-full flex items-center justify-center text-xl mr-3 shadow-inner">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-gray-800 text-sm">尋寶達人</h4>
+                            <p class="text-xs text-gray-500 mt-0.5">注意力訓練</p>
+                        </div>
+                        <div class="text-right flex flex-col items-end">
+                            <span class="bg-yellow-100 text-yellow-700 text-xs px-2.5 py-1 rounded-full font-bold mb-1">+10 點</span>
+                            <span class="text-[10px] text-blue-500 font-bold">去挑戰 <i class="fas fa-play ml-0.5"></i></span>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+        </div>
     </div>
+
 </div>
+
+<script>
+    function agreeAndStart() {
+        // 隱藏條款頁面
+        document.getElementById('view-terms').style.display = 'none';
+        
+        // 顯示大廳頁面並加入淡入動畫
+        const dashboard = document.getElementById('view-dashboard');
+        dashboard.style.display = 'block';
+        dashboard.classList.add('fade-in');
+
+        // (備註：實際開發時，這裡應該打 API 紀錄使用者已同意條款，下次登入就不用再跳出來了)
+        console.log("使用者已同意條款，進入大廳");
+    }
+</script>
 
 </body>
 </html>
