@@ -5,10 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Health 服務體驗模擬</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        body { background-color: #f9fafb; }
-        .mobile-container { max-width: 414px; margin: 0 auto; background-color: #f9fafb; min-height: 100vh; box-shadow: 0 0 15px rgba(0,0,0,0.1); overflow-x: hidden; position: relative; }
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
+        body { 
+            background-color: #f3f4f6; 
+            font-family: 'Noto Sans TC', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .mobile-container { 
+            max-width: 414px; 
+            margin: 0 auto; 
+            background-color: #f9fafb; 
+            min-height: 100vh; 
+            box-shadow: 0 0 15px rgba(0,0,0,0.1); 
+            overflow-x: hidden; 
+            position: relative; 
+        }
         /* 隱藏與顯示的動畫過渡 */
         .fade-in { animation: fadeIn 0.4s ease-in-out forwards; }
         .hidden-view { display: none; }
@@ -16,25 +29,29 @@
         /* 模擬 HG APP 點擊區的脈衝動畫 */
         .pulse-pointer { animation: pulse 2s infinite; }
         @keyframes pulse { 0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(22, 163, 74, 0); } 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); } }
+        /* 隱藏滾動條但保留滾動功能 */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
 <body>
 
-<div class="mobile-container relative pb-20">
+<div class="mobile-container relative pb-10">
 
+    <!-- 視圖 1：模擬 HG APP 首頁 -->
     <div id="view-hg-app" class="bg-gray-800 min-h-[100vh] relative cursor-pointer" onclick="enterHealthService()">
-       <img src="images/hg_home.jpg" alt="HG App 首頁模擬" class="w-full h-auto object-cover opacity-60">
+         <img src="images/hg_home.jpg" alt="HG App 首頁模擬" class="w-full h-auto object-cover opacity-60">
         
         <div class="absolute inset-0 flex flex-col items-center justify-center text-white">
-            <div class="pulse-pointer w-24 h-24 bg-green-600/80 rounded-full flex items-center justify-center mb-4 border-4 border-white/50 shadow-2xl">
+            <div class="pulse-pointer w-24 h-24 bg-green-600/90 rounded-full flex items-center justify-center mb-4 border-4 border-white/50 shadow-2xl">
                 <i class="fas fa-hand-pointer text-4xl"></i>
             </div>
             <h2 class="text-2xl font-bold mb-2 shadow-black drop-shadow-md">點擊進入「健康挑戰」</h2>
-            <p class="text-sm opacity-80 bg-black/50 px-4 py-1 rounded-full">模擬從 HG APP 點擊 Webview 入口</p>
+            <p class="text-sm opacity-90 bg-black/60 px-4 py-1.5 rounded-full">模擬從 HG APP 點擊 Webview 入口</p>
         </div>
     </div>
 
-
+    <!-- 視圖 2：授權同意頁 -->
     <div id="view-terms" class="hidden-view px-5 py-8 bg-white min-h-[100vh]">
         <header class="bg-white text-gray-800 pb-4 sticky top-0 z-10 border-b mb-6">
             <div class="flex justify-between items-center">
@@ -61,7 +78,7 @@
                 </li>
                 <li class="flex items-start">
                     <i class="fas fa-check-circle text-green-500 mt-0.5 mr-2"></i>
-                    <span><strong>健康數據分析：</strong>同意本服務蒐集您於遊戲與檢測任務中產生之分數，以利未來 AI 推薦系統使用。</span>
+                    <span><strong>健康行為分析：</strong>同意本服務蒐集您於任務中產生之互動指標，以利未來提供專屬健康優惠與推薦。</span>
                 </li>
             </ul>
         </div>
@@ -72,85 +89,200 @@
         <p class="text-center text-xs text-gray-400 mt-4">點擊代表您已詳閱並同意隱私權政策</p>
     </div>
 
-
-    <div id="view-dashboard" class="hidden-view">
-        <header class="bg-white text-gray-800 p-4 sticky top-0 z-10 shadow-sm border-b">
-            <div class="flex justify-between items-center">
-                <div class="text-sm text-green-600 cursor-pointer" onclick="backToHgApp()"><i class="fas fa-chevron-left mr-1"></i> 返回 HG 首頁</div>
-                <div class="font-bold text-lg">健康挑戰專區</div>
-                <div class="text-gray-400"><i class="fas fa-ellipsis-h"></i></div>
+    <!-- 視圖 3：商業化健康任務大廳 -->
+    <div id="view-dashboard" class="hidden-view bg-gray-50 min-h-[100vh]">
+        
+        <!-- Header -->
+        <header class="bg-white/95 backdrop-blur-md text-gray-800 p-4 sticky top-0 z-50 shadow-sm border-b flex justify-between items-center">
+            <div class="text-sm text-gray-500 cursor-pointer hover:text-gray-800 transition flex items-center" onclick="backToHgApp()">
+                <i class="fas fa-chevron-left mr-1.5"></i> 返回
             </div>
+            <div class="font-bold text-lg">健康任務專區</div>
+            <div class="text-gray-400"><i class="fas fa-ellipsis-h"></i></div>
         </header>
         
-        <div class="bg-gradient-to-r from-yellow-100 to-yellow-50 p-3 text-xs text-yellow-800 border-b border-yellow-200 flex items-center shadow-inner">
-            <i class="fas fa-bullhorn text-yellow-600 text-lg mr-2"></i> 
-            <span><strong>封測積分狂飆中！</strong>現在累積健康積分，未來可於【專屬健康 APP】兌換超值好禮！</span>
+        <!-- 跑馬燈公告 -->
+        <div class="bg-amber-50 text-amber-800 px-4 py-2.5 text-xs flex items-center border-b border-amber-100">
+            <i class="fas fa-bullhorn text-amber-500 text-base mr-2"></i> 
+            <span class="truncate">🎉 歡慶上線！本月完成指定挑戰，再抽 10,000 點！</span>
         </div>
 
-        <div class="px-4 py-5 bg-white mb-2">
-            <div class="flex justify-between items-center mb-4">
-                <h1 class="text-xl font-bold text-gray-800">早安，準備好活化大腦了嗎？</h1>
-            </div>
-            <div class="w-full bg-gradient-to-br from-green-600 to-teal-500 rounded-2xl p-4 text-white shadow-md relative overflow-hidden">
-                <div class="absolute -right-4 -top-4 opacity-20 text-6xl"><i class="fas fa-coins"></i></div>
-                <p class="text-sm opacity-90 mb-1">我的健康積分 (預挖礦累積)</p>
-                <div class="flex items-baseline">
-                    <span class="text-3xl font-bold mr-2">1,250</span>
-                    <span class="text-sm">Pts</span>
-                </div>
-                <div class="mt-3 pt-3 border-t border-white/20 text-xs">
-                    <i class="fas fa-lock mr-1"></i> 兌換商城籌備中，敬請期待新 App 上線！
-                </div>
-            </div>
-        </div>
-
-        <div class="px-4 py-3">
+        <div class="p-4 space-y-6">
             
-            <div class="mb-6">
-                <h3 class="font-bold text-gray-800 mb-3 flex items-center text-sm">
-                    <i class="fas fa-stethoscope text-red-500 mr-2"></i> 半年定期篩檢 (建議完成)
-                </h3>
+            <!-- 打招呼與健康點卡片 -->
+            <div>
+                <h2 class="text-xl font-bold text-gray-800 mb-3">早安！今天也要元氣滿滿 ☀️</h2>
                 
-                <a href="https://chrysyehddim-pm.github.io/ad8test/" target="_blank" class="block bg-white rounded-2xl p-4 shadow-sm border border-gray-100 hover:border-green-300 transition">
-                    <div class="flex items-center">
-                        <div class="w-12 h-12 bg-red-50 text-red-500 rounded-full flex items-center justify-center text-xl mr-3 shadow-inner">
-                            <i class="fas fa-store"></i>
+                <!-- 積分卡片 -->
+                <div class="bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl p-5 text-white shadow-lg relative overflow-hidden">
+                    <!-- 裝飾背景圈圈 -->
+                    <div class="absolute -right-6 -top-6 w-32 h-32 bg-white opacity-10 rounded-full"></div>
+                    <div class="absolute right-12 -bottom-10 w-24 h-24 bg-white opacity-10 rounded-full"></div>
+                    
+                    <div class="relative z-10">
+                        <p class="text-emerald-50 text-sm mb-1">我的健康點 (Pts)</p>
+                        <div class="flex items-baseline mb-4">
+                            <span class="text-4xl font-black tracking-tight">1,250</span>
+                            <span class="text-sm ml-2 opacity-80">點</span>
                         </div>
-                        <div class="flex-1">
-                            <h4 class="font-bold text-gray-800 text-sm">幸福柑仔店</h4>
-                            <p class="text-xs text-gray-500 mt-0.5">極早期失智篩檢 (AD8)</p>
-                        </div>
-                        <div class="text-right flex flex-col items-end">
-                            <span class="bg-green-100 text-green-700 text-xs px-2.5 py-1 rounded-full font-bold mb-1">+50 點</span>
-                            <span class="text-[10px] text-gray-400">半年限領一次</span>
+                        
+                        <div class="bg-black/20 rounded-lg p-2.5 flex items-center justify-between text-xs backdrop-blur-sm">
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-lock mr-2 text-emerald-200"></i>
+                                <span>點數兌換商城籌備中，敬請期待！</span>
+                            </div>
                         </div>
                     </div>
-                </a>
+                </div>
             </div>
 
-            <div class="mb-4">
-                <h3 class="font-bold text-gray-800 mb-3 flex items-center text-sm">
-                    <i class="fas fa-calendar-check text-blue-500 mr-2"></i> 每日大腦鍛鍊 (0/3)
-                </h3>
+            <!-- 區塊 1：高價值 AD8 任務 (半年一次) - 冠名贊助展示 -->
+            <section>
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="text-base font-bold text-gray-800 flex items-center">
+                        <i class="fa-solid fa-crown text-amber-500 mr-2"></i> VIP 限定大禮包
+                    </h3>
+                    <span class="text-xs text-gray-500">半年限領一次</span>
+                </div>
                 
-                <a href="#" class="block bg-white rounded-2xl p-4 mb-3 shadow-sm border border-gray-100 hover:border-blue-300 transition">
-                    <div class="flex items-center">
-                        <div class="w-12 h-12 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center text-xl mr-3 shadow-inner">
-                            <i class="fas fa-bullseye"></i>
+                <!-- AD8 包裝成大調查 (點擊整張卡片跳轉) -->
+                <a href="https://ad8test.vercel.app/" target="_blank" class="block bg-white border-2 border-amber-200 rounded-xl p-4 shadow-sm relative overflow-hidden transition hover:border-amber-400 active:scale-[0.98]">
+                    <!-- 冠名標籤 -->
+                    <div class="absolute top-0 right-0 bg-amber-100 text-amber-800 text-[10px] px-2.5 py-1 rounded-bl-lg font-bold">
+                        贊助 | 安達人壽 守護專案
+                    </div>
+                    
+                    <div class="flex items-center justify-between mt-3">
+                        <div class="flex items-center flex-1">
+                            <div class="w-12 h-12 bg-amber-50 rounded-full flex items-center justify-center mr-3 shrink-0">
+                                <i class="fa-solid fa-brain text-amber-500 text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800">大腦靈活度大調查</h4>
+                                <p class="text-xs text-gray-500 mt-0.5 line-clamp-1">完成測驗，了解大腦年齡</p>
+                            </div>
                         </div>
-                        <div class="flex-1">
-                            <h4 class="font-bold text-gray-800 text-sm">眼明手快</h4>
-                            <p class="text-xs text-gray-500 mt-0.5">專注力訓練</p>
-                        </div>
-                        <div class="text-right flex flex-col items-end">
-                            <span class="bg-yellow-100 text-yellow-700 text-xs px-2.5 py-1 rounded-full font-bold mb-1">+10 點</span>
-                            <span class="text-[10px] text-blue-500 font-bold">去挑戰 <i class="fas fa-play ml-0.5"></i></span>
+                        <div class="flex flex-col items-end ml-2 shrink-0">
+                            <span class="text-amber-600 font-bold text-sm bg-amber-50 px-2.5 py-1 rounded-full mb-1">+ 50 點</span>
+                            <span class="text-blue-600 text-xs font-bold">開始測驗 <i class="fa-solid fa-play ml-0.5"></i></span>
                         </div>
                     </div>
                 </a>
-                
+            </section>
+
+            <!-- 區塊 2：每日遊戲賺點 - 品牌廣告展示 -->
+            <section>
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="text-base font-bold text-gray-800 flex items-center">
+                        <i class="fa-regular fa-calendar-check text-blue-500 mr-2"></i> 每日賺點任務
+                    </h3>
+                    <span class="text-xs text-gray-500">今日完成 (0/4)</span>
                 </div>
+
+                <div class="space-y-3">
+                    
+                    <!-- 遊戲 1: 專注力 (眼力極限) -->
+                    <a href="https://execution.vercel.app/" target="_blank" class="block bg-white border border-gray-100 rounded-xl p-4 shadow-sm hover:shadow-md transition active:scale-[0.98]">
+                        <div class="flex justify-between items-start mb-1.5">
+                            <span class="bg-blue-50 text-blue-600 text-[10px] px-2 py-0.5 rounded font-medium border border-blue-100">白蘭氏 葉黃素 贊助</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center flex-1">
+                                <div class="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center mr-3 shrink-0">
+                                    <i class="fa-solid fa-eye text-blue-500"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 text-sm">眼力極限考驗</h4>
+                                    <p class="text-xs text-gray-500 mt-0.5">專注力大挑戰</p>
+                                </div>
+                            </div>
+                            <div class="flex flex-col items-end shrink-0">
+                                <span class="text-emerald-600 font-bold text-xs bg-emerald-50 px-2.5 py-1 rounded-full mb-1">+ 10 點</span>
+                                <span class="text-blue-600 text-xs font-bold">去挑戰 <i class="fa-solid fa-play ml-0.5"></i></span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- 遊戲 2: 體能 (金幣深蹲王) -->
+                    <a href="https://squat-game-po-c.vercel.app/" target="_blank" class="block bg-white border border-gray-100 rounded-xl p-4 shadow-sm hover:shadow-md transition active:scale-[0.98]">
+                        <div class="flex justify-between items-start mb-1.5">
+                            <span class="bg-rose-50 text-rose-600 text-[10px] px-2 py-0.5 rounded font-medium border border-rose-100">World Gym 贊助</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center flex-1">
+                                <div class="w-10 h-10 bg-rose-50 rounded-full flex items-center justify-center mr-3 shrink-0">
+                                    <i class="fa-solid fa-person-arrow-down-to-line text-rose-500"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 text-sm">金幣深蹲王</h4>
+                                    <p class="text-xs text-gray-500 mt-0.5">跟著鏡頭動一動</p>
+                                </div>
+                            </div>
+                            <div class="flex flex-col items-end shrink-0">
+                                <span class="text-emerald-600 font-bold text-xs bg-emerald-50 px-2.5 py-1 rounded-full mb-1">+ 20 點</span>
+                                <span class="text-blue-600 text-xs font-bold">去挑戰 <i class="fa-solid fa-play ml-0.5"></i></span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- 遊戲 3: 記憶力 (生活好時光) -->
+                    <a href="https://memory-game-ad.vercel.app/" target="_blank" class="block bg-white border border-gray-100 rounded-xl p-4 shadow-sm hover:shadow-md transition active:scale-[0.98]">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center flex-1">
+                                <div class="w-10 h-10 bg-purple-50 rounded-full flex items-center justify-center mr-3 shrink-0">
+                                    <i class="fa-solid fa-clock-rotate-left text-purple-500"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 text-sm">生活好時光</h4>
+                                    <p class="text-xs text-gray-500 mt-0.5">記憶力大考驗</p>
+                                </div>
+                            </div>
+                            <div class="flex flex-col items-end shrink-0">
+                                <span class="text-emerald-600 font-bold text-xs bg-emerald-50 px-2.5 py-1 rounded-full mb-1">+ 10 點</span>
+                                <span class="text-blue-600 text-xs font-bold">去挑戰 <i class="fa-solid fa-play ml-0.5"></i></span>
+                            </div>
+                        </div>
+                    </a>
+
+                     <!-- 遊戲 4: 執行力 (一日超商店長) -->
+                     <a href="https://execution.vercel.app/" target="_blank" class="block bg-white border border-gray-100 rounded-xl p-4 shadow-sm hover:shadow-md transition active:scale-[0.98]">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center flex-1">
+                                <div class="w-10 h-10 bg-orange-50 rounded-full flex items-center justify-center mr-3 shrink-0">
+                                    <i class="fa-solid fa-store text-orange-500"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 text-sm">一日超商店長</h4>
+                                    <p class="text-xs text-gray-500 mt-0.5">多工處理大挑戰</p>
+                                </div>
+                            </div>
+                            <div class="flex flex-col items-end shrink-0">
+                                <span class="text-emerald-600 font-bold text-xs bg-emerald-50 px-2.5 py-1 rounded-full mb-1">+ 10 點</span>
+                                <span class="text-blue-600 text-xs font-bold">去挑戰 <i class="fa-solid fa-play ml-0.5"></i></span>
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+            </section>
         </div>
+
+        <!-- 底部推廣 Banner (CPA 導購位) -->
+        <div class="px-4 pb-8 mt-2">
+            <div class="bg-slate-800 rounded-xl p-4 flex items-center justify-between shadow-lg cursor-pointer hover:bg-slate-700 transition">
+                <div class="text-white">
+                    <p class="text-[11px] text-slate-300 mb-1 tracking-wider">精選健康優惠</p>
+                    <p class="font-bold text-sm">大樹藥局 | 銀髮族保健專區</p>
+                    <p class="text-xs mt-1.5 text-emerald-400 font-medium bg-emerald-400/10 inline-block px-2 py-0.5 rounded">專屬 8 折優惠碼：HG2025</p>
+                </div>
+                <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center shrink-0 ml-3 shadow-inner">
+                    <i class="fa-solid fa-pills text-slate-800 text-2xl"></i>
+                </div>
+            </div>
+            
+            <p class="text-center text-xs text-gray-400 mt-6 pb-4">Happy Go 智慧健康服務</p>
+        </div>
+
     </div>
 
 </div>
@@ -163,6 +295,7 @@
         const termsView = document.getElementById('view-terms');
         termsView.style.display = 'block';
         termsView.classList.add('fade-in');
+        window.scrollTo(0, 0);
     }
 
     // 步驟 2：同意條款並進入大廳
@@ -172,6 +305,7 @@
         const dashboard = document.getElementById('view-dashboard');
         dashboard.style.display = 'block';
         dashboard.classList.add('fade-in');
+        window.scrollTo(0, 0);
         
         console.log("使用者已同意條款，進入任務大廳");
     }
@@ -183,7 +317,11 @@
         
         const hgAppView = document.getElementById('view-hg-app');
         hgAppView.style.display = 'block';
+        hgAppView.classList.remove('fade-in');
+        // 稍微做個小動畫重啟
+        void hgAppView.offsetWidth; 
         hgAppView.classList.add('fade-in');
+        window.scrollTo(0, 0);
     }
 </script>
 
