@@ -238,20 +238,88 @@
       text-align: center;
     }
  
-    /* ── Kick / edit btns ── */
+    /* ── Remove / edit btns ── */
     .kick-btn {
       font-size: 11px;
       padding: 4px 10px;
       border-radius: 8px;
-      border: 1.5px solid #fca5a5;
-      color: #ef4444;
-      background: #fff1f2;
-      font-weight: 700;
+      border: 1px solid #cbd5e1;
+      color: #64748b;
+      background: #f8fafc;
+      font-weight: 500;
       cursor: pointer;
-      transition: background 0.15s;
+      transition: background 0.15s, color 0.15s;
       white-space: nowrap;
     }
-    .kick-btn:active { background: #fee2e2; }
+    .kick-btn:active { background: #e2e8f0; color: #475569; }
+ 
+    /* ── Activity line ── */
+    .activity-line {
+      font-size: 12px;
+      color: #64748b;
+      line-height: 1.5;
+      margin-top: 6px;
+      padding-top: 6px;
+      border-top: 1px dashed #e2e8f0;
+    }
+ 
+    /* ── Weekly report banner ── */
+    .report-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(135deg, #f0fdf4, #ecfdf5);
+      border: 1.5px solid #a7f3d0;
+      border-radius: 1rem;
+      padding: 0.875rem 1rem;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      margin-top: 12px;
+    }
+    .report-banner:active { transform: scale(0.98); background: #d1fae5; }
+ 
+    /* ── Weekly report modal ── */
+    .report-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15,23,42,0.65);
+      z-index: 250;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      animation: fadeIn 0.2s ease;
+    }
+    .report-modal-sheet {
+      background: #fff;
+      border-radius: 1.5rem 1.5rem 0 0;
+      padding: 1.5rem 1.5rem 2.5rem;
+      width: 100%;
+      max-width: 414px;
+      max-height: 85vh;
+      overflow-y: auto;
+      animation: slideUp 0.35s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
+    }
+ 
+    /* ── Report stat card ── */
+    .stat-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 0.875rem;
+      padding: 0.875rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .stat-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
     .edit-icon {
       cursor: pointer;
       font-size: 13px;
@@ -618,6 +686,92 @@
   </div>
 </div>
  
+<!-- WEEKLY REPORT MODAL -->
+<div id="modal-weekly-report" class="report-modal-overlay hidden-view" onclick="closeWeeklyReport()">
+  <div class="report-modal-sheet" onclick="event.stopPropagation()">
+    <!-- Handle -->
+    <div class="w-12 h-1 bg-slate-200 rounded-full mx-auto mb-5"></div>
+ 
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-5">
+      <div>
+        <h3 class="text-xl font-black text-gray-800">本週健康與共融報告</h3>
+        <p class="text-xs text-slate-400 mt-0.5">2025 年第 3 週 · 群組限定</p>
+      </div>
+      <div class="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center text-xl">📋</div>
+    </div>
+ 
+    <!-- Stats -->
+    <div class="space-y-3 mb-5">
+ 
+      <!-- Stat 1: 大腦活化天數 -->
+      <div class="stat-card">
+        <div class="stat-icon bg-purple-50">🧠</div>
+        <div class="flex-1">
+          <p class="text-xs text-slate-400 font-medium">大腦活化天數</p>
+          <p class="text-sm font-black text-gray-800 mt-0.5">本週累計 <span class="text-purple-600 text-base">5 天</span></p>
+        </div>
+        <div class="text-right shrink-0">
+          <div class="flex gap-1">
+            ${[1,2,3,4,5,6,7].map((d, i) => `
+              <div class="w-5 h-5 rounded-md text-[9px] flex items-center justify-center font-bold
+                ${i < 5 ? 'bg-purple-500 text-white' : 'bg-slate-100 text-slate-300'}">
+                ${['一','二','三','四','五','六','日'][i]}
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+ 
+      <!-- Stat 2: 最佳認知表現 -->
+      <div class="stat-card">
+        <div class="stat-icon bg-orange-50">🏆</div>
+        <div class="flex-1">
+          <p class="text-xs text-slate-400 font-medium">最佳認知表現</p>
+          <p class="text-sm font-black text-gray-800 mt-0.5">多工執行力</p>
+          <p class="text-xs text-orange-600 font-medium">24H 一日店長</p>
+        </div>
+        <div class="bg-orange-50 border border-orange-100 rounded-lg px-2.5 py-1 shrink-0">
+          <p class="text-xs text-orange-700 font-bold text-center">本週最強</p>
+          <p class="text-lg text-center">⭐</p>
+        </div>
+      </div>
+ 
+      <!-- Stat 3: 家庭共融指數 -->
+      <div class="stat-card">
+        <div class="stat-icon bg-emerald-50">🤝</div>
+        <div class="flex-1">
+          <p class="text-xs text-slate-400 font-medium">家庭共融指數</p>
+          <p class="text-sm font-black text-gray-800 mt-0.5">全家共同參與 <span class="text-emerald-600">4 天</span></p>
+          <div class="flex items-center gap-1.5 mt-1">
+            <div class="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden">
+              <div class="h-full bg-emerald-500 rounded-full" style="width:75%"></div>
+            </div>
+            <p class="text-xs text-emerald-600 font-bold shrink-0">超越 75% 用戶！</p>
+          </div>
+        </div>
+      </div>
+ 
+    </div>
+ 
+    <!-- Divider -->
+    <div class="h-px bg-slate-100 mb-4"></div>
+ 
+    <!-- App 導流鉤子 -->
+    <div onclick="closeWeeklyReport(); openModal('modal-download');"
+      class="flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-xl p-4 cursor-pointer active:bg-slate-100 transition">
+      <div class="w-10 h-10 bg-slate-200 rounded-xl flex items-center justify-center text-lg shrink-0">🔒</div>
+      <div class="flex-1">
+        <p class="font-bold text-gray-700 text-sm">查看歷史認知趨勢與深度分析</p>
+        <p class="text-xs text-slate-400 mt-0.5">下載 GO HEALTH APP 解鎖完整報告</p>
+      </div>
+      <i class="fas fa-chevron-right text-slate-300 text-sm shrink-0"></i>
+    </div>
+ 
+    <button onclick="closeWeeklyReport()" class="w-full text-slate-400 text-sm py-3 mt-3 active:opacity-60">關閉報告</button>
+  </div>
+</div>
+ 
 <!-- Toast container -->
 <div id="toast-container"></div>
  
@@ -633,9 +787,21 @@
       streak: 4,
       maxPoints: 10000,
       members: [
-        { id: 1, name: 'Chrys（你）', role: '房主', points: 1200, isYou: true,  isCoolingDown: false },
-        { id: 2, name: '爸爸',        role: '成員', points: 300,  isYou: false, isCoolingDown: false },
-        { id: 3, name: '新成員',      role: '成員', points: 0,    isYou: false, isCoolingDown: true  }
+        {
+          id: 1, name: 'Chrys（你）', role: '房主', points: 1200,
+          isYou: true, isCoolingDown: false,
+          latestActivity: { game: '大腦靈活度測試', icon: '🧠', points: 200, time: '1 小時前' }
+        },
+        {
+          id: 2, name: '爸爸', role: '成員', points: 300,
+          isYou: false, isCoolingDown: false,
+          latestActivity: { game: '眼力極限考驗', icon: '👀', points: 100, time: '10 分鐘前' }
+        },
+        {
+          id: 3, name: '新成員', role: '成員', points: 0,
+          isYou: false, isCoolingDown: true,
+          latestActivity: null
+        }
       ]
     }
   };
@@ -786,9 +952,9 @@
     const member = appState.group.members.find(m => m.id === memberId);
     if (!member) return;
     openWarnModal(
-      `踢出 ${member.name}？`,
+      `移出 ${member.name}？`,
       '此操作無法復原',
-      `確認執行？退出後，${member.name} 本週貢獻的 ${member.points} 點將從群組總分中扣除！`,
+      `確認執行？移出後，${member.name} 本週貢獻的 ${member.points} 點將從群組總分中扣除！`,
       () => {
         appState.group.members = appState.group.members.filter(m => m.id !== memberId);
         renderGroupView();
@@ -812,6 +978,16 @@
         showToast('已退出群組');
       }
     );
+  }
+ 
+  /* ═══════════════════════════════════════════════
+     WEEKLY REPORT MODAL
+  ═══════════════════════════════════════════════ */
+  function openWeeklyReport() {
+    openModal('modal-weekly-report');
+  }
+  function closeWeeklyReport() {
+    closeModal('modal-weekly-report');
   }
  
   /* ═══════════════════════════════════════════════
@@ -909,6 +1085,20 @@
             <i class="fas fa-fire-flame-curved"></i> 群組已連續打卡 ${streak} 天
           </p>
         `}
+ 
+        <!-- 週報入口 Banner (只在解鎖狀態顯示) -->
+        ${isUnlocked ? `
+          <div class="report-banner" onclick="openWeeklyReport()">
+            <div class="flex items-center gap-2.5">
+              <div class="w-9 h-9 bg-emerald-100 rounded-xl flex items-center justify-center text-lg shrink-0">📊</div>
+              <div>
+                <p class="font-bold text-emerald-800 text-sm">查看本週家庭健康週報</p>
+                <p class="text-xs text-emerald-600 mt-0.5">認知表現 · 共融指數 · 健康趨勢</p>
+              </div>
+            </div>
+            <i class="fas fa-chevron-right text-emerald-400 text-sm shrink-0"></i>
+          </div>
+        ` : ''}
       </section>
  
       <!-- ② 成員列表 -->
@@ -925,7 +1115,7 @@
         <div class="space-y-3">
           ${members.map(m => `
             <div class="member-card">
-              <div class="flex items-center gap-3">
+              <div class="flex items-start gap-3">
                 <!-- Avatar -->
                 <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl shrink-0
                   ${m.isYou ? 'bg-emerald-100' : m.isCoolingDown ? 'bg-slate-100' : 'bg-blue-100'}">
@@ -934,11 +1124,17 @@
  
                 <!-- Info -->
                 <div class="flex-1 min-w-0">
-                  <div class="flex items-center gap-1 flex-wrap">
-                    <span class="font-black text-gray-800 text-base">${m.name}</span>
-                    <span onclick="editMemberName(${m.id})" class="edit-icon" title="編輯名稱">✏️</span>
-                    <span class="text-[10px] bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded-full font-medium">${m.role}</span>
-                    ${m.isYou ? `<span class="text-[10px] bg-green-100 text-green-700 px-1.5 py-0.5 rounded-full font-medium">你</span>` : ''}
+                  <div class="flex items-center justify-between gap-2">
+                    <div class="flex items-center gap-1 flex-wrap min-w-0">
+                      <span class="font-black text-gray-800 text-base">${m.name}</span>
+                      <span onclick="editMemberName(${m.id})" class="edit-icon" title="編輯名稱">✏️</span>
+                      <span class="text-[10px] bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded-full font-medium">${m.role}</span>
+                      ${m.isYou ? `<span class="text-[10px] bg-green-100 text-green-700 px-1.5 py-0.5 rounded-full font-medium">你</span>` : ''}
+                    </div>
+                    <!-- Move-out button (host only, non-self, non-host targets) -->
+                    ${(!m.isYou && !isHost(m))
+                      ? `<button class="kick-btn shrink-0" onclick="kickMember(${m.id})">[移出]</button>`
+                      : ''}
                   </div>
                   <div class="flex items-center gap-2 mt-1 flex-wrap">
                     <p class="text-sm font-bold ${m.isCoolingDown ? 'text-slate-400' : 'text-emerald-600'}">
@@ -946,12 +1142,15 @@
                     </p>
                     ${m.isCoolingDown ? `<span class="cooling-tag">新手暖身中，明日計入群組</span>` : ''}
                   </div>
+                  ${(!m.isCoolingDown && m.latestActivity) ? `
+                    <p class="activity-line">
+                      ${m.latestActivity.time}剛完成了
+                      <strong class="text-gray-700">${m.latestActivity.game}</strong>
+                      ${m.latestActivity.icon}，為群組注入
+                      <strong class="text-emerald-600">${m.latestActivity.points} 點</strong>健康力！
+                    </p>
+                  ` : ''}
                 </div>
- 
-                <!-- Actions (only host can kick, not self) -->
-                ${(!m.isYou && !isHost(m))
-                  ? `<button class="kick-btn" onclick="kickMember(${m.id})">踢出</button>`
-                  : ''}
               </div>
             </div>
           `).join('')}
