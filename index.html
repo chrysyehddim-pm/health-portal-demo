@@ -531,9 +531,10 @@
         <i class="fas fa-chevron-left mr-1.5"></i> 返回
       </button>
       <span class="font-black text-gray-800 text-base tracking-wide">GO HEALTH</span>
-      <div class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center">
+      <button onclick="openNotifications()" class="relative w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center active:bg-slate-200 transition" id="bell-btn-dash">
         <i class="fas fa-bell text-slate-400 text-sm"></i>
-      </div>
+        <span id="bell-badge-dash" class="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white hidden"></span>
+      </button>
     </header>
  
     <div class="bg-amber-50 text-amber-800 px-4 py-2 text-xs flex items-center border-b border-amber-100 gap-2">
@@ -687,7 +688,12 @@
         <i class="fas fa-arrow-right text-emerald-400 text-sm shrink-0"></i>
       </div>
  
-      <p class="text-center text-xs text-slate-300 pb-2">GO HEALTH</p>
+      <div class="text-center text-[11px] text-slate-400 pb-3">
+        <span class="font-bold text-slate-300 mr-2">GO HEALTH</span>
+        <a href="#" class="underline active:text-slate-500">服務條款</a>
+        <span class="mx-1.5 text-slate-300">|</span>
+        <a href="#" class="underline active:text-slate-500">隱私權政策</a>
+      </div>
     </div>
  
     <nav class="bottom-nav">
@@ -710,7 +716,10 @@
         <i class="fas fa-chevron-left mr-1.5"></i> 返回
       </button>
       <span class="font-black text-gray-800 text-base tracking-wide">我的群組</span>
-      <div class="w-10"></div>
+      <button onclick="openNotifications()" class="relative w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center active:bg-slate-200 transition" id="bell-btn-group">
+        <i class="fas fa-bell text-slate-400 text-sm"></i>
+        <span id="bell-badge-group" class="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white hidden"></span>
+      </button>
     </header>
  
     <div class="flex-1 overflow-y-auto no-scrollbar p-4 space-y-5 pb-4" id="group-content">
@@ -906,7 +915,7 @@
     </div>
     <div class="bg-slate-50 rounded-2xl p-4 border border-slate-100 mb-5">
       <p class="text-sm text-slate-700 leading-relaxed">
-        健康點是 GO HEALTH 專屬點數。透過完成任務與群組互動獲得，未來可於專屬商城兌換 <strong class="text-emerald-600">HAPPY GO 點數</strong>或<strong class="text-emerald-600">健康商品</strong>。
+        健康點是 GO HEALTH 專屬點數。透過完成任務與群組互動獲得，未來可於專屬商城兌換 <strong class="text-emerald-600">HAPPY GO 點數</strong>或<strong class="text-emerald-600">實體健康商品</strong>。
       </p>
     </div>
     <div class="space-y-2.5 mb-5">
@@ -1002,6 +1011,28 @@
   </div>
 </div>
  
+<!-- NOTIFICATION CENTER MODAL -->
+<div id="modal-notifications" class="modal-overlay hidden-view" style="align-items:flex-end;" onclick="closeNotifications()">
+  <div class="modal-sheet" style="max-height:85vh; overflow-y:auto; padding-bottom:2.5rem;" onclick="event.stopPropagation()">
+ 
+    <!-- Handle -->
+    <div class="w-12 h-1 bg-slate-200 rounded-full mx-auto mb-4"></div>
+ 
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="text-lg font-black text-gray-800">通知中心</h3>
+      <button onclick="markAllRead()" class="text-xs text-emerald-600 font-bold active:opacity-60 transition px-2 py-1">全部設為已讀</button>
+    </div>
+ 
+    <!-- Notification list -->
+    <div id="notification-list" class="space-y-2">
+      <!-- Rendered by JS -->
+    </div>
+ 
+    <button onclick="closeNotifications()" class="w-full text-slate-400 text-sm py-3 mt-3 active:opacity-60">關閉</button>
+  </div>
+</div>
+ 
 <!-- Toast container -->
 <div id="toast-container"></div>
  
@@ -1038,6 +1069,15 @@
  
   // pending warn action (callback stored here)
   let pendingWarnAction = null;
+ 
+  // notifications state
+  appState.notifications = [
+    { id: 1, type: 'system',    icon: '📢', title: '本週抽獎結果出爐！',  desc: '恭喜您的群組獲得 100 點 HG 點數！',              time: '10 分鐘前', isRead: false },
+    { id: 2, type: 'message',   icon: '💬', title: '爸爸 傳送了關心',     desc: '喝杯水休息一下，今天的健康任務做得很棒唷！',    time: '2 小時前',  isRead: false },
+    { id: 3, type: 'milestone', icon: '🎫', title: '群組達成里程碑',      desc: '群組累積滿 1,000 點，成功獲得 1 張抽獎券！',    time: '昨天',      isRead: true  },
+    { id: 4, type: 'group',     icon: '👋', title: '新成員加入',          desc: '媽媽 已成功加入您的家庭群組。',                 time: '2 天前',    isRead: true  },
+    { id: 5, type: 'points',    icon: '💰', title: '新手任務完成',        desc: '專屬健康設定已完成，獲得 100 點。',             time: '3 天前',    isRead: true  }
+  ];
  
   /* ═══════════════════════════════════════════════
      COMPUTED HELPERS
@@ -1503,14 +1543,71 @@
         <p class="text-center text-xs text-slate-400 mt-2">退出後，本週貢獻點數將從群組總分中扣除</p>
       </div>
  
-      <p class="text-center text-xs text-slate-300 pb-2">GO HEALTH</p>
+      <div class="text-center text-[11px] text-slate-400 pb-3">
+        <span class="font-bold text-slate-300 mr-2">GO HEALTH</span>
+        <a href="#" class="underline active:text-slate-500">服務條款</a>
+        <span class="mx-1.5 text-slate-300">|</span>
+        <a href="#" class="underline active:text-slate-500">隱私權政策</a>
+      </div>
     `;
+  }
+ 
+  /* ═══════════════════════════════════════════════
+     NOTIFICATIONS
+  ═══════════════════════════════════════════════ */
+  function hasUnread() {
+    return appState.notifications.some(n => !n.isRead);
+  }
+ 
+  function updateBadges() {
+    const show = hasUnread();
+    ['bell-badge-dash', 'bell-badge-group'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.classList.toggle('hidden', !show);
+    });
+  }
+ 
+  function renderNotificationList() {
+    const list = document.getElementById('notification-list');
+    if (!list) return;
+    list.innerHTML = appState.notifications.map(n => `
+      <div class="flex items-start gap-3 rounded-2xl px-4 py-3.5 border transition ${n.isRead ? 'bg-white border-slate-100' : 'bg-slate-50 border-slate-200'}">
+        <div class="w-11 h-11 rounded-2xl flex items-center justify-center text-2xl shrink-0 ${n.isRead ? 'bg-slate-100' : 'bg-white border border-slate-200 shadow-sm'}">
+          ${n.icon}
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center justify-between gap-2">
+            <p class="font-bold text-gray-800 text-sm ${n.isRead ? '' : 'text-gray-900'}">${n.title}</p>
+            ${!n.isRead ? '<span class="w-2 h-2 bg-red-500 rounded-full shrink-0"></span>' : ''}
+          </div>
+          <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">${n.desc}</p>
+          <p class="text-[10px] text-slate-400 mt-1.5">${n.time}</p>
+        </div>
+      </div>
+    `).join('');
+  }
+ 
+  function openNotifications() {
+    renderNotificationList();
+    openModal('modal-notifications');
+  }
+ 
+  function closeNotifications() {
+    closeModal('modal-notifications');
+  }
+ 
+  function markAllRead() {
+    appState.notifications.forEach(n => n.isRead = true);
+    updateBadges();
+    renderNotificationList();
+    showToast('✅ 全部通知已設為已讀');
   }
  
   /* ═══════════════════════════════════════════════
      INIT
   ═══════════════════════════════════════════════ */
   renderGroupView();
+  updateBadges();
 </script>
 </body>
 </html>
