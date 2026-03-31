@@ -538,7 +538,7 @@
  
     <div class="bg-amber-50 text-amber-800 px-4 py-2 text-xs flex items-center border-b border-amber-100 gap-2">
       <i class="fas fa-bullhorn text-amber-500"></i>
-      <span class="truncate">🎉 歡慶上線！本月完成所有挑戰，再抽 10,000 點！</span>
+      <span class="truncate">🎉 歡慶上線！本月天天登入完成挑戰，再抽 1000 點</span>
     </div>
  
     <div class="flex-1 overflow-y-auto no-scrollbar p-4 space-y-6 pb-4">
@@ -550,7 +550,10 @@
           <div class="absolute -right-8 -top-8 w-36 h-36 bg-white/10 rounded-full"></div>
           <div class="absolute right-16 -bottom-12 w-28 h-28 bg-white/10 rounded-full"></div>
           <div class="relative z-10">
-            <p class="text-emerald-100 text-sm mb-1 font-medium">我的健康點 (Pts)</p>
+            <p class="text-emerald-100 text-sm mb-1 font-medium flex items-center gap-1.5">
+              我的健康點 (Pts)
+              <button onclick="openModal('modal-points-info')" class="w-5 h-5 rounded-full bg-white/20 text-white/80 text-[10px] font-black flex items-center justify-center hover:bg-white/30 transition active:scale-90 shrink-0 leading-none">?</button>
+            </p>
             <div class="flex items-baseline mb-4">
               <span class="text-5xl font-black tracking-tight">1,200</span>
               <span class="text-base ml-2 opacity-75">點</span>
@@ -587,6 +590,30 @@
             </span>
           </div>
         </a>
+      </section>
+ 
+      <!-- 新手專屬任務 -->
+      <section>
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="section-title mb-0">
+            <i class="fa-solid fa-star text-sky-500"></i> 新手專屬任務
+          </h3>
+          <span class="text-xs text-sky-600 bg-sky-50 px-2.5 py-1 rounded-full border border-sky-100 font-medium">僅限一次</span>
+        </div>
+ 
+        <div class="bg-sky-50 border border-sky-100 rounded-2xl p-4 flex items-center gap-3 shadow-sm active:scale-[0.98] transition cursor-pointer">
+          <div class="w-11 h-11 bg-sky-100 rounded-xl flex items-center justify-center shrink-0">
+            <i class="fa-solid fa-clipboard-question text-sky-500 text-lg"></i>
+          </div>
+          <div class="flex-1 min-w-0">
+            <h4 class="font-bold text-gray-800 text-sm">專屬健康設定</h4>
+            <p class="text-xs text-slate-500 mt-0.5">讓我們了解您的作息與健康偏好</p>
+          </div>
+          <div class="flex flex-col items-end shrink-0 gap-1.5">
+            <span class="shimmer-badge text-emerald-700 font-bold text-xs px-2.5 py-1 rounded-full">+ 100 點</span>
+            <span class="text-sky-600 text-xs font-bold flex items-center gap-0.5">立即填寫 <i class="fa-solid fa-arrow-right text-[10px]"></i></span>
+          </div>
+        </div>
       </section>
  
       <!-- 每日賺點 -->
@@ -783,19 +810,19 @@
     <!-- Header -->
     <div class="flex items-center justify-between mb-5">
       <div>
-        <h3 class="text-xl font-black text-gray-800">本週健康與共融報告</h3>
-        <p class="text-xs text-slate-400 mt-0.5">2025 年第 3 週 · 群組限定</p>
+        <h3 class="text-xl font-black text-gray-800">本週群組健康週報</h3>
+        <p class="text-xs text-slate-400 mt-0.5">2025 年第 3 週 · 群組限定（統計至昨日）</p>
       </div>
       <div class="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center text-xl shrink-0">📋</div>
     </div>
  
     <!-- ── BLOCK A: 家庭共融表現 ── -->
-    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2.5">👨‍👩‍👧 家庭共融表現</p>
+    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2.5">👨‍👩‍👧 家族活躍表現</p>
     <div class="bg-emerald-50 border border-emerald-100 rounded-2xl p-4 mb-4">
       <div class="flex items-center gap-3 mb-3">
         <div class="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center text-xl shrink-0">🤝</div>
         <div class="flex-1">
-          <p class="text-xs text-slate-400 font-medium">家庭共融指數</p>
+          <p class="text-xs text-slate-400 font-medium">家族活躍指數</p>
           <p class="font-black text-gray-800 text-sm mt-0.5">全家共同參與 <span class="text-emerald-600 text-base">4 天</span></p>
         </div>
       </div>
@@ -866,6 +893,73 @@
   </div>
 </div>
  
+<!-- MODAL: 健康點說明 -->
+<div id="modal-points-info" class="modal-overlay hidden-view" onclick="closeModal('modal-points-info')">
+  <div class="modal-sheet" onclick="event.stopPropagation()">
+    <div class="w-12 h-1 bg-slate-200 rounded-full mx-auto mb-5"></div>
+    <div class="flex items-center gap-3 mb-4">
+      <div class="w-12 h-12 bg-emerald-50 rounded-2xl flex items-center justify-center text-2xl shrink-0">🏅</div>
+      <div>
+        <h3 class="text-lg font-black text-gray-800">什麼是健康點？</h3>
+        <p class="text-xs text-slate-400 mt-0.5">GO HEALTH 專屬積分說明</p>
+      </div>
+    </div>
+    <div class="bg-slate-50 rounded-2xl p-4 border border-slate-100 mb-5">
+      <p class="text-sm text-slate-700 leading-relaxed">
+        健康點是 GO HEALTH 專屬點數。透過完成任務與群組互動獲得，未來可於專屬商城兌換 <strong class="text-emerald-600">HAPPY GO 點數</strong>或<strong class="text-emerald-600">實體健康商品</strong>。
+      </p>
+    </div>
+    <div class="space-y-2.5 mb-5">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 bg-amber-50 rounded-xl flex items-center justify-center text-base shrink-0">🧠</div>
+        <p class="text-sm text-gray-700">完成認知訓練任務：每次 <strong>+100～200 點</strong></p>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 bg-blue-50 rounded-xl flex items-center justify-center text-base shrink-0">👥</div>
+        <p class="text-sm text-gray-700">群組互動與共同達標：額外加成</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 bg-purple-50 rounded-xl flex items-center justify-center text-base shrink-0">🎁</div>
+        <p class="text-sm text-gray-700">商城兌換功能即將上線，敬請期待！</p>
+      </div>
+    </div>
+    <button onclick="closeModal('modal-points-info')" class="w-full bg-green-600 text-white font-bold py-3.5 rounded-2xl active:scale-95 transition">我知道了</button>
+  </div>
+</div>
+ 
+<!-- MODAL: 抽獎規則 -->
+<div id="modal-lottery-rules" class="modal-overlay hidden-view" onclick="closeModal('modal-lottery-rules')">
+  <div class="modal-sheet" onclick="event.stopPropagation()">
+    <div class="w-12 h-1 bg-slate-200 rounded-full mx-auto mb-5"></div>
+    <div class="flex items-center gap-3 mb-5">
+      <div class="w-12 h-12 bg-amber-50 rounded-2xl flex items-center justify-center text-2xl shrink-0">🎟️</div>
+      <div>
+        <h3 class="text-lg font-black text-gray-800">抽獎規則說明</h3>
+        <p class="text-xs text-slate-400 mt-0.5">每週限定 · 滾動更新</p>
+      </div>
+    </div>
+    <div class="space-y-3 mb-5">
+      <div class="flex items-start gap-3 bg-amber-50 rounded-xl p-3.5 border border-amber-100">
+        <span class="text-xl shrink-0">📅</span>
+        <p class="text-sm text-amber-900 leading-relaxed"><strong>結算時間：</strong>每週日 23:59 進行本週積分結算。</p>
+      </div>
+      <div class="flex items-start gap-3 bg-emerald-50 rounded-xl p-3.5 border border-emerald-100">
+        <span class="text-xl shrink-0">🎫</span>
+        <p class="text-sm text-emerald-900 leading-relaxed"><strong>兌換規則：</strong>群組每累積滿 1,000 點，可換得 1 張抽獎券。</p>
+      </div>
+      <div class="flex items-start gap-3 bg-blue-50 rounded-xl p-3.5 border border-blue-100">
+        <span class="text-xl shrink-0">🏆</span>
+        <p class="text-sm text-blue-900 leading-relaxed"><strong>抽獎方式：</strong>每週抽出 1 名幸運兒，獲得 <strong>100 點 HG 點數</strong>！</p>
+      </div>
+      <div class="flex items-start gap-3 bg-slate-50 rounded-xl p-3.5 border border-slate-100">
+        <span class="text-xl shrink-0">🔄</span>
+        <p class="text-sm text-slate-700 leading-relaxed"><strong>獎項說明：</strong>獎項內容將滾動更新，請持續關注最新公告。</p>
+      </div>
+    </div>
+    <button onclick="closeModal('modal-lottery-rules')" class="w-full bg-slate-800 text-white font-bold py-3.5 rounded-2xl active:scale-95 transition">了解了！</button>
+  </div>
+</div>
+ 
 <!-- INTERACTION BOTTOM SHEET -->
 <div id="modal-interaction" class="interaction-overlay hidden-view" onclick="closeInteractionModal()">
   <div class="interaction-sheet" onclick="event.stopPropagation()">
@@ -887,7 +981,24 @@
       <!-- Populated by JS -->
     </div>
  
-    <button onclick="closeInteractionModal()" class="w-full text-slate-400 text-sm py-3 mt-3 active:opacity-60">取消</button>
+    <!-- Custom message input -->
+    <div class="mt-4 pt-4 border-t border-slate-100">
+      <p class="text-xs text-slate-400 font-medium mb-2">或自己輸入：</p>
+      <div class="flex items-center gap-2">
+        <input
+          id="custom-msg-input"
+          type="text"
+          maxlength="30"
+          placeholder="自己輸入關心… (最多 30 字)"
+          class="flex-1 border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm text-gray-800 focus:border-emerald-400 focus:outline-none transition placeholder:text-slate-300"
+        />
+        <button onclick="sendCustomMessage()" class="bg-emerald-600 text-white font-bold px-4 py-2.5 rounded-xl text-sm active:scale-95 active:bg-emerald-700 transition shrink-0">
+          傳送
+        </button>
+      </div>
+    </div>
+ 
+    <button onclick="closeInteractionModal()" class="w-full text-slate-400 text-sm py-3 mt-2 active:opacity-60">取消</button>
   </div>
 </div>
  
@@ -1017,8 +1128,12 @@
      INVITE CODE
   ═══════════════════════════════════════════════ */
   function copyInviteCode() {
-    navigator.clipboard?.writeText(appState.group.inviteCode).catch(() => {});
-    showToast('📋 邀請碼已複製！');
+    const you = appState.group.members.find(m => m.isYou);
+    const name = you ? you.name.replace('（你）', '').trim() : 'GO HEALTH 用戶';
+    const code = appState.group.inviteCode;
+    const deepLink = `「${name} 邀請你加入 GO HEALTH 群組一起賺健康！請下載 HAPPY GO APP 體驗全新健康服務，群組代碼：${code}，讓關心變得更簡單」`;
+    navigator.clipboard?.writeText(deepLink).catch(() => {});
+    showToast('📋 邀請連結已複製！');
   }
   function showInviteModal() {
     document.getElementById('modal-invite-code').textContent = appState.group.inviteCode;
@@ -1129,12 +1244,16 @@
  
     // render option buttons
     const opts = document.getElementById('interaction-options');
-    opts.innerHTML = CANNED_MESSAGES.map((msg, idx) => `
+    opts.innerHTML = CANNED_MESSAGES.map((msg) => `
       <button class="msg-btn" onclick="sendMessage(${memberId}, '${msg.icon}', '${msg.text.replace(/'/g, '&#39;')}')">
         <span class="msg-btn-icon">${msg.icon}</span>
         <span>${msg.text}</span>
       </button>
     `).join('');
+ 
+    // clear custom input
+    const customInput = document.getElementById('custom-msg-input');
+    if (customInput) customInput.value = '';
  
     openModal('modal-interaction');
   }
@@ -1142,6 +1261,16 @@
   function closeInteractionModal() {
     closeModal('modal-interaction');
     _interactionTarget = null;
+  }
+ 
+  function sendCustomMessage() {
+    const input = document.getElementById('custom-msg-input');
+    const text = input ? input.value.trim() : '';
+    if (!text || !_interactionTarget) {
+      if (!text) showToast('⚠️ 請輸入關心內容');
+      return;
+    }
+    sendMessage(_interactionTarget.id, '💬', text);
   }
  
   function sendMessage(memberId, icon, text) {
@@ -1171,10 +1300,28 @@
     if (!isBound) {
       /* ── UNBOUND ── */
       container.innerHTML = `
-        <div class="text-center py-6">
-          <div class="w-24 h-24 bg-emerald-50 rounded-3xl flex items-center justify-center mx-auto mb-5 text-5xl shadow-inner">🌱</div>
-          <h2 class="text-2xl font-black text-gray-800 mb-2">建立您的群組</h2>
-          <p class="text-slate-500 text-sm leading-relaxed">邀請家人一起挑戰健康任務，<br>共同累積群組點數、抽取大獎！</p>
+        <div class="text-center pt-6 pb-2">
+          <div class="w-24 h-24 bg-emerald-50 rounded-3xl flex items-center justify-center mx-auto mb-4 text-5xl shadow-inner">🌱</div>
+          <h2 class="text-2xl font-black text-gray-800 mb-1">建立您的群組</h2>
+          <p class="text-slate-500 text-sm">只需兩步，立刻開始家庭健康挑戰！</p>
+        </div>
+ 
+        <!-- Step guide -->
+        <div class="space-y-3">
+          <div class="flex items-start gap-3 bg-white rounded-2xl p-4 border border-slate-100 shadow-sm">
+            <div class="w-9 h-9 bg-green-600 text-white rounded-full flex items-center justify-center font-black text-base shrink-0 mt-0.5">1</div>
+            <div>
+              <p class="font-black text-gray-800 text-base">點擊「建立群組」成為房主</p>
+              <p class="text-xs text-slate-400 mt-1 leading-relaxed">系統將為您產生專屬 6 碼邀請代碼，您即成為群組房主。</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3 bg-white rounded-2xl p-4 border border-slate-100 shadow-sm">
+            <div class="w-9 h-9 bg-green-600 text-white rounded-full flex items-center justify-center font-black text-base shrink-0 mt-0.5">2</div>
+            <div>
+              <p class="font-black text-gray-800 text-base">分享代碼，邀請家人加入！</p>
+              <p class="text-xs text-slate-400 mt-1 leading-relaxed">將專屬代碼傳給家人，請他們輸入代碼加入，即可一起賺健康點！</p>
+            </div>
+          </div>
         </div>
  
         <button onclick="createGroupAndBind()"
@@ -1184,20 +1331,18 @@
  
         <div class="flex items-center gap-3 my-1">
           <div class="flex-1 h-px bg-slate-200"></div>
-          <span class="text-slate-400 text-xs">或</span>
+          <span class="text-slate-400 text-xs">或輸入家人的代碼加入</span>
           <div class="flex-1 h-px bg-slate-200"></div>
         </div>
  
         <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm space-y-3">
-          <h3 class="font-bold text-gray-700">輸入邀請碼加入</h3>
           <input id="join-code-input" type="text" maxlength="6"
-            placeholder="請輸入 6 碼邀請碼"
+            placeholder="輸入 6 碼群組代碼"
             class="w-full border-2 border-slate-200 rounded-xl px-4 py-3.5 text-center text-2xl font-black tracking-widest text-gray-800 focus:border-green-500 focus:outline-none transition"/>
           <button onclick="tryJoinGroup()"
             class="w-full bg-slate-800 text-white font-bold py-3.5 rounded-xl active:scale-95 transition text-base">
             加入群組
           </button>
-          <p class="text-center text-xs text-slate-400">向家人索取 6 碼邀請碼後輸入</p>
         </div>
       `;
       return;
@@ -1217,10 +1362,13 @@
           <h3 class="font-black text-gray-800 flex items-center gap-2">
             <i class="fas fa-ticket text-emerald-600"></i> 群組抽獎券
           </h3>
-          ${isUnlocked
-            ? `<span class="text-xs bg-emerald-50 text-emerald-700 border border-emerald-100 px-2.5 py-1 rounded-full font-medium">🔥 已解鎖</span>`
-            : `<span class="text-xs bg-slate-100 text-slate-500 border border-slate-200 px-2.5 py-1 rounded-full font-medium">🔒 上鎖中</span>`
-          }
+          <div class="flex items-center gap-2">
+            <button onclick="openModal('modal-lottery-rules')" class="text-xs text-slate-500 bg-slate-50 border border-slate-200 px-2 py-1 rounded-lg font-medium active:bg-slate-100 transition">📜 抽獎規則</button>
+            ${isUnlocked
+              ? `<span class="text-xs bg-emerald-50 text-emerald-700 border border-emerald-100 px-2.5 py-1 rounded-full font-medium">🔥 已解鎖</span>`
+              : `<span class="text-xs bg-slate-100 text-slate-500 border border-slate-200 px-2.5 py-1 rounded-full font-medium">🔒 上鎖中</span>`
+            }
+          </div>
         </div>
  
         ${!isUnlocked ? `
@@ -1263,8 +1411,8 @@
             <div class="flex items-center gap-2.5">
               <div class="w-9 h-9 bg-emerald-100 rounded-xl flex items-center justify-center text-lg shrink-0">📊</div>
               <div>
-                <p class="font-bold text-emerald-800 text-sm">查看本週家庭健康週報</p>
-                <p class="text-xs text-emerald-600 mt-0.5">認知表現 · 共融指數 · 健康趨勢</p>
+                <p class="font-bold text-emerald-800 text-sm">查看本週群組健康週報</p>
+                <p class="text-xs text-emerald-600 mt-0.5">認知表現 · 活躍指數 · 健康趨勢</p>
               </div>
             </div>
             <i class="fas fa-chevron-right text-emerald-400 text-sm shrink-0"></i>
