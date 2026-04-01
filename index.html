@@ -745,10 +745,7 @@
         <i class="fas fa-chevron-left mr-1.5"></i> 返回
       </button>
       <span class="font-black text-gray-800 text-base tracking-wide">GO HEALTH</span>
-      <button onclick="openNotifications()" class="relative w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center active:bg-slate-200 transition" id="bell-btn-group">
-        <i class="fas fa-bell text-slate-400 text-sm"></i>
-        <span id="bell-badge-group" class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white hidden"></span>
-      </button>
+      <div class="w-10"></div>
     </header>
 
     <div class="flex-1 overflow-y-auto no-scrollbar p-4 space-y-5 pb-4" id="group-content">
@@ -1457,6 +1454,15 @@
     const isUnlocked = members.length >= 2;
 
     container.innerHTML = `
+
+      <!-- 問候列 + 鈴鐺（與首頁一致） -->
+      <div class="flex items-center justify-between mb-1">
+        <h2 class="text-xl font-black text-gray-800">我的群組 👥</h2>
+        <button onclick="openNotifications()" class="relative w-10 h-10 bg-white border border-slate-200 rounded-full flex items-center justify-center active:bg-slate-50 transition shadow-sm shrink-0" id="bell-btn-group">
+          <i class="fas fa-bell text-slate-400 text-base"></i>
+          <span id="bell-badge-group" class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white ${hasUnread() ? '' : 'hidden'}"></span>
+        </button>
+      </div>
 
       <!-- 模組 A：群組抽獎券卡片 -->
       <section class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm">
