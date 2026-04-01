@@ -1171,9 +1171,9 @@
     const you = appState.group.members.find(m => m.isYou);
     const name = you ? you.name.replace('（你）', '').trim() : 'GO HEALTH 用戶';
     const code = appState.group.inviteCode;
-    const deepLink = `「${name} 邀請你加入 GO HEALTH 群組一起賺健康！請下載 HAPPY GO APP 體驗全新健康服務，群組代碼：${code}，讓關心變得更簡單」`;
+    const deepLink = `「${name} 邀請你加入 GO HEALTH 群組一起賺健康！\n點擊下方連結進入 HAPPY GO APP 體驗全新健康服務，輸入群組代碼：${code}，讓關心變得更簡單！\n👉 happygo://gohealth/group」`;
     navigator.clipboard?.writeText(deepLink).catch(() => {});
-    showToast('📋 邀請連結已複製！');
+    showToast('📋 邀請碼已複製！');
   }
   function showInviteModal() {
     document.getElementById('modal-invite-code').textContent = appState.group.inviteCode;
@@ -1191,18 +1191,56 @@
   }
   function tryJoinGroup() {
     const input = document.getElementById('join-code-input');
+    const errorMsg = document.getElementById('join-error-msg');
     const val = input ? input.value.trim() : '';
-    if (val.length === 6) {
-      appState.group.isBound = true;
-      showToast('🎉 成功加入群組！');
-      renderGroupView();
-    } else {
-      showToast('⚠️ 請輸入正確的 6 碼邀請碼');
+
+    // helper: show inline error
+    function showJoinError(msg) {
       if (input) {
-        input.classList.add('border-red-400');
-        setTimeout(() => input.classList.remove('border-red-400'), 1500);
+        input.classList.remove('border-slate-200', 'border-green-500');
+        input.classList.add('border-red-500');
+      }
+      if (errorMsg) {
+        errorMsg.textContent = msg;
+        errorMsg.classList.remove('hidden-view');
       }
     }
+
+    // helper: clear error state
+    function clearJoinError() {
+      if (input) {
+        input.classList.remove('border-red-500');
+        input.classList.add('border-slate-200');
+      }
+      if (errorMsg) {
+        errorMsg.textContent = '';
+        errorMsg.classList.add('hidden-view');
+      }
+    }
+
+    // Situation A: length < 6
+    if (val.length < 6) {
+      showJoinError('⚠️ 長度不足，請輸入 6 碼代碼');
+      return;
+    }
+
+    // Situation B: non-numeric
+    if (!/^\d+$/.test(val)) {
+      showJoinError('⚠️ 格式錯誤，請輸入純數字代碼');
+      return;
+    }
+
+    // Situation C: simulated invalid code
+    if (val === '000000') {
+      showJoinError('⚠️ 代碼錯誤，請確認後重新輸入');
+      return;
+    }
+
+    // Situation D: success
+    clearJoinError();
+    appState.group.isBound = true;
+    showToast('🎉 成功加入群組！');
+    renderGroupView();
   }
 
   /* ═══════════════════════════════════════════════
@@ -1376,9 +1414,10 @@
         </div>
 
         <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm space-y-3">
-          <input id="join-code-input" type="text" maxlength="6"
+          <input id="join-code-input" type="tel" inputmode="numeric" pattern="[0-9]*" maxlength="6"
             placeholder="輸入 6 碼群組代碼"
             class="w-full border-2 border-slate-200 rounded-xl px-4 py-3.5 text-center text-2xl font-black tracking-widest text-gray-800 focus:border-green-500 focus:outline-none transition"/>
+          <p id="join-error-msg" class="text-xs text-red-500 font-bold mt-1.5 hidden-view"></p>
           <button onclick="tryJoinGroup()"
             class="w-full bg-slate-800 text-white font-bold py-3.5 rounded-xl active:scale-95 transition text-base">
             加入群組
