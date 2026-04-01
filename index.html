@@ -13,15 +13,15 @@
       --green-light: #dcfce7;
       --radius-card: 1.25rem;
     }
- 
+
     * { box-sizing: border-box; }
- 
+
     body {
       background-color: #d1d5db;
       font-family: 'Noto Sans TC', sans-serif;
       -webkit-tap-highlight-color: transparent;
     }
- 
+
     .mobile-container {
       max-width: 414px;
       margin: 0 auto;
@@ -31,12 +31,12 @@
       overflow-x: hidden;
       position: relative;
     }
- 
+
     /* ── Animations ── */
     .fade-in { animation: fadeIn 0.4s ease-out forwards; }
     .slide-up { animation: slideUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
     .hidden-view { display: none !important; }
- 
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(12px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -66,13 +66,13 @@
       from { width: 0%; }
       to   { width: var(--bar-w); }
     }
- 
+
     .pulse-pointer { animation: pulse 2s infinite; }
- 
+
     /* ── Scrollbar hidden ── */
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
- 
+
     /* ── Bottom nav ── */
     .bottom-nav {
       position: sticky;
@@ -100,7 +100,7 @@
     }
     .nav-btn.active { color: var(--green-primary); }
     .nav-btn i { font-size: 21px; margin-bottom: 3px; }
- 
+
     /* ── Task card ── */
     .task-card {
       background: #fff;
@@ -114,19 +114,19 @@
       color: inherit;
     }
     .task-card:active { transform: scale(0.98); box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
- 
+
     /* ── Shimmer badge ── */
     .shimmer-badge {
       background: linear-gradient(90deg, #dcfce7 0%, #a7f3d0 40%, #dcfce7 80%);
       background-size: 200% 100%;
       animation: shimmer 2.5s linear infinite;
     }
- 
+
     /* ── Points card ── */
     .points-card {
       background: linear-gradient(135deg, #059669 0%, #0d9488 55%, #0e7490 100%);
     }
- 
+
     /* ── Section title ── */
     .section-title {
       font-size: 1rem;
@@ -137,7 +137,7 @@
       gap: 0.5rem;
       margin-bottom: 0.75rem;
     }
- 
+
     /* ── Member card ── */
     .member-card {
       background: #fff;
@@ -146,7 +146,7 @@
       border: 1px solid #e2e8f0;
       box-shadow: 0 1px 6px rgba(0,0,0,0.05);
     }
- 
+
     /* ── Progress bar ── */
     .progress-track {
       height: 14px;
@@ -165,7 +165,7 @@
       animation: none;
       width: 0% !important;
     }
- 
+
     /* ── Modal ── */
     .modal-overlay {
       position: fixed;
@@ -185,7 +185,7 @@
       max-width: 414px;
       animation: slideUp 0.35s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
     }
- 
+
     /* ── Warning modal ── */
     .warn-modal-overlay {
       position: fixed;
@@ -206,7 +206,7 @@
       max-width: 360px;
       animation: slideUp 0.3s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
     }
- 
+
     /* ── Toast ── */
     .toast {
       position: fixed;
@@ -224,7 +224,7 @@
       font-weight: 600;
     }
     .toast.hiding { animation: toastOut 0.3s ease forwards; }
- 
+
     /* ── Invite code ── */
     .invite-code {
       letter-spacing: 0.35em;
@@ -237,7 +237,7 @@
       padding: 1rem 1.5rem;
       text-align: center;
     }
- 
+
     /* ── Remove / edit btns ── */
     .kick-btn {
       font-size: 11px;
@@ -252,7 +252,7 @@
       white-space: nowrap;
     }
     .kick-btn:active { background: #e2e8f0; color: #475569; }
- 
+
     /* ── Activity line ── */
     .activity-line {
       font-size: 12px;
@@ -262,7 +262,7 @@
       padding-top: 6px;
       border-top: 1px dashed #e2e8f0;
     }
- 
+
     /* ── Weekly report banner ── */
     .report-banner {
       display: flex;
@@ -277,7 +277,7 @@
       margin-top: 12px;
     }
     .report-banner:active { transform: scale(0.98); background: #d1fae5; }
- 
+
     /* ── Weekly report modal ── */
     .report-modal-overlay {
       position: fixed;
@@ -299,7 +299,7 @@
       overflow-y: auto;
       animation: slideUp 0.35s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
     }
- 
+
     /* ── Report stat card ── */
     .stat-card {
       background: #f8fafc;
@@ -334,7 +334,7 @@
       transition: color 0.15s;
     }
     .edit-icon:hover { color: var(--green-primary); }
- 
+
     /* ── Exit btn ── */
     .exit-btn {
       width: 100%;
@@ -353,7 +353,7 @@
       transition: background 0.15s;
     }
     .exit-btn:active { background: #fee2e2; transform: scale(0.98); }
- 
+
     /* ── Cooling tag ── */
     .cooling-tag {
       font-size: 10px;
@@ -365,7 +365,7 @@
       font-weight: 600;
       white-space: nowrap;
     }
- 
+
     /* ── Interaction modal ── */
     .interaction-overlay {
       position: fixed;
@@ -407,7 +407,7 @@
       font-size: 1.75rem;
       flex-shrink: 0;
     }
- 
+
     /* ── Received message bubble ── */
     .msg-bubble {
       margin-top: 8px;
@@ -452,7 +452,7 @@
 </head>
 <body>
 <div class="mobile-container" id="app-root">
- 
+
   <!-- ══════════════════════════════════════════════ -->
   <!-- VIEW 0: HG APP HOME                           -->
   <!-- ══════════════════════════════════════════════ -->
@@ -471,7 +471,7 @@
       <p class="text-sm text-white/80 bg-black/40 px-5 py-2 rounded-full">模擬從 HG APP 點擊 Webview 入口</p>
     </div>
   </div>
- 
+
   <!-- ══════════════════════════════════════════════ -->
   <!-- VIEW 1: TERMS                                 -->
   <!-- ══════════════════════════════════════════════ -->
@@ -483,7 +483,7 @@
       <span class="font-bold text-gray-800">授權服務</span>
       <div class="w-12"></div>
     </header>
- 
+
     <div class="flex-1 px-6 py-8">
       <div class="text-center mb-8">
         <div class="w-24 h-24 bg-emerald-50 text-emerald-600 rounded-3xl flex items-center justify-center text-5xl mx-auto mb-5 shadow-inner">
@@ -492,7 +492,7 @@
         <h1 class="text-2xl font-black text-gray-800 leading-tight">GO HEALTH<br>授權同意</h1>
         <p class="text-gray-500 text-sm mt-3 leading-relaxed">為提供最專屬的健康任務體驗，<br>我們需要您的授權同意。</p>
       </div>
- 
+
       <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200 mb-8 space-y-4">
         <h3 class="font-bold text-gray-700 text-sm border-b border-slate-200 pb-2.5 flex items-center gap-2">
           <i class="fas fa-list-check text-green-600"></i> 我們將取用與紀錄：
@@ -512,7 +512,7 @@
           </li>
         </ul>
       </div>
- 
+
       <button onclick="agreeAndStart()"
         class="w-full bg-green-600 text-white font-bold py-4 rounded-2xl shadow-lg hover:bg-green-700 transition active:scale-95 text-lg">
         我同意並開始挑戰 🚀
@@ -520,33 +520,36 @@
       <p class="text-center text-xs text-gray-400 mt-4">點擊代表您已詳閱並同意隱私權政策</p>
     </div>
   </div>
- 
+
   <!-- ══════════════════════════════════════════════ -->
   <!-- VIEW 2: DASHBOARD                             -->
   <!-- ══════════════════════════════════════════════ -->
   <div id="view-dashboard" class="hidden-view flex flex-col min-h-[100vh]">
- 
+
     <header class="bg-white/96 backdrop-blur px-4 py-3.5 border-b border-slate-100 sticky top-0 z-50 flex items-center justify-between">
       <button class="text-slate-400 text-sm flex items-center active:opacity-60 transition" onclick="backToHgApp()">
         <i class="fas fa-chevron-left mr-1.5"></i> 返回
       </button>
       <span class="font-black text-gray-800 text-base tracking-wide">GO HEALTH</span>
-      <button onclick="openNotifications()" class="relative w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center active:bg-slate-200 transition" id="bell-btn-dash">
-        <i class="fas fa-bell text-slate-400 text-sm"></i>
-        <span id="bell-badge-dash" class="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white hidden"></span>
-      </button>
+      <div class="w-10"></div>
     </header>
- 
+
     <div class="bg-amber-50 text-amber-800 px-4 py-2 text-xs flex items-center border-b border-amber-100 gap-2">
       <i class="fas fa-bullhorn text-amber-500"></i>
       <span class="truncate">🎉 歡慶上線！本月天天登入完成挑戰，再抽 1000 點</span>
     </div>
- 
+
     <div class="flex-1 overflow-y-auto no-scrollbar p-4 space-y-6 pb-4">
- 
+
       <!-- Greeting + points card -->
       <div>
-        <h2 class="text-xl font-black text-gray-800 mb-3">早安！今天也要元氣滿滿 ☀️</h2>
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-xl font-black text-gray-800">早安！今天也要元氣滿滿 ☀️</h2>
+          <button onclick="openNotifications()" class="relative w-10 h-10 bg-white border border-slate-200 rounded-full flex items-center justify-center active:bg-slate-50 transition shadow-sm shrink-0" id="bell-btn-dash">
+            <i class="fas fa-bell text-slate-400 text-base"></i>
+            <span id="bell-badge-dash" class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white hidden"></span>
+          </button>
+        </div>
         <div class="points-card rounded-2xl p-5 text-white shadow-xl relative overflow-hidden">
           <div class="absolute -right-8 -top-8 w-36 h-36 bg-white/10 rounded-full"></div>
           <div class="absolute right-16 -bottom-12 w-28 h-28 bg-white/10 rounded-full"></div>
@@ -566,7 +569,7 @@
           </div>
         </div>
       </div>
- 
+
       <!-- 月限定任務 -->
       <section>
         <div class="flex items-center justify-between mb-3">
@@ -575,7 +578,7 @@
           </h3>
           <span class="text-xs text-slate-400 bg-amber-50 text-amber-700 px-2.5 py-1 rounded-full border border-amber-100 font-medium">每月限定</span>
         </div>
- 
+
         <a href="https://ad8test.vercel.app/" target="_blank" class="task-card flex items-center gap-3">
           <div class="w-14 h-14 bg-amber-50 rounded-2xl flex items-center justify-center shrink-0">
             <i class="fa-solid fa-brain text-amber-500 text-2xl"></i>
@@ -592,7 +595,7 @@
           </div>
         </a>
       </section>
- 
+
       <!-- 新手專屬任務 -->
       <section>
         <div class="flex items-center justify-between mb-3">
@@ -601,7 +604,7 @@
           </h3>
           <span class="text-xs text-sky-600 bg-sky-50 px-2.5 py-1 rounded-full border border-sky-100 font-medium">僅限一次</span>
         </div>
- 
+
         <div class="bg-sky-50 border border-sky-100 rounded-2xl p-4 flex items-center gap-3 shadow-sm active:scale-[0.98] transition cursor-pointer">
           <div class="w-11 h-11 bg-sky-100 rounded-xl flex items-center justify-center shrink-0">
             <i class="fa-solid fa-clipboard-question text-sky-500 text-lg"></i>
@@ -616,7 +619,7 @@
           </div>
         </div>
       </section>
- 
+
       <!-- 每日賺點 -->
       <section>
         <div class="flex items-center justify-between mb-3">
@@ -625,9 +628,9 @@
           </h3>
           <span class="text-xs text-slate-400 bg-slate-100 px-2.5 py-1 rounded-full">今日完成 0/3</span>
         </div>
- 
+
         <div class="space-y-3">
- 
+
           <!-- 眼力極限 -->
           <a href="https://concentration-ad.vercel.app/" target="_blank" class="task-card flex items-center gap-3">
             <div class="w-11 h-11 bg-blue-50 rounded-xl flex items-center justify-center shrink-0">
@@ -642,7 +645,7 @@
               <span class="text-blue-600 text-xs font-bold flex items-center gap-0.5">去挑戰 <i class="fa-solid fa-arrow-right text-[10px]"></i></span>
             </div>
           </a>
- 
+
           <!-- 生活好時光 -->
           <a href="https://memory-game-ad.vercel.app/" target="_blank" class="task-card flex items-center gap-3">
             <div class="w-11 h-11 bg-purple-50 rounded-xl flex items-center justify-center shrink-0">
@@ -657,7 +660,7 @@
               <span class="text-blue-600 text-xs font-bold flex items-center gap-0.5">去挑戰 <i class="fa-solid fa-arrow-right text-[10px]"></i></span>
             </div>
           </a>
- 
+
           <!-- 24H 一日店長 (新增) -->
           <a href="https://execution.vercel.app/" target="_blank" class="task-card flex items-center gap-3">
             <div class="w-11 h-11 bg-orange-50 rounded-xl flex items-center justify-center shrink-0">
@@ -672,10 +675,10 @@
               <span class="text-blue-600 text-xs font-bold flex items-center gap-0.5">去挑戰 <i class="fa-solid fa-arrow-right text-[10px]"></i></span>
             </div>
           </a>
- 
+
         </div>
       </section>
- 
+
       <!-- Group teaser -->
       <div class="bg-slate-800 rounded-2xl p-4 flex items-center gap-3 cursor-pointer active:opacity-80 transition" onclick="switchToGroup()">
         <div class="w-10 h-10 bg-emerald-500/20 rounded-xl flex items-center justify-center shrink-0">
@@ -687,7 +690,7 @@
         </div>
         <i class="fas fa-arrow-right text-emerald-400 text-sm shrink-0"></i>
       </div>
- 
+
       <div class="text-center text-[11px] text-slate-400 pb-3">
         <span class="font-bold text-slate-300 mr-2">GO HEALTH</span>
         <a href="#" class="underline active:text-slate-500">服務條款</a>
@@ -695,7 +698,7 @@
         <a href="#" class="underline active:text-slate-500">隱私權政策</a>
       </div>
     </div>
- 
+
     <nav class="bottom-nav">
       <button class="nav-btn active" onclick="switchToDashboard()">
         <i class="fas fa-house"></i><span>首頁</span>
@@ -705,27 +708,24 @@
       </button>
     </nav>
   </div>
- 
+
   <!-- ══════════════════════════════════════════════ -->
   <!-- VIEW 3: GROUP HUB                             -->
   <!-- ══════════════════════════════════════════════ -->
   <div id="view-group" class="hidden-view flex flex-col min-h-[100vh]">
- 
+
     <header class="bg-white/96 backdrop-blur px-4 py-3.5 border-b border-slate-100 sticky top-0 z-50 flex items-center justify-between">
       <button class="text-slate-400 text-sm flex items-center active:opacity-60 transition" onclick="backToHgApp()">
         <i class="fas fa-chevron-left mr-1.5"></i> 返回
       </button>
       <span class="font-black text-gray-800 text-base tracking-wide">我的群組</span>
-      <button onclick="openNotifications()" class="relative w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center active:bg-slate-200 transition" id="bell-btn-group">
-        <i class="fas fa-bell text-slate-400 text-sm"></i>
-        <span id="bell-badge-group" class="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white hidden"></span>
-      </button>
+      <div class="w-10"></div>
     </header>
- 
+
     <div class="flex-1 overflow-y-auto no-scrollbar p-4 space-y-5 pb-4" id="group-content">
       <!-- Rendered by JS -->
     </div>
- 
+
     <nav class="bottom-nav">
       <button class="nav-btn" onclick="switchToDashboard()">
         <i class="fas fa-house"></i><span>首頁</span>
@@ -735,9 +735,9 @@
       </button>
     </nav>
   </div>
- 
+
 </div>
- 
+
 <!-- ══════════════════════════════════════════════ -->
 <!-- MODAL: App Download                           -->
 <!-- ══════════════════════════════════════════════ -->
@@ -764,7 +764,7 @@
     </div>
   </div>
 </div>
- 
+
 <!-- MODAL: Invite Code -->
 <div id="modal-invite" class="modal-overlay hidden-view" onclick="closeModal('modal-invite')">
   <div class="modal-sheet" onclick="event.stopPropagation()">
@@ -780,7 +780,7 @@
     <button class="w-full text-slate-400 text-sm py-2 active:opacity-60" onclick="closeModal('modal-invite')">關閉</button>
   </div>
 </div>
- 
+
 <!-- WARNING MODAL (kick / exit) -->
 <div id="modal-warn" class="warn-modal-overlay hidden-view">
   <div class="warn-modal-box" onclick="event.stopPropagation()">
@@ -808,14 +808,14 @@
     </div>
   </div>
 </div>
- 
+
 <!-- WEEKLY REPORT MODAL -->
 <div id="modal-weekly-report" class="report-modal-overlay hidden-view" onclick="closeWeeklyReport()">
   <div class="report-modal-sheet" onclick="event.stopPropagation()">
- 
+
     <!-- Handle -->
     <div class="w-12 h-1 bg-slate-200 rounded-full mx-auto mb-5"></div>
- 
+
     <!-- Header -->
     <div class="flex items-center justify-between mb-5">
       <div>
@@ -824,7 +824,7 @@
       </div>
       <div class="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center text-xl shrink-0">📋</div>
     </div>
- 
+
     <!-- ── BLOCK A: 家庭共融表現 ── -->
     <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2.5">👨‍👩‍👧 家族活躍表現</p>
     <div class="bg-emerald-50 border border-emerald-100 rounded-2xl p-4 mb-4">
@@ -840,13 +840,13 @@
       </div>
       <p class="text-xs text-emerald-700 font-bold text-center">默契極佳！本週超越 75% 的家庭用戶 🏅</p>
     </div>
- 
+
     <div class="h-px bg-slate-100 mb-4"></div>
- 
+
     <!-- ── BLOCK B: 我的個人表現 ── -->
     <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2.5">🙋 我的個人表現</p>
     <div class="space-y-3 mb-4">
- 
+
       <!-- B-1: 大腦活化天數 -->
       <div class="stat-card col">
         <div class="flex items-center gap-3 w-full">
@@ -867,7 +867,7 @@
           <div class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-400 text-xs font-bold shrink-0">日</div>
         </div>
       </div>
- 
+
       <!-- B-2: 最佳認知表現 -->
       <div class="stat-card">
         <div class="stat-icon bg-orange-50 shrink-0">🏆</div>
@@ -881,11 +881,11 @@
           <p class="text-xl mt-1">⭐</p>
         </div>
       </div>
- 
+
     </div>
- 
+
     <div class="h-px bg-slate-100 mb-4"></div>
- 
+
     <!-- ── BLOCK C: 鎖定的 App 導流區 ── -->
     <div onclick="closeWeeklyReport(); openModal('modal-download');"
       class="flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-xl p-4 cursor-pointer active:bg-slate-100 transition mb-4">
@@ -896,12 +896,12 @@
       </div>
       <i class="fas fa-chevron-right text-slate-300 text-sm shrink-0"></i>
     </div>
- 
+
     <button onclick="closeWeeklyReport()" class="w-full text-slate-400 text-sm py-2 active:opacity-60">關閉報告</button>
- 
+
   </div>
 </div>
- 
+
 <!-- MODAL: 健康點說明 -->
 <div id="modal-points-info" class="modal-overlay hidden-view" onclick="closeModal('modal-points-info')">
   <div class="modal-sheet" onclick="event.stopPropagation()">
@@ -935,7 +935,7 @@
     <button onclick="closeModal('modal-points-info')" class="w-full bg-green-600 text-white font-bold py-3.5 rounded-2xl active:scale-95 transition">我知道了</button>
   </div>
 </div>
- 
+
 <!-- MODAL: 抽獎規則 -->
 <div id="modal-lottery-rules" class="modal-overlay hidden-view" onclick="closeModal('modal-lottery-rules')">
   <div class="modal-sheet" onclick="event.stopPropagation()">
@@ -968,14 +968,14 @@
     <button onclick="closeModal('modal-lottery-rules')" class="w-full bg-slate-800 text-white font-bold py-3.5 rounded-2xl active:scale-95 transition">了解了！</button>
   </div>
 </div>
- 
+
 <!-- INTERACTION BOTTOM SHEET -->
 <div id="modal-interaction" class="interaction-overlay hidden-view" onclick="closeInteractionModal()">
   <div class="interaction-sheet" onclick="event.stopPropagation()">
- 
+
     <!-- Handle -->
     <div class="w-12 h-1 bg-slate-200 rounded-full mx-auto mb-4"></div>
- 
+
     <!-- Title -->
     <div class="flex items-center gap-2.5 mb-4">
       <div class="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center text-xl shrink-0">💬</div>
@@ -984,12 +984,12 @@
         <p class="text-xs text-slate-400">選擇一則罐頭心意，立即傳送</p>
       </div>
     </div>
- 
+
     <!-- Message options -->
     <div class="space-y-2.5" id="interaction-options">
       <!-- Populated by JS -->
     </div>
- 
+
     <!-- Custom message input -->
     <div class="mt-4 pt-4 border-t border-slate-100">
       <p class="text-xs text-slate-400 font-medium mb-2">或自己輸入：</p>
@@ -1006,36 +1006,36 @@
         </button>
       </div>
     </div>
- 
+
     <button onclick="closeInteractionModal()" class="w-full text-slate-400 text-sm py-3 mt-2 active:opacity-60">取消</button>
   </div>
 </div>
- 
+
 <!-- NOTIFICATION CENTER MODAL -->
 <div id="modal-notifications" class="modal-overlay hidden-view" style="align-items:flex-end;" onclick="closeNotifications()">
   <div class="modal-sheet" style="max-height:85vh; overflow-y:auto; padding-bottom:2.5rem;" onclick="event.stopPropagation()">
- 
+
     <!-- Handle -->
     <div class="w-12 h-1 bg-slate-200 rounded-full mx-auto mb-4"></div>
- 
+
     <!-- Header -->
     <div class="flex items-center justify-between mb-4">
       <h3 class="text-lg font-black text-gray-800">通知中心</h3>
       <button onclick="markAllRead()" class="text-xs text-emerald-600 font-bold active:opacity-60 transition px-2 py-1">全部設為已讀</button>
     </div>
- 
+
     <!-- Notification list -->
     <div id="notification-list" class="space-y-2">
       <!-- Rendered by JS -->
     </div>
- 
+
     <button onclick="closeNotifications()" class="w-full text-slate-400 text-sm py-3 mt-3 active:opacity-60">關閉</button>
   </div>
 </div>
- 
+
 <!-- Toast container -->
 <div id="toast-container"></div>
- 
+
 <script>
   /* ═══════════════════════════════════════════════
      APP STATE
@@ -1066,10 +1066,10 @@
       ]
     }
   };
- 
+
   // pending warn action (callback stored here)
   let pendingWarnAction = null;
- 
+
   // notifications state
   appState.notifications = [
     { id: 1, type: 'system',    icon: '📢', title: '本週抽獎結果出爐！',  desc: '恭喜您的群組獲得 100 點 HG 點數！',              time: '10 分鐘前', isRead: false },
@@ -1078,7 +1078,7 @@
     { id: 4, type: 'group',     icon: '👋', title: '新成員加入',          desc: '媽媽 已成功加入您的家庭群組。',                 time: '2 天前',    isRead: true  },
     { id: 5, type: 'points',    icon: '💰', title: '新手任務完成',        desc: '專屬健康設定已完成，獲得 100 點。',             time: '3 天前',    isRead: true  }
   ];
- 
+
   /* ═══════════════════════════════════════════════
      COMPUTED HELPERS
   ═══════════════════════════════════════════════ */
@@ -1094,7 +1094,7 @@
   function isHost(member) {
     return member.role === '房主';
   }
- 
+
   /* ═══════════════════════════════════════════════
      VIEW SWITCHING
   ═══════════════════════════════════════════════ */
@@ -1112,13 +1112,13 @@
     }
     appState.currentView = id;
   }
- 
+
   function enterHealthService() { showView('view-terms'); }
   function agreeAndStart()      { showView('view-dashboard'); }
   function backToHgApp()        { showView('view-hg-app'); }
   function switchToDashboard()  { showView('view-dashboard'); }
   function switchToGroup()      { renderGroupView(); showView('view-group'); }
- 
+
   /* ═══════════════════════════════════════════════
      MODAL
   ═══════════════════════════════════════════════ */
@@ -1130,7 +1130,7 @@
   function closeModal(id) {
     document.getElementById(id).classList.add('hidden-view');
   }
- 
+
   /* ═══════════════════════════════════════════════
      WARNING MODAL
   ═══════════════════════════════════════════════ */
@@ -1149,7 +1149,7 @@
     if (pendingWarnAction) { pendingWarnAction(); }
     closeWarnModal();
   });
- 
+
   /* ═══════════════════════════════════════════════
      TOAST
   ═══════════════════════════════════════════════ */
@@ -1163,7 +1163,7 @@
       setTimeout(() => toast.remove(), 300);
     }, 2300);
   }
- 
+
   /* ═══════════════════════════════════════════════
      INVITE CODE
   ═══════════════════════════════════════════════ */
@@ -1179,7 +1179,7 @@
     document.getElementById('modal-invite-code').textContent = appState.group.inviteCode;
     openModal('modal-invite');
   }
- 
+
   /* ═══════════════════════════════════════════════
      JOIN GROUP (unbound state)
   ═══════════════════════════════════════════════ */
@@ -1204,7 +1204,7 @@
       }
     }
   }
- 
+
   /* ═══════════════════════════════════════════════
      EDIT MEMBER NAME
   ═══════════════════════════════════════════════ */
@@ -1218,7 +1218,7 @@
       showToast('✅ 名稱已更新');
     }
   }
- 
+
   /* ═══════════════════════════════════════════════
      KICK MEMBER
   ═══════════════════════════════════════════════ */
@@ -1236,7 +1236,7 @@
       }
     );
   }
- 
+
   /* ═══════════════════════════════════════════════
      EXIT GROUP
   ═══════════════════════════════════════════════ */
@@ -1253,7 +1253,7 @@
       }
     );
   }
- 
+
   /* ═══════════════════════════════════════════════
      WEEKLY REPORT MODAL
   ═══════════════════════════════════════════════ */
@@ -1263,7 +1263,7 @@
   function closeWeeklyReport() {
     closeModal('modal-weekly-report');
   }
- 
+
   /* ═══════════════════════════════════════════════
      INTERACTION MODAL (罐頭心意)
   ═══════════════════════════════════════════════ */
@@ -1272,16 +1272,16 @@
     { icon: '🍵', text: '喝杯水休息一下，今天的健康任務做得很棒唷！' },
     { icon: '🌟', text: '太厲害了！大腦超級靈活，健康達人非你莫屬！' }
   ];
- 
+
   // store which member the sheet is currently targeting
   let _interactionTarget = null;
- 
+
   function openInteractionModal(memberId, memberName) {
     _interactionTarget = { id: memberId, name: memberName };
- 
+
     // set title
     document.getElementById('interaction-title').textContent = `傳送關心給 ${memberName}`;
- 
+
     // render option buttons
     const opts = document.getElementById('interaction-options');
     opts.innerHTML = CANNED_MESSAGES.map((msg) => `
@@ -1290,19 +1290,19 @@
         <span>${msg.text}</span>
       </button>
     `).join('');
- 
+
     // clear custom input
     const customInput = document.getElementById('custom-msg-input');
     if (customInput) customInput.value = '';
- 
+
     openModal('modal-interaction');
   }
- 
+
   function closeInteractionModal() {
     closeModal('modal-interaction');
     _interactionTarget = null;
   }
- 
+
   function sendCustomMessage() {
     const input = document.getElementById('custom-msg-input');
     const text = input ? input.value.trim() : '';
@@ -1312,31 +1312,31 @@
     }
     sendMessage(_interactionTarget.id, '💬', text);
   }
- 
+
   function sendMessage(memberId, icon, text) {
     // 1. Close sheet
     closeInteractionModal();
- 
+
     // 2. Find member & update state
     const member = appState.group.members.find(m => m.id === memberId);
     if (!member) return;
- 
+
     member.receivedMessage = { icon, text };
- 
+
     // 3. Toast
     showToast(`💬 已發送關心給 ${member.name}`);
- 
+
     // 4. Re-render
     renderGroupView();
   }
- 
+
   /* ═══════════════════════════════════════════════
      RENDER GROUP VIEW
   ═══════════════════════════════════════════════ */
   function renderGroupView() {
     const container = document.getElementById('group-content');
     const { isBound, inviteCode, streak, maxPoints, members } = appState.group;
- 
+
     if (!isBound) {
       /* ── UNBOUND ── */
       container.innerHTML = `
@@ -1345,7 +1345,7 @@
           <h2 class="text-2xl font-black text-gray-800 mb-1">建立您的群組</h2>
           <p class="text-slate-500 text-sm">只需兩步，立刻開始家庭健康挑戰！</p>
         </div>
- 
+
         <!-- Step guide -->
         <div class="space-y-3">
           <div class="flex items-start gap-3 bg-white rounded-2xl p-4 border border-slate-100 shadow-sm">
@@ -1363,18 +1363,18 @@
             </div>
           </div>
         </div>
- 
+
         <button onclick="createGroupAndBind()"
           class="w-full bg-green-600 text-white font-bold py-4 rounded-2xl shadow-lg active:scale-95 transition text-lg flex items-center justify-center gap-2">
           <i class="fas fa-plus-circle"></i> 建立群組
         </button>
- 
+
         <div class="flex items-center gap-3 my-1">
           <div class="flex-1 h-px bg-slate-200"></div>
           <span class="text-slate-400 text-xs">或輸入家人的代碼加入</span>
           <div class="flex-1 h-px bg-slate-200"></div>
         </div>
- 
+
         <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm space-y-3">
           <input id="join-code-input" type="text" maxlength="6"
             placeholder="輸入 6 碼群組代碼"
@@ -1387,15 +1387,24 @@
       `;
       return;
     }
- 
+
     /* ── BOUND ── */
     const totalPoints = getGroupTotalPoints();
     const tickets = getTickets(totalPoints);
     const pct = Math.min(100, Math.round((totalPoints / maxPoints) * 100));
     const isUnlocked = members.length >= 2;
- 
+
     container.innerHTML = `
- 
+
+      <!-- 通知鈴鐺列 -->
+      <div class="flex items-center justify-between">
+        <p class="text-sm text-slate-400 font-medium">我的群組</p>
+        <button onclick="openNotifications()" class="relative w-10 h-10 bg-white border border-slate-200 rounded-full flex items-center justify-center active:bg-slate-50 transition shadow-sm" id="bell-btn-group">
+          <i class="fas fa-bell text-slate-400 text-base"></i>
+          <span id="bell-badge-group" class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white ${hasUnread() ? '' : 'hidden'}"></span>
+        </button>
+      </div>
+
       <!-- ① 群組點數 & 抽獎券進度 -->
       <section class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm">
         <div class="flex items-center justify-between mb-3">
@@ -1410,7 +1419,7 @@
             }
           </div>
         </div>
- 
+
         ${!isUnlocked ? `
           <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-center">
             <p class="text-amber-800 font-bold text-base leading-snug">
@@ -1444,7 +1453,7 @@
             <i class="fas fa-fire-flame-curved"></i> 群組已連續打卡 ${streak} 天
           </p>
         `}
- 
+
         <!-- 週報入口 Banner (只在解鎖狀態顯示) -->
         ${isUnlocked ? `
           <div class="report-banner" onclick="openWeeklyReport()">
@@ -1459,7 +1468,7 @@
           </div>
         ` : ''}
       </section>
- 
+
       <!-- ② 成員列表 -->
       <section>
         <div class="flex items-center justify-between mb-3">
@@ -1470,7 +1479,7 @@
             <i class="fas fa-plus"></i> 邀請
           </button>
         </div>
- 
+
         <div class="space-y-3">
           ${members.map(m => `
             <div class="member-card">
@@ -1480,7 +1489,7 @@
                   ${m.isYou ? 'bg-emerald-100' : m.isCoolingDown ? 'bg-slate-100' : 'bg-blue-100'}">
                   ${m.isYou ? '🙋' : m.isCoolingDown ? '🌱' : '👴'}
                 </div>
- 
+
                 <!-- Info -->
                 <div class="flex-1 min-w-0">
                   <div class="flex items-center justify-between gap-2">
@@ -1528,13 +1537,13 @@
           `).join('')}
         </div>
       </section>
- 
+
       <!-- ③ 我的邀請碼 -->
       <button onclick="showInviteModal()"
         class="w-full bg-emerald-50 border-2 border-emerald-200 text-emerald-700 font-bold py-3.5 rounded-2xl active:scale-95 transition flex items-center justify-center gap-2">
         <i class="fas fa-share-nodes"></i> 查看我的邀請碼
       </button>
- 
+
       <!-- ④ 退出群組 -->
       <div>
         <button onclick="exitGroup()" class="exit-btn">
@@ -1542,7 +1551,7 @@
         </button>
         <p class="text-center text-xs text-slate-400 mt-2">退出後，本週貢獻點數將從群組總分中扣除</p>
       </div>
- 
+
       <div class="text-center text-[11px] text-slate-400 pb-3">
         <span class="font-bold text-slate-300 mr-2">GO HEALTH</span>
         <a href="#" class="underline active:text-slate-500">服務條款</a>
@@ -1551,22 +1560,27 @@
       </div>
     `;
   }
- 
+
   /* ═══════════════════════════════════════════════
      NOTIFICATIONS
   ═══════════════════════════════════════════════ */
   function hasUnread() {
     return appState.notifications.some(n => !n.isRead);
   }
- 
+
   function updateBadges() {
     const show = hasUnread();
-    ['bell-badge-dash', 'bell-badge-group'].forEach(id => {
+    // dash bell is static HTML, always exists after page load
+    ['bell-badge-dash'].forEach(id => {
       const el = document.getElementById(id);
       if (el) el.classList.toggle('hidden', !show);
     });
+    // group bell is re-rendered by renderGroupView; its badge class is set inline via hasUnread()
+    // but also update it if it happens to exist in DOM right now
+    const groupBadge = document.getElementById('bell-badge-group');
+    if (groupBadge) groupBadge.classList.toggle('hidden', !show);
   }
- 
+
   function renderNotificationList() {
     const list = document.getElementById('notification-list');
     if (!list) return;
@@ -1586,23 +1600,23 @@
       </div>
     `).join('');
   }
- 
+
   function openNotifications() {
     renderNotificationList();
     openModal('modal-notifications');
   }
- 
+
   function closeNotifications() {
     closeModal('modal-notifications');
   }
- 
+
   function markAllRead() {
     appState.notifications.forEach(n => n.isRead = true);
     updateBadges();
     renderNotificationList();
     showToast('✅ 全部通知已設為已讀');
   }
- 
+
   /* ═══════════════════════════════════════════════
      INIT
   ═══════════════════════════════════════════════ */
