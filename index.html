@@ -718,8 +718,11 @@
       <button class="text-slate-400 text-sm flex items-center active:opacity-60 transition" onclick="backToHgApp()">
         <i class="fas fa-chevron-left mr-1.5"></i> 返回
       </button>
-      <span class="font-black text-gray-800 text-base tracking-wide">我的群組</span>
-      <div class="w-10"></div>
+      <span class="font-black text-gray-800 text-base tracking-wide">GO HEALTH</span>
+      <button onclick="openNotifications()" class="relative w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center active:bg-slate-200 transition" id="bell-btn-group">
+        <i class="fas fa-bell text-slate-400 text-sm"></i>
+        <span id="bell-badge-group" class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white hidden"></span>
+      </button>
     </header>
 
     <div class="flex-1 overflow-y-auto no-scrollbar p-4 space-y-5 pb-4" id="group-content">
@@ -1435,16 +1438,7 @@
 
     container.innerHTML = `
 
-      <!-- 通知鈴鐺列 -->
-      <div class="flex items-center justify-between">
-        <p class="text-sm text-slate-400 font-medium">我的群組</p>
-        <button onclick="openNotifications()" class="relative w-10 h-10 bg-white border border-slate-200 rounded-full flex items-center justify-center active:bg-slate-50 transition shadow-sm" id="bell-btn-group">
-          <i class="fas fa-bell text-slate-400 text-base"></i>
-          <span id="bell-badge-group" class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white ${hasUnread() ? '' : 'hidden'}"></span>
-        </button>
-      </div>
-
-      <!-- ① 群組點數 & 抽獎券進度 -->
+      <!-- 模組 A：群組抽獎券卡片 -->
       <section class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm">
         <div class="flex items-center justify-between mb-3">
           <h3 class="font-black text-gray-800 flex items-center gap-2">
@@ -1469,7 +1463,6 @@
             </button>
           </div>
         ` : `
-          <!-- 進度條 -->
           <div class="mb-2">
             <div class="flex justify-between text-xs text-slate-500 mb-1.5">
               <span>群組總分 <strong class="text-gray-800">${totalPoints.toLocaleString()}</strong> 點</span>
@@ -1488,25 +1481,30 @@
             </p>
             <p class="text-xs text-slate-500 mt-0.5">每 1,000 點換 1 張</p>
           </div>
-          <p class="text-center text-sm font-bold text-orange-600 mt-3 flex items-center justify-center gap-1.5">
-            <i class="fas fa-fire-flame-curved"></i> 群組已連續打卡 ${streak} 天
-          </p>
         `}
-
-        <!-- 週報入口 Banner (只在解鎖狀態顯示) -->
-        ${isUnlocked ? `
-          <div class="report-banner" onclick="openWeeklyReport()">
-            <div class="flex items-center gap-2.5">
-              <div class="w-9 h-9 bg-emerald-100 rounded-xl flex items-center justify-center text-lg shrink-0">📊</div>
-              <div>
-                <p class="font-bold text-emerald-800 text-sm">查看本週群組健康週報</p>
-                <p class="text-xs text-emerald-600 mt-0.5">認知表現 · 活躍指數 · 健康趨勢</p>
-              </div>
-            </div>
-            <i class="fas fa-chevron-right text-emerald-400 text-sm shrink-0"></i>
-          </div>
-        ` : ''}
       </section>
+
+      <!-- 模組 B：連續打卡紀錄（僅解鎖時顯示） -->
+      ${isUnlocked ? `
+        <div class="bg-orange-50 border border-orange-100 rounded-xl p-3.5 flex items-center justify-center gap-2">
+          <i class="fas fa-fire-flame-curved text-orange-500 text-base"></i>
+          <p class="text-orange-600 font-bold text-sm">群組已連續打卡 ${streak} 天</p>
+        </div>
+      ` : ''}
+
+      <!-- 模組 C：群組健康週報 Banner（僅解鎖時顯示） -->
+      ${isUnlocked ? `
+        <div class="report-banner" onclick="openWeeklyReport()">
+          <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 bg-emerald-100 rounded-xl flex items-center justify-center text-lg shrink-0">📊</div>
+            <div>
+              <p class="font-bold text-emerald-800 text-sm">查看本週群組健康週報</p>
+              <p class="text-xs text-emerald-600 mt-0.5">認知表現 · 活躍指數 · 健康趨勢</p>
+            </div>
+          </div>
+          <i class="fas fa-chevron-right text-emerald-400 text-sm shrink-0"></i>
+        </div>
+      ` : ''}
 
       <!-- ② 成員列表 -->
       <section>
@@ -1609,15 +1607,10 @@
 
   function updateBadges() {
     const show = hasUnread();
-    // dash bell is static HTML, always exists after page load
-    ['bell-badge-dash'].forEach(id => {
+    ['bell-badge-dash', 'bell-badge-group'].forEach(id => {
       const el = document.getElementById(id);
       if (el) el.classList.toggle('hidden', !show);
     });
-    // group bell is re-rendered by renderGroupView; its badge class is set inline via hasUnread()
-    // but also update it if it happens to exist in DOM right now
-    const groupBadge = document.getElementById('bell-badge-group');
-    if (groupBadge) groupBadge.classList.toggle('hidden', !show);
   }
 
   function renderNotificationList() {
