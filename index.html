@@ -679,23 +679,49 @@
         </div>
       </section>
 
-      <!-- Group teaser -->
-      <div class="bg-slate-800 rounded-2xl p-4 flex items-center gap-3 cursor-pointer active:opacity-80 transition" onclick="switchToGroup()">
-        <div class="w-10 h-10 bg-emerald-500/20 rounded-xl flex items-center justify-center shrink-0">
-          <i class="fas fa-users text-emerald-400"></i>
+      <!-- 衛教文章 -->
+      <section id="health-articles">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="section-title mb-0">
+            <span class="text-lg">🏥</span> 醫師嚴選 ‧ 健康指南
+          </h3>
         </div>
-        <div class="flex-1">
-          <p class="text-xs text-slate-400 mb-0.5">群組健康挑戰</p>
-          <p class="font-bold text-white text-sm">邀請家人一起挑戰，共同抽大獎！</p>
-        </div>
-        <i class="fas fa-arrow-right text-emerald-400 text-sm shrink-0"></i>
-      </div>
 
-      <div class="text-center text-[11px] text-slate-400 pb-3">
+        <div class="space-y-3">
+
+          <a href="#" class="bg-white rounded-xl p-4 shadow-sm flex items-start gap-3 block no-underline active:scale-[0.98] transition">
+            <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center text-xl shrink-0">🧬</div>
+            <div class="flex-1 min-w-0">
+              <p class="font-bold text-gray-800 text-sm truncate">解鎖大腦健康 失智症新趨勢 健檢為您量身打造</p>
+              <p class="line-clamp-2 text-xs text-slate-500 mt-1">了解最新失智症預防趨勢與亞東醫院專屬健檢方案...</p>
+              <p class="text-xs text-emerald-600 font-bold mt-2 flex items-center gap-0.5">閱讀更多 <i class="fas fa-arrow-up-right-from-square text-[10px]"></i></p>
+            </div>
+          </a>
+
+          <a href="#" class="bg-white rounded-xl p-4 shadow-sm flex items-start gap-3 block no-underline active:scale-[0.98] transition">
+            <div class="w-10 h-10 bg-green-50 rounded-xl flex items-center justify-center text-xl shrink-0">🥗</div>
+            <div class="flex-1 min-w-0">
+              <p class="font-bold text-gray-800 text-sm truncate">預防失智從日常做起：地中海飲食的5個關鍵</p>
+              <p class="line-clamp-2 text-xs text-slate-500 mt-1">飲食也是防護網的一環！營養師教你如何吃出年輕腦力...</p>
+              <p class="text-xs text-emerald-600 font-bold mt-2 flex items-center gap-0.5">閱讀更多 <i class="fas fa-arrow-up-right-from-square text-[10px]"></i></p>
+            </div>
+          </a>
+
+          <a href="#" class="bg-white rounded-xl p-4 shadow-sm flex items-start gap-3 block no-underline active:scale-[0.98] transition">
+            <div class="w-10 h-10 bg-purple-50 rounded-xl flex items-center justify-center text-xl shrink-0">🎮</div>
+            <div class="flex-1 min-w-0">
+              <p class="font-bold text-gray-800 text-sm truncate">長輩常忘東忘西？三招大腦活化小遊戲帶你在家練</p>
+              <p class="line-clamp-2 text-xs text-slate-500 mt-1">每天只要十分鐘，透過簡單的互動遊戲，有效延緩認知退化...</p>
+              <p class="text-xs text-emerald-600 font-bold mt-2 flex items-center gap-0.5">閱讀更多 <i class="fas fa-arrow-up-right-from-square text-[10px]"></i></p>
+            </div>
+          </a>
+
+        </div>
+      </section>
+
+      <div class="text-center text-[11px] text-slate-400 pb-4">
         <span class="font-bold text-slate-300 mr-2">GO HEALTH</span>
-        <a href="#" class="underline active:text-slate-500">服務條款</a>
-        <span class="mx-1.5 text-slate-300">|</span>
-        <a href="#" class="underline active:text-slate-500">隱私權政策</a>
+        <a href="#" class="underline active:text-slate-500">政策與須知</a>
       </div>
     </div>
 
@@ -823,7 +849,7 @@
     <div class="flex items-center justify-between mb-5">
       <div>
         <h3 class="text-xl font-black text-gray-800">本週群組健康週報</h3>
-        <p class="text-xs text-slate-400 mt-0.5">2025 年第 3 週 · 群組限定（統計至昨日）</p>
+        <p class="text-xs text-slate-400 mt-0.5">2026年 第14週 (03/30 - 04/05) · 統計至昨日</p>
       </div>
       <div class="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center text-xl shrink-0">📋</div>
     </div>
@@ -871,17 +897,13 @@
         </div>
       </div>
 
-      <!-- B-2: 最佳認知表現 -->
+      <!-- B-2: 本週最投入挑戰 -->
       <div class="stat-card">
-        <div class="stat-icon bg-orange-50 shrink-0">🏆</div>
+        <div class="stat-icon bg-orange-50 shrink-0">🏪</div>
         <div class="flex-1">
-          <p class="text-xs text-slate-400 font-medium">最佳認知表現</p>
-          <p class="font-black text-gray-800 text-sm mt-0.5">多工執行力</p>
-          <p class="text-xs text-orange-600 font-bold">24H 一日店長</p>
-        </div>
-        <div class="bg-orange-50 border border-orange-100 rounded-xl px-3 py-2 text-center shrink-0">
-          <p class="text-[10px] text-orange-600 font-bold leading-none">本週最強</p>
-          <p class="text-xl mt-1">⭐</p>
+          <p class="text-xs text-slate-400 font-medium">本週最投入挑戰</p>
+          <p class="font-black text-gray-800 text-sm mt-0.5">24H 一日店長 🏪</p>
+          <p class="text-xs text-orange-600 font-bold mt-0.5">本週挑戰次數最多</p>
         </div>
       </div>
 
@@ -889,15 +911,13 @@
 
     <div class="h-px bg-slate-100 mb-4"></div>
 
-    <!-- ── BLOCK C: 鎖定的 App 導流區 ── -->
-    <div onclick="closeWeeklyReport(); openModal('modal-download');"
-      class="flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-xl p-4 cursor-pointer active:bg-slate-100 transition mb-4">
+    <!-- ── BLOCK C: 深度分析（籌備中）── -->
+    <div class="flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-xl p-4 opacity-60 mb-4 cursor-default">
       <div class="w-10 h-10 bg-slate-200 rounded-xl flex items-center justify-center text-lg shrink-0">🔒</div>
       <div class="flex-1">
-        <p class="font-bold text-gray-700 text-sm">查看所有家人的詳細歷史報告與深度分析</p>
-        <p class="text-xs text-slate-400 mt-0.5">下載 GO HEALTH APP 解鎖完整報告</p>
+        <p class="font-bold text-gray-600 text-sm">🔒 深度健康趨勢分析（籌備中）</p>
+        <p class="text-xs text-slate-400 mt-0.5">更詳盡的個人歷史報告，將於 GO HEALTH APP 推出，敬請期待！</p>
       </div>
-      <i class="fas fa-chevron-right text-slate-300 text-sm shrink-0"></i>
     </div>
 
     <button onclick="closeWeeklyReport()" class="w-full text-slate-400 text-sm py-2 active:opacity-60">關閉報告</button>
@@ -1589,11 +1609,9 @@
         <p class="text-center text-xs text-slate-400 mt-2">退出後，本週貢獻點數將從群組總分中扣除</p>
       </div>
 
-      <div class="text-center text-[11px] text-slate-400 pb-3">
+      <div class="text-center text-[11px] text-slate-400 pb-4">
         <span class="font-bold text-slate-300 mr-2">GO HEALTH</span>
-        <a href="#" class="underline active:text-slate-500">服務條款</a>
-        <span class="mx-1.5 text-slate-300">|</span>
-        <a href="#" class="underline active:text-slate-500">隱私權政策</a>
+        <a href="#" class="underline active:text-slate-500">政策與須知</a>
       </div>
     `;
   }
