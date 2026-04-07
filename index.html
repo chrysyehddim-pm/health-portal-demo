@@ -1644,7 +1644,7 @@
                       <span class="font-black text-gray-800 text-base">${m.name}</span>
                       ${m.isYou
                         ? `<span onclick="openNicknameSheet(${m.id}, '${m.name.replace(/'/g, '&#39;')}')" class="text-slate-400 cursor-pointer text-sm ml-0.5 active:opacity-60" title="編輯暱稱">✏️</span>`
-                    
+                        : `<span onclick="editMemberName(${m.id})" class="edit-icon" title="編輯名稱">✏️</span>`
                       }
                       <span class="text-[10px] bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded-full font-medium">${m.role}</span>
                       ${m.isYou ? `<span class="text-[10px] bg-green-100 text-green-700 px-1.5 py-0.5 rounded-full font-medium">你</span>` : ''}
