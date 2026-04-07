@@ -679,7 +679,7 @@
         </div>
       </section>
 
-      <!-- 衛教文章 -->
+      <!-- 衛教文章（雙頁籤） -->
       <section id="health-articles">
         <div class="flex items-center justify-between mb-3">
           <h3 class="section-title mb-0">
@@ -687,8 +687,22 @@
           </h3>
         </div>
 
-        <div class="space-y-3">
+        <!-- Tab 導覽列 -->
+        <div class="flex border-b border-slate-200 mb-3">
+          <button id="tab-btn-recommend"
+            onclick="switchArticleTab('recommend')"
+            class="flex-1 pb-2.5 text-sm font-bold text-green-600 border-b-2 border-green-600 transition">
+            ✨ 專屬推薦
+          </button>
+          <button id="tab-btn-edu"
+            onclick="switchArticleTab('edu')"
+            class="flex-1 pb-2.5 text-sm text-slate-400 border-b-2 border-transparent transition">
+            🏥 衛教專區
+          </button>
+        </div>
 
+        <!-- 專屬推薦 內容 -->
+        <div id="tab-content-recommend" class="space-y-3">
           <a href="#" class="bg-white rounded-xl p-4 shadow-sm flex items-start gap-3 block no-underline active:scale-[0.98] transition">
             <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center text-xl shrink-0">🧬</div>
             <div class="flex-1 min-w-0">
@@ -697,7 +711,6 @@
               <p class="text-xs text-emerald-600 font-bold mt-2 flex items-center gap-0.5">閱讀更多 <i class="fas fa-arrow-up-right-from-square text-[10px]"></i></p>
             </div>
           </a>
-
           <a href="#" class="bg-white rounded-xl p-4 shadow-sm flex items-start gap-3 block no-underline active:scale-[0.98] transition">
             <div class="w-10 h-10 bg-green-50 rounded-xl flex items-center justify-center text-xl shrink-0">🥗</div>
             <div class="flex-1 min-w-0">
@@ -706,7 +719,6 @@
               <p class="text-xs text-emerald-600 font-bold mt-2 flex items-center gap-0.5">閱讀更多 <i class="fas fa-arrow-up-right-from-square text-[10px]"></i></p>
             </div>
           </a>
-
           <a href="#" class="bg-white rounded-xl p-4 shadow-sm flex items-start gap-3 block no-underline active:scale-[0.98] transition">
             <div class="w-10 h-10 bg-purple-50 rounded-xl flex items-center justify-center text-xl shrink-0">🎮</div>
             <div class="flex-1 min-w-0">
@@ -715,7 +727,34 @@
               <p class="text-xs text-emerald-600 font-bold mt-2 flex items-center gap-0.5">閱讀更多 <i class="fas fa-arrow-up-right-from-square text-[10px]"></i></p>
             </div>
           </a>
+        </div>
 
+        <!-- 衛教專區 內容（預設隱藏） -->
+        <div id="tab-content-edu" class="space-y-3 hidden">
+          <a href="#" class="bg-white rounded-xl p-4 shadow-sm flex items-start gap-3 block no-underline active:scale-[0.98] transition">
+            <div class="w-10 h-10 bg-red-50 rounded-xl flex items-center justify-center text-xl shrink-0">❤️</div>
+            <div class="flex-1 min-w-0">
+              <p class="font-bold text-gray-800 text-sm truncate">心血管保健不可少：認識三高與日常管理</p>
+              <p class="line-clamp-2 text-xs text-slate-500 mt-1">高血壓、高血脂、高血糖是現代人常見的慢性病，學習如何正確管理...</p>
+              <p class="text-xs text-emerald-600 font-bold mt-2 flex items-center gap-0.5">閱讀更多 <i class="fas fa-arrow-up-right-from-square text-[10px]"></i></p>
+            </div>
+          </a>
+          <a href="#" class="bg-white rounded-xl p-4 shadow-sm flex items-start gap-3 block no-underline active:scale-[0.98] transition">
+            <div class="w-10 h-10 bg-yellow-50 rounded-xl flex items-center justify-center text-xl shrink-0">🌞</div>
+            <div class="flex-1 min-w-0">
+              <p class="font-bold text-gray-800 text-sm truncate">維生素D與骨質疏鬆：銀髮族的陽光補給攻略</p>
+              <p class="line-clamp-2 text-xs text-slate-500 mt-1">骨骼健康是長者行動力的關鍵，補充維生素D的正確方式與注意事項...</p>
+              <p class="text-xs text-emerald-600 font-bold mt-2 flex items-center gap-0.5">閱讀更多 <i class="fas fa-arrow-up-right-from-square text-[10px]"></i></p>
+            </div>
+          </a>
+          <a href="#" class="bg-white rounded-xl p-4 shadow-sm flex items-start gap-3 block no-underline active:scale-[0.98] transition">
+            <div class="w-10 h-10 bg-teal-50 rounded-xl flex items-center justify-center text-xl shrink-0">🧘</div>
+            <div class="flex-1 min-w-0">
+              <p class="font-bold text-gray-800 text-sm truncate">情緒也是健康一部分：認識老年憂鬱與舒緩方法</p>
+              <p class="line-clamp-2 text-xs text-slate-500 mt-1">情緒低落不代表「想太多」，了解如何辨識與支持身邊長輩的心理健康...</p>
+              <p class="text-xs text-emerald-600 font-bold mt-2 flex items-center gap-0.5">閱讀更多 <i class="fas fa-arrow-up-right-from-square text-[10px]"></i></p>
+            </div>
+          </a>
         </div>
       </section>
 
@@ -1053,6 +1092,49 @@
   </div>
 </div>
 
+<!-- EDIT NICKNAME BOTTOM SHEET -->
+<div id="sheet-edit-nickname" class="interaction-overlay hidden-view" onclick="closeNicknameSheet()">
+  <div class="interaction-sheet" onclick="event.stopPropagation()">
+    <div class="w-12 h-1 bg-slate-200 rounded-full mx-auto mb-5"></div>
+    <div class="flex items-center gap-3 mb-5">
+      <div class="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center text-xl shrink-0">✏️</div>
+      <div>
+        <h3 class="font-black text-gray-800 text-base">修改群組暱稱</h3>
+        <p class="text-xs text-slate-400 mt-0.5">此暱稱僅在群組內顯示</p>
+      </div>
+    </div>
+    <input
+      id="nickname-input"
+      type="text"
+      maxlength="10"
+      placeholder="請輸入暱稱 (最多 10 字)"
+      class="w-full border-2 border-slate-200 rounded-xl px-4 py-3.5 text-base font-bold text-gray-800 focus:border-emerald-400 focus:outline-none transition mb-2"
+    />
+    <p id="nickname-count" class="text-xs text-slate-400 text-right mb-4">0 / 10</p>
+    <button onclick="saveNickname()" class="w-full bg-green-600 text-white font-bold py-3.5 rounded-2xl active:scale-95 active:bg-green-700 transition text-base">
+      儲存修改
+    </button>
+    <button onclick="closeNicknameSheet()" class="w-full text-slate-400 text-sm py-3 mt-1 active:opacity-60">取消</button>
+  </div>
+</div>
+
+<!-- COPY SUCCESS TOAST (邀請碼複製) -->
+<div id="toast-copy-success"
+  class="fixed bottom-24 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-sm font-bold px-5 py-3 rounded-full shadow-xl flex items-center gap-2 z-[999] hidden"
+  style="white-space:nowrap;">
+  ✅ 邀請碼已複製
+</div>
+
+<!-- GENERIC ERROR / EMPTY STATE TEMPLATE -->
+<div id="generic-state-template" class="hidden fixed inset-0 bg-white z-[400] flex flex-col items-center justify-center text-center min-h-[60vh] px-6">
+  <div id="state-icon" class="text-6xl mb-2">⚠️</div>
+  <h2 id="state-title" class="text-lg font-bold text-slate-800 mt-4">發生錯誤</h2>
+  <p id="state-message" class="text-sm text-slate-500 mt-2 px-6 leading-relaxed">請稍後再試，或重新整理頁面。</p>
+  <button id="state-btn" class="hidden mt-6 px-6 py-2.5 bg-green-600 text-white font-bold rounded-full active:scale-95 transition text-sm">
+    重試
+  </button>
+</div>
+
 <!-- Toast container -->
 <div id="toast-container"></div>
 
@@ -1193,7 +1275,9 @@
     const code = appState.group.inviteCode;
     const deepLink = `「${name} 邀請你加入 GO HEALTH 群組一起賺健康！\n點擊下方連結進入 HAPPY GO APP 體驗全新健康服務，輸入群組代碼：${code}，讓關心變得更簡單！\n👉 happygo://gohealth/group」`;
     navigator.clipboard?.writeText(deepLink).catch(() => {});
-    showToast('📋 邀請碼已複製！');
+    console.log('[複製內容]', deepLink);
+    closeModal('modal-invite');
+    showCopyToast();
   }
   function showInviteModal() {
     document.getElementById('modal-invite-code').textContent = appState.group.inviteCode;
@@ -1558,7 +1642,10 @@
                   <div class="flex items-center justify-between gap-2">
                     <div class="flex items-center gap-1 flex-wrap min-w-0">
                       <span class="font-black text-gray-800 text-base">${m.name}</span>
-                      <span onclick="editMemberName(${m.id})" class="edit-icon" title="編輯名稱">✏️</span>
+                      ${m.isYou
+                        ? `<span onclick="openNicknameSheet(${m.id}, '${m.name.replace(/'/g, '&#39;')}')" class="text-slate-400 cursor-pointer text-sm ml-0.5 active:opacity-60" title="編輯暱稱">✏️</span>`
+                    
+                      }
                       <span class="text-[10px] bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded-full font-medium">${m.role}</span>
                       ${m.isYou ? `<span class="text-[10px] bg-green-100 text-green-700 px-1.5 py-0.5 rounded-full font-medium">你</span>` : ''}
                     </div>
@@ -1671,6 +1758,93 @@
     updateBadges();
     renderNotificationList();
     showToast('✅ 全部通知已設為已讀');
+  }
+
+  /* ═══════════════════════════════════════════════
+     ARTICLE TABS
+  ═══════════════════════════════════════════════ */
+  function switchArticleTab(tab) {
+    const tabs = ['recommend', 'edu'];
+    tabs.forEach(t => {
+      const btn = document.getElementById('tab-btn-' + t);
+      const content = document.getElementById('tab-content-' + t);
+      const isActive = t === tab;
+      if (btn) {
+        btn.className = isActive
+          ? 'flex-1 pb-2.5 text-sm font-bold text-green-600 border-b-2 border-green-600 transition'
+          : 'flex-1 pb-2.5 text-sm text-slate-400 border-b-2 border-transparent transition';
+      }
+      if (content) content.classList.toggle('hidden', !isActive);
+    });
+  }
+
+  /* ═══════════════════════════════════════════════
+     NICKNAME BOTTOM SHEET
+  ═══════════════════════════════════════════════ */
+  let _nicknameTargetId = null;
+
+  function openNicknameSheet(memberId, currentName) {
+    _nicknameTargetId = memberId;
+    const input = document.getElementById('nickname-input');
+    const count = document.getElementById('nickname-count');
+    if (input) {
+      input.value = currentName.replace('（你）', '').trim();
+      if (count) count.textContent = input.value.length + ' / 10';
+      input.oninput = () => {
+        if (count) count.textContent = input.value.length + ' / 10';
+      };
+    }
+    openModal('sheet-edit-nickname');
+  }
+
+  function closeNicknameSheet() {
+    closeModal('sheet-edit-nickname');
+    _nicknameTargetId = null;
+  }
+
+  function saveNickname() {
+    const input = document.getElementById('nickname-input');
+    const newName = input ? input.value.trim() : '';
+    if (!newName) { showToast('⚠️ 暱稱不能為空'); return; }
+    const member = appState.group.members.find(m => m.id === _nicknameTargetId);
+    if (member) {
+      member.name = newName + '（你）';
+      closeNicknameSheet();
+      renderGroupView();
+      showToast('✅ 暱稱已更新');
+    }
+  }
+
+  /* ═══════════════════════════════════════════════
+     COPY SUCCESS TOAST (邀請碼)
+  ═══════════════════════════════════════════════ */
+  function showCopyToast() {
+    const el = document.getElementById('toast-copy-success');
+    if (!el) return;
+    el.classList.remove('hidden');
+    setTimeout(() => el.classList.add('hidden'), 2000);
+  }
+
+  /* ═══════════════════════════════════════════════
+     GENERIC STATE TEMPLATE
+  ═══════════════════════════════════════════════ */
+  function showGenericState({ icon = '⚠️', title = '發生錯誤', message = '', btnLabel = '', btnAction = null } = {}) {
+    document.getElementById('state-icon').textContent = icon;
+    document.getElementById('state-title').textContent = title;
+    document.getElementById('state-message').textContent = message;
+    const btn = document.getElementById('state-btn');
+    if (btnLabel && btnAction) {
+      btn.textContent = btnLabel;
+      btn.onclick = btnAction;
+      btn.classList.remove('hidden');
+    } else {
+      btn.classList.add('hidden');
+    }
+    document.getElementById('generic-state-template').classList.remove('hidden');
+  }
+
+  function hideGenericState() {
+    document.getElementById('generic-state-template').classList.add('hidden');
   }
 
   /* ═══════════════════════════════════════════════
