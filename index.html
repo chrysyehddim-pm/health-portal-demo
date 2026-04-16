@@ -584,7 +584,7 @@
             <i class="fa-solid fa-clipboard-question text-sky-500 text-lg"></i>
           </div>
           <div class="flex-1 min-w-0">
-            <h4 class="font-bold text-gray-800 text-sm">健康大調查</h4>
+            <h4 class="font-bold text-gray-800 text-base">健康大調查</h4>
             <p class="text-xs text-slate-500 mt-0.5">只需 1 分鐘，完成即領獎勵</p>
           </div>
           <div class="flex flex-col items-end shrink-0 gap-1.5">
@@ -1119,7 +1119,7 @@
         },
         {
           id: 3, name: '新成員', role: '成員', points: 0,
-          isYou: false, isCoolingDown: true,
+          isYou: false, isCoolingDown: false,
           latestActivity: null
         }
       ]
@@ -1623,7 +1623,6 @@
                     <p class="text-sm font-bold ${m.isCoolingDown ? 'text-slate-400' : 'text-emerald-600'}">
                       本週貢獻：${m.points} 點
                     </p>
-                    ${m.isCoolingDown ? `<span class="cooling-tag">新手暖身中，明日計入群組</span>` : ''}
                   </div>
                   ${(!m.isCoolingDown && m.latestActivity) ? `
                     <p class="activity-line">
