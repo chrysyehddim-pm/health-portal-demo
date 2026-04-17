@@ -37,13 +37,13 @@
     .slide-up { animation: slideUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
     .hidden-view { display: none !important; }
 
-    @keyframes fadeIn {
+@keyframes fadeIn {
       from { opacity: 0; transform: translateY(12px); }
-      to   { opacity: 1; transform: translateY(0); }
+      to   { opacity: 1; transform: none; } /* 關鍵：結尾改成 none，解除固定限制 */
     }
     @keyframes slideUp {
       from { opacity: 0; transform: translateY(40px); }
-      to   { opacity: 1; transform: translateY(0); }
+      to   { opacity: 1; transform: none; }
     }
     @keyframes pulse {
       0%   { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(22,163,74,0.65); }
@@ -1769,7 +1769,7 @@ function triggerError(index) {
     document.getElementById('state-message').textContent = s.msg;
     
     const btn = document.getElementById('state-btn');
-    // 加上判斷：如果有傳入 btn 文字才顯示按鈕，否則隱藏
+    // 加上判斷：有文字才顯示，空字串就確實隱藏
     if (s.btn && s.btn.trim() !== '') {
       btn.textContent = s.btn;
       btn.classList.remove('hidden');
