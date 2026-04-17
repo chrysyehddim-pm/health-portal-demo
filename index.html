@@ -73,15 +73,22 @@
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-    /* ── Bottom nav ── */
+/* ── Bottom nav (懸浮圓角版) ── */
     .bottom-nav {
-      position: sticky;
-      bottom: 0;
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 32px);
+      max-width: 448px; /* 配合容器 480px 減去左右間距 */
       z-index: 100;
-      background: rgba(255,255,255,0.97);
+      background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(12px);
-      border-top: 1px solid #e2e8f0;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: 9999px; /* 膠囊狀大圓角 */
       display: flex;
+      padding: 4px 8px;
     }
     .nav-btn {
       flex: 1;
@@ -895,21 +902,21 @@
     </div>
     <div class="bg-slate-50 rounded-2xl p-4 border border-slate-100 mb-5">
       <p class="text-sm text-slate-700 leading-relaxed">
-        健康點是 GO HEALTH 專屬點數。透過完成任務與群組互動獲得，未來可於專屬商城兌換 <strong class="text-emerald-600">HAPPY GO 點數</strong>或<strong class="text-emerald-600">實體健康商品</strong>。
+        健康點是 GO HEALTH 專屬點數。透過完成任務獲得，未來可於商城兌換 <strong class="text-emerald-600">HAPPY GO 點數</strong>或<strong class="text-emerald-600">專屬獎勵</strong>。
       </p>
     </div>
-    <div class="space-y-2.5 mb-5">
-      <div class="flex items-center gap-3">
-        <div class="w-8 h-8 bg-amber-50 rounded-xl flex items-center justify-center text-base shrink-0">💰</div>
-        <p class="text-sm text-gray-700"><strong>個人累積：</strong>完成每日健康任務獲得點數。未來可用於專屬商城兌換商品！（花費點數不影響群組進度喔）</p>
+    <div class="space-y-4 mb-5">
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 bg-amber-50 rounded-xl flex items-center justify-center text-base shrink-0 mt-0.5">💰</div>
+        <p class="text-sm text-gray-700 leading-relaxed"><strong>個人累積：</strong>完成每日健康任務獲得點數。可用於兌換商品，且花費個人點數絕不影響群組的抽獎進度喔！（點數具使用效期，詳見規範）</p>
       </div>
-      <div class="flex items-center gap-3">
-        <div class="w-8 h-8 bg-blue-50 rounded-xl flex items-center justify-center text-base shrink-0">👥</div>
-        <p class="text-sm text-gray-700"><strong>群組進度：</strong>你的每日貢獻會「同步累積」至群組池。群組每滿 1,000 點即可獲得 1 張抽獎券。</p>
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 bg-blue-50 rounded-xl flex items-center justify-center text-base shrink-0 mt-0.5">👥</div>
+        <p class="text-sm text-gray-700 leading-relaxed"><strong>群組進度：</strong>你的每日任務得分會「同步計算」至群組池。群組每滿 1,000 點即可獲得 1 張抽獎券。</p>
       </div>
-      <div class="flex items-center gap-3">
-        <div class="w-8 h-8 bg-purple-50 rounded-xl flex items-center justify-center text-base shrink-0">🎁</div>
-        <p class="text-sm text-gray-700"><strong>兌換商城：</strong>商城兌換功能即將上線，敬請期待！</p>
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 bg-purple-50 rounded-xl flex items-center justify-center text-base shrink-0 mt-0.5">🎁</div>
+        <p class="text-sm text-gray-700 leading-relaxed"><strong>兌換商城：</strong>商城功能即將上線，敬請期待！</p>
       </div>
     </div>
     <button onclick="closeModal('modal-points-info')" class="w-full bg-green-600 text-white font-bold py-3.5 rounded-2xl active:scale-95 transition">我知道了</button>
