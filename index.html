@@ -75,22 +75,26 @@
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-/* ── Bottom nav (懸浮膠囊版) ── */
+/* ── Bottom nav (懸浮膠囊版 - Webview 相容優化) ── */
     .bottom-nav {
       position: fixed !important;
-      /* 針對 iPhone 底部橫條優化，自動避開系統黑線 */
       bottom: calc(env(safe-area-inset-bottom) + 24px) !important; 
       left: 50% !important;
       transform: translateX(-50%) !important;
       width: calc(100% - 32px);
       max-width: 448px;
       z-index: 9999 !important;
-      /* 毛玻璃效果與透明度調整 (調降至 0.85 讓背景透出來) */
-      background: rgba(255, 255, 255, 0.85) !important;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px); /* 關鍵：讓 iPhone/Safari 也能顯示毛玻璃 */
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.8);
+      
+      /* 1. 降低背景透明度 (0.85 -> 0.75)，讓底下的內容更容易透上來 */
+      background: rgba(255, 255, 255, 0.75) !important;
+      
+      /* 2. 加入 saturate(180%)，這是 iOS 做出高級毛玻璃質感的秘訣，能讓透過去的顏色更飽和 */
+      -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+      backdrop-filter: blur(16px) saturate(180%) !important;
+      
+      /* 3. 強化陰影：萬一使用者的舊手機真的不支援毛玻璃，強烈的立體陰影依然能確保選單漂亮懸浮 */
+      box-shadow: 0 12px 30px -4px rgba(0, 0, 0, 0.15), 0 4px 10px -2px rgba(0, 0, 0, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.9);
       border-radius: 9999px;
       display: flex;
       padding: 6px 8px;
