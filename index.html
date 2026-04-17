@@ -32,15 +32,17 @@
       position: relative;
     }
 
-    /* ── Animations ── */
-    .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+/* ── Animations ── */
+    .fade-in { animation: fadeIn 0.3s ease-out forwards; }
     .slide-up { animation: slideUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
     .hidden-view { display: none !important; }
 
-@keyframes fadeIn {
-      from { opacity: 0; transform: translateY(12px); }
-      to   { opacity: 1; transform: none; } /* 關鍵：結尾改成 none，解除固定限制 */
+    /* 關鍵修復：移除 fadeIn 的 transform，避免破壞 fixed 定位 */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
     }
+    
     @keyframes slideUp {
       from { opacity: 0; transform: translateY(40px); }
       to   { opacity: 1; transform: none; }
@@ -73,17 +75,20 @@
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-/* ── Bottom nav (懸浮圓角版) ── */
+/* ── Bottom nav (懸浮膠囊版) ── */
     .bottom-nav {
-      position: fixed !important; /* 強制固定於視窗 */
-      bottom: 24px !important;    /* 距離底部的高度 */
+      position: fixed !important;
+      /* 針對 iPhone 底部橫條優化，自動避開系統黑線 */
+      bottom: calc(env(safe-area-inset-bottom) + 24px) !important; 
       left: 50% !important;
-      transform: translateX(-50%) !important; /* 確保置中 */
+      transform: translateX(-50%) !important;
       width: calc(100% - 32px);
       max-width: 448px;
-      z-index: 9999 !important;   /* 確保層級最高，不被任何內容蓋住 */
-      background: rgba(255, 255, 255, 0.95);
+      z-index: 9999 !important;
+      /* 毛玻璃效果與透明度調整 (調降至 0.85 讓背景透出來) */
+      background: rgba(255, 255, 255, 0.85) !important;
       backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px); /* 關鍵：讓 iPhone/Safari 也能顯示毛玻璃 */
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
       border: 1px solid rgba(255, 255, 255, 0.8);
       border-radius: 9999px;
