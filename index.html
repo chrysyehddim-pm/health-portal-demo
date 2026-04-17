@@ -1099,7 +1099,7 @@
   /* ═══════════════════════════════════════════════
      APP STATE
   ═══════════════════════════════════════════════ */
-  const appState = {
+const appState = {
     currentView: 'hg-app',
     group: {
       isBound: true,
@@ -1109,18 +1109,18 @@
       members: [
         {
           id: 1, name: 'Chrys（你）', role: '房主', points: 1200,
-          isYou: true, isCoolingDown: false,
+          isYou: true, gender: 'F', // 增加性別欄位
           latestActivity: { game: '大腦靈活度測試', icon: '🧠', points: 200, time: '1 小時前' }
         },
         {
           id: 2, name: '爸爸', role: '成員', points: 300,
-          isYou: false, isCoolingDown: false,
+          isYou: false, gender: 'M',
           latestActivity: { game: '眼力極限考驗', icon: '👀', points: 100, time: '10 分鐘前' }
         },
         {
-          id: 3, name: '新成員', role: '成員', points: 0,
-          isYou: false, isCoolingDown: false,
-          latestActivity: null
+          id: 3, name: '新成員', role: '成員', points: 450,
+          isYou: false, gender: 'U', // 未知或新加入
+          latestActivity: { game: '24H 一日店長', icon: '🏪', points: 150, time: '剛才' }
         }
       ]
     }
@@ -1585,62 +1585,49 @@
         </div>
 
         <div class="space-y-3">
-          ${members.map(m => `
+${members.map(m => {
+            // 性別與 Icon 映射邏輯
+            let iconClass = 'fa-solid fa-user';
+            let bgClass = 'bg-blue-100 text-blue-500'; // 預設男
+            if (m.gender === 'F') bgClass = 'bg-rose-100 text-rose-500'; // 女
+            if (m.gender === 'U') {
+              iconClass = 'fa-solid fa-seedling'; // 新成員/未知
+              bgClass = 'bg-emerald-100 text-emerald-500';
+            }
+
+            return `
             <div class="member-card">
               <div class="flex items-start gap-3">
-                <!-- Avatar -->
-                <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl shrink-0
-                  ${m.isYou ? 'bg-emerald-100' : m.isCoolingDown ? 'bg-slate-100' : 'bg-blue-100'}">
-                  ${m.isYou ? '🙋' : m.isCoolingDown ? '🌱' : '👴'}
+                <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-xl shrink-0 ${bgClass}">
+                  <i class="${iconClass}"></i>
                 </div>
 
-                <!-- Info -->
                 <div class="flex-1 min-w-0">
                   <div class="flex items-center justify-between gap-2">
                     <div class="flex items-center gap-1 flex-wrap min-w-0">
                       <span class="font-black text-gray-800 text-base">${m.name}</span>
-                     ${m.isYou
-                        ? `<span onclick="openNicknameSheet(${m.id}, '${m.name.replace(/'/g, '&#39;')}')" class="text-slate-400 cursor-pointer text-sm ml-0.5 active:opacity-60" title="編輯暱稱">✏️</span>`
-                        : ''
-                      }
+                      ${m.isYou 
+                        ? `<span onclick="openNicknameSheet(${m.id}, '${m.name.replace(/'/g, '&#39;')}')" class="text-slate-400 cursor-pointer text-sm ml-0.5 active:opacity-60">✏️</span>` 
+                        : '' /* 僅本人顯示編輯 Icon */}
                       <span class="text-[10px] bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded-full font-medium">${m.role}</span>
-                      ${m.isYou ? `<span class="text-[10px] bg-green-100 text-green-700 px-1.5 py-0.5 rounded-full font-medium">你</span>` : ''}
                     </div>
-                    <!-- Action buttons for non-self members -->
                     ${!m.isYou ? `
                       <div class="flex items-center gap-1.5 shrink-0">
-                        <button onclick="openInteractionModal(${m.id}, '${m.name.replace(/'/g, '&#39;')}')"
-                          class="bg-emerald-50 text-emerald-600 px-2.5 py-1.5 rounded-lg text-xs font-bold transition active:scale-95 active:bg-emerald-100 flex items-center gap-1">
-                          💬 關心
-                        </button>
-                        ${!isHost(m)
-                          ? `<button onclick="kickMember(${m.id})" class="text-slate-400 bg-slate-100 px-2.5 py-1.5 rounded-lg text-xs font-bold transition active:bg-slate-200 flex items-center gap-1"><i class="fas fa-user-minus"></i> 移出</button>`
-                          : ''}
+                        <button onclick="openInteractionModal(${m.id}, '${m.name}')" class="bg-emerald-50 text-emerald-600 px-2.5 py-1.5 rounded-lg text-xs font-bold transition active:scale-95">💬 關心</button>
+                        ${m.role !== '房主' ? `<button onclick="kickMember(${m.id})" class="text-slate-400 bg-slate-100 px-2.5 py-1.5 rounded-lg text-xs font-bold transition active:bg-slate-200"><i class="fas fa-user-minus"></i></button>` : ''}
                       </div>
                     ` : ''}
                   </div>
-                  <div class="flex items-center gap-2 mt-1 flex-wrap">
-                    <p class="text-sm font-bold ${m.isCoolingDown ? 'text-slate-400' : 'text-emerald-600'}">
-                      本週貢獻：${m.points} 點
-                    </p>
-                  </div>
-                  ${(!m.isCoolingDown && m.latestActivity) ? `
+                  <p class="text-sm font-bold text-emerald-600 mt-1">本週貢獻：${m.points} 點</p>
+                  ${m.latestActivity ? `
                     <p class="activity-line">
-                      ${m.latestActivity.time}剛完成了
-                      <strong class="text-gray-700">${m.latestActivity.game}</strong>
-                      ${m.latestActivity.icon}，為群組注入
-                      <strong class="text-emerald-600">${m.latestActivity.points} 點</strong>健康力！
+                      ${m.latestActivity.time}剛完成了 <strong class="text-gray-700">${m.latestActivity.game}</strong> ${m.latestActivity.icon}，注入 <strong class="text-emerald-600">${m.latestActivity.points} 點</strong>健康力！
                     </p>
-                  ` : ''}
-                  ${m.receivedMessage ? `
-                    <div class="msg-bubble">
-                      💬 <strong>Chrys（你）</strong>剛剛說：${m.receivedMessage.icon} ${m.receivedMessage.text}
-                    </div>
                   ` : ''}
                 </div>
               </div>
-            </div>
-          `).join('')}
+            </div>`;
+          }).join('')}
         </div>
       </section>
 
