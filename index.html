@@ -17,18 +17,17 @@
     * { box-sizing: border-box; }
 
     body {
-      background-color: #d1d5db;
+      background-color: #f8fafc; /* 讓全螢幕背景與 App 底色一致，自然延伸 */
       font-family: 'Noto Sans TC', sans-serif;
       -webkit-tap-highlight-color: transparent;
     }
 
     .mobile-container {
-      width: 100%;
-      max-width: 100%; /* 移除原先 414px 的限制，讓 iPad 可以自然延伸背景不動佈局 */
+      max-width: 480px; /* 限制內容寬度，保持卡片與按鈕集中 */
       margin: 0 auto;
       background-color: #f8fafc;
       min-height: 100vh;
-      box-shadow: 0 0 30px rgba(0,0,0,0.18);
+      box-shadow: none; /* 移除陰影，消除小手機邊框感 */
       overflow-x: hidden;
       position: relative;
     }
@@ -1740,14 +1739,14 @@ ${members.map(m => {
   function showDebugMenu() { document.getElementById('debug-menu').classList.remove('hidden'); }
   function hideDebugMenu() { document.getElementById('debug-menu').classList.add('hidden'); }
 
-  const errorScenarios = [
-    { icon: '📡', title: '網路連線異常', msg: '目前無法與伺服器取得連線，請檢查您的網路狀態或開啟飛航模式後重試。', btn: '重新載入' },
-    { icon: '🛠️', title: '系統定期維護', msg: '為提供更優質的服務，系統正在進行例行性優化維護中，預計將於 04:00 完成。', btn: '我知道了' },
-    { icon: '⚠️', title: '資料讀取失敗', msg: '伺服器目前忙碌中，暫時無法顯示您的健康數據，請稍後再試。', btn: '再次嘗試' },
-    { icon: '🔍', title: '尚無群組動態', msg: '您的家庭群組目前還沒有任何活動紀錄。快去邀請親友加入，一起累積健康點！', btn: '去邀請' },
-    { icon: '🔒', title: '權限已失效', msg: '您的登入狀態已過期，為了保護您的個資安全，請重新登入 HAPPY GO。', btn: '重新登入' },
-    { icon: '🚧', title: '功能籌備中', msg: '此功能正在進行最後的壓力測試與優化，將在下個版本與您見面。', btn: '返回首頁' },
-    { icon: '💨', title: '頁面消失了', msg: '您所尋找的頁面可能已移除或變更路徑，請回大廳重新進入。', btn: '回首頁' }
+const errorScenarios = [
+    { icon: '📡', title: '系統連線異常', msg: '網路似乎有點不穩，請確認網路狀態後再試 (Err: 504/Offline)', btn: '重新載入' },
+    { icon: '⚠️', title: '發生未知的錯誤', msg: '系統正在搶修中，請稍候再試 (Err: 500)', btn: '回首頁' },
+    { icon: '🛠️', title: '系統維護中', msg: 'GO HEALTH 正在進行升級保養，預計於 HH:MM 恢復服務 (Err: 503)', btn: '' }, // 空字串將隱藏按鈕
+    { icon: '🔍', title: '找不到此頁面', msg: '您訪問的頁面不存在或已移除 (Err: 404)', btn: '回首頁' },
+    { icon: '🚫', title: '權限已變更', msg: '您已被移出該群組，或登入狀態已失效 (Err: 403)', btn: '重新載入' },
+    { icon: '🔒', title: '此群組已解散', msg: '目前群組無成員，請向家人索取最新代碼 (Err: 410)', btn: '回首頁' },
+    { icon: '📭', title: '尚無健康紀錄', msg: '本週數據正在累積中，請於明日查看', btn: '' } // 空字串將隱藏按鈕
   ];
 
   function triggerError(index) {
