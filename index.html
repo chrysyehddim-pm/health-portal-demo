@@ -75,20 +75,20 @@
 
 /* ── Bottom nav (懸浮圓角版) ── */
     .bottom-nav {
-      position: fixed; /* 確保永遠固定在螢幕視窗下方 */
-      bottom: 12px; /* 數字越小，越貼近螢幕最下緣 */
-      left: 50%;
-      transform: translateX(-50%);
+      position: fixed !important; /* 強制固定於視窗 */
+      bottom: 24px !important;    /* 距離底部的高度 */
+      left: 50% !important;
+      transform: translateX(-50%) !important; /* 確保置中 */
       width: calc(100% - 32px);
       max-width: 448px;
-      z-index: 100;
+      z-index: 9999 !important;   /* 確保層級最高，不被任何內容蓋住 */
       background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(12px);
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
       border: 1px solid rgba(255, 255, 255, 0.8);
       border-radius: 9999px;
       display: flex;
-      padding: 4px 8px;
+      padding: 6px 8px;
     }
     .nav-btn {
       flex: 1;
@@ -1737,11 +1737,16 @@ ${members.map(m => {
   /* ═══════════════════════════════════════════════
      DEBUG ERROR MENU & GENERIC STATE LOGIC
   ═══════════════════════════════════════════════ */
-  let debugClicks = 0;
+let debugClicks = 0;
   function handleDebugTrigger() {
     debugClicks++;
-    if (debugClicks >= 5) { showDebugMenu(); debugClicks = 0; }
-    setTimeout(() => debugClicks = 0, 2000);
+    // 改為 >= 2 (雙擊即可觸發)
+    if (debugClicks >= 2) { 
+      showDebugMenu(); 
+      debugClicks = 0; 
+    }
+    // 延長判定時間，讓點擊不用那麼急促
+    setTimeout(() => debugClicks = 0, 800);
   }
   function showDebugMenu() { document.getElementById('debug-menu').classList.remove('hidden'); }
   function hideDebugMenu() { document.getElementById('debug-menu').classList.add('hidden'); }
@@ -1756,16 +1761,22 @@ const errorScenarios = [
     { icon: '📭', title: '尚無健康紀錄', msg: '本週數據正在累積中，請於明日查看', btn: '' } // 空字串將隱藏按鈕
   ];
 
-  function triggerError(index) {
+function triggerError(index) {
     hideDebugMenu();
     const s = errorScenarios[index];
     document.getElementById('state-icon').textContent = s.icon;
     document.getElementById('state-title').textContent = s.title;
     document.getElementById('state-message').textContent = s.msg;
+    
     const btn = document.getElementById('state-btn');
-    btn.textContent = s.btn;
-    btn.classList.remove('hidden');
-    btn.onclick = hideGenericState;
+    // 加上判斷：如果有傳入 btn 文字才顯示按鈕，否則隱藏
+    if (s.btn && s.btn.trim() !== '') {
+      btn.textContent = s.btn;
+      btn.classList.remove('hidden');
+      btn.onclick = hideGenericState;
+    } else {
+      btn.classList.add('hidden');
+    }
     document.getElementById('generic-state-template').classList.remove('hidden');
   }
 
