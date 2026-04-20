@@ -1765,8 +1765,8 @@ const errorScenarios = [
     { icon: '⚠️', title: '發生未知的錯誤', msg: '系統正在搶修中，請稍候再試 (Err: 500)', btn: '回首頁' },
     { icon: '🛠️', title: '系統維護中', msg: 'GO HEALTH 正在進行升級保養，預計於 HH:MM 恢復服務 (Err: 503)', btn: '' },
     { icon: '🔍', title: '找不到此頁面', msg: '您訪問的頁面不存在或已移除 (Err: 404)', btn: '回首頁' },
-    { icon: '🚫', title: '權限已變更', msg: '您已被移出該群組，或登入狀態已失效 (Err: 403)', btn: '重新載入' },
-    { icon: '🔒', title: '此群組已解散', msg: '目前群組無成員，請向家人索取最新代碼 (Err: 410)', btn: '回首頁' }
+    { icon: '🚫', title: '權限已變更', msg: '您的登入狀態已失效，為了保護個資安全，請重新登入 (Err: 403)', btn: '重新登入' },
+    { icon: '🔒', title: '此群組已解散', msg: '此群組已被房主解散，請向家人索取最新代碼 (Err: 410)', btn: '回首頁' }
   ];
 
 function triggerError(index) {
