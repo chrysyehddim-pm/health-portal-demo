@@ -1064,14 +1064,13 @@
       <span>🔧 開發者異常狀態模擬器</span>
       <button onclick="hideDebugMenu()"><i class="fas fa-times text-slate-400"></i></button>
     </div>
-    <div class="max-h-[60vh] overflow-y-auto">
-      <button class="debug-menu-item p-4 border-b border-slate-100 w-full text-left font-medium active:bg-slate-50" onclick="triggerError(0)">1. 網路斷線 (504)</button>
-      <button class="debug-menu-item p-4 border-b border-slate-100 w-full text-left font-medium active:bg-slate-50" onclick="triggerError(1)">2. 系統維護中 (503)</button>
-      <button class="debug-menu-item p-4 border-b border-slate-100 w-full text-left font-medium active:bg-slate-50" onclick="triggerError(2)">3. 資料讀取失敗 (500)</button>
-      <button class="debug-menu-item p-4 border-b border-slate-100 w-full text-left font-medium active:bg-slate-50" onclick="triggerError(3)">4. 查無群組動態 (Empty)</button>
-      <button class="debug-menu-item p-4 border-b border-slate-100 w-full text-left font-medium active:bg-slate-50" onclick="triggerError(4)">5. 權限失效 (401)</button>
-      <button class="debug-menu-item p-4 border-b border-slate-100 w-full text-left font-medium active:bg-slate-50" onclick="triggerError(5)">6. 功能籌備中 (Pending)</button>
-      <button class="debug-menu-item p-4 border-b border-slate-100 w-full text-left font-medium active:bg-slate-50" onclick="triggerError(6)">7. 找不到此頁面 (404)</button>
+   <div class="max-h-[60vh] overflow-y-auto">
+      <button class="debug-menu-item p-4 border-b border-slate-100 w-full text-left font-medium active:bg-slate-50" onclick="triggerError(0)">1. 網路斷線 / API 超時 (504)</button>
+      <button class="debug-menu-item p-4 border-b border-slate-100 w-full text-left font-medium active:bg-slate-50" onclick="triggerError(1)">2. 伺服器未預期錯誤 (500)</button>
+      <button class="debug-menu-item p-4 border-b border-slate-100 w-full text-left font-medium active:bg-slate-50" onclick="triggerError(2)">3. 系統維護中 (503)</button>
+      <button class="debug-menu-item p-4 border-b border-slate-100 w-full text-left font-medium active:bg-slate-50" onclick="triggerError(3)">4. 找不到此頁面 (404)</button>
+      <button class="debug-menu-item p-4 border-b border-slate-100 w-full text-left font-medium active:bg-slate-50" onclick="triggerError(4)">5. 權限失效 / 被移出群組 (403)</button>
+      <button class="debug-menu-item p-4 border-b border-slate-100 w-full text-left font-medium active:bg-slate-50" onclick="triggerError(5)">6. 群組已被封存解散 (410)</button>
     </div>
   </div>
 </div>
@@ -1763,11 +1762,10 @@ let debugClicks = 0;
 const errorScenarios = [
     { icon: '📡', title: '系統連線異常', msg: '網路似乎有點不穩，請確認網路狀態後再試 (Err: 504/Offline)', btn: '重新載入' },
     { icon: '⚠️', title: '發生未知的錯誤', msg: '系統正在搶修中，請稍候再試 (Err: 500)', btn: '回首頁' },
-    { icon: '🛠️', title: '系統維護中', msg: 'GO HEALTH 正在進行升級保養，預計於 HH:MM 恢復服務 (Err: 503)', btn: '' }, // 空字串將隱藏按鈕
+    { icon: '🛠️', title: '系統維護中', msg: 'GO HEALTH 正在進行升級保養，預計於 HH:MM 恢復服務 (Err: 503)', btn: '' },
     { icon: '🔍', title: '找不到此頁面', msg: '您訪問的頁面不存在或已移除 (Err: 404)', btn: '回首頁' },
     { icon: '🚫', title: '權限已變更', msg: '您已被移出該群組，或登入狀態已失效 (Err: 403)', btn: '重新載入' },
-    { icon: '🔒', title: '此群組已解散', msg: '目前群組無成員，請向家人索取最新代碼 (Err: 410)', btn: '回首頁' },
-    { icon: '📭', title: '尚無健康紀錄', msg: '本週數據正在累積中，請於明日查看', btn: '' } // 空字串將隱藏按鈕
+    { icon: '🔒', title: '此群組已解散', msg: '目前群組無成員，請向家人索取最新代碼 (Err: 410)', btn: '回首頁' }
   ];
 
 function triggerError(index) {
