@@ -1064,13 +1064,14 @@
       <span>🔧 開發者異常狀態模擬器</span>
       <button onclick="hideDebugMenu()"><i class="fas fa-times text-slate-400"></i></button>
     </div>
-   <div class="max-h-[60vh] overflow-y-auto">
-      <button class="debug-menu-item p-4 border-b border-slate-100 w-full text-left font-medium active:bg-slate-50" onclick="triggerError(0)">1. 網路斷線 / API 超時 (504)</button>
-      <button class="debug-menu-item p-4 border-b border-slate-100 w-full text-left font-medium active:bg-slate-50" onclick="triggerError(1)">2. 伺服器未預期錯誤 (500)</button>
+  <div class="max-h-[60vh] overflow-y-auto">
+      <button class="debug-menu-item p-4 border-b border-slate-100 w-full text-left font-medium active:bg-slate-50" onclick="triggerError(0)">1. 網路斷線 (504)</button>
+      <button class="debug-menu-item p-4 border-b border-slate-100 w-full text-left font-medium active:bg-slate-50" onclick="triggerError(1)">2. 伺服器錯誤 (500)</button>
       <button class="debug-menu-item p-4 border-b border-slate-100 w-full text-left font-medium active:bg-slate-50" onclick="triggerError(2)">3. 系統維護中 (503)</button>
-      <button class="debug-menu-item p-4 border-b border-slate-100 w-full text-left font-medium active:bg-slate-50" onclick="triggerError(3)">4. 找不到此頁面 (404)</button>
-      <button class="debug-menu-item p-4 border-b border-slate-100 w-full text-left font-medium active:bg-slate-50" onclick="triggerError(4)">5. 權限失效 / 被移出群組 (403)</button>
-      <button class="debug-menu-item p-4 border-b border-slate-100 w-full text-left font-medium active:bg-slate-50" onclick="triggerError(5)">6. 群組已被封存解散 (410)</button>
+      <button class="debug-menu-item p-4 border-b border-slate-100 w-full text-left font-medium active:bg-slate-50" onclick="triggerError(3)">4. 找不到頁面 (404)</button>
+      <button class="debug-menu-item p-4 border-b border-slate-100 w-full text-left font-medium active:bg-slate-50" onclick="triggerError(4)">5. 登入狀態失效 (403)</button>
+      <button class="debug-menu-item p-4 border-b border-slate-100 w-full text-left font-medium active:bg-slate-50" onclick="triggerError(5)">6. 群組已解散 (410)</button>
+      <button class="debug-menu-item p-4 border-b border-slate-100 w-full text-left font-bold text-orange-600 active:bg-orange-50" onclick="simulateKickedOut()">7. [特殊] 模擬被踢出群組 (Toast)</button>
     </div>
   </div>
 </div>
@@ -1786,7 +1787,17 @@ function triggerError(index) {
     }
     document.getElementById('generic-state-template').classList.remove('hidden');
   }
-
+  function simulateKickedOut() {
+    hideDebugMenu();
+    // 1. 將狀態改為未綁定
+    appState.group.isBound = false;
+    // 2. 強制重新渲染並跳轉到群組頁（會顯示建立/加入群組畫面）
+    switchToGroup();
+    // 3. 彈出前端把關的 Toast 提示
+    setTimeout(() => {
+      showToast('⚠️ 您已不在原先的家庭群組中');
+    }, 300);
+  }
   function hideGenericState() {
     document.getElementById('generic-state-template').classList.add('hidden');
   }
