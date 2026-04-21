@@ -687,25 +687,22 @@
         </div>
 
         <div class="space-y-3">
-          <a href="#" class="bg-white rounded-xl p-4 shadow-sm flex items-start gap-3 block no-underline active:scale-[0.98] transition">
-            <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center text-xl shrink-0">🧬</div>
-            <div class="flex-1 min-w-0">
+          <a href="#" class="bg-white rounded-xl p-4 shadow-sm block no-underline active:scale-[0.98] transition">
+            <div class="min-w-0">
               <p class="font-bold text-gray-800 text-base truncate">解鎖大腦健康 失智症新趨勢 健檢為您量身打造</p>
               <p class="line-clamp-2 text-xs text-slate-500 mt-1">了解最新失智症預防趨勢與亞東醫院專屬健檢方案...</p>
               <p class="text-xs text-emerald-600 font-bold mt-2 flex items-center gap-0.5">閱讀更多 <i class="fas fa-arrow-up-right-from-square text-[10px]"></i></p>
             </div>
           </a>
-          <a href="#" class="bg-white rounded-xl p-4 shadow-sm flex items-start gap-3 block no-underline active:scale-[0.98] transition">
-            <div class="w-10 h-10 bg-red-50 rounded-xl flex items-center justify-center text-xl shrink-0">❤️</div>
-            <div class="flex-1 min-w-0">
+          <a href="#" class="bg-white rounded-xl p-4 shadow-sm block no-underline active:scale-[0.98] transition">
+            <div class="min-w-0">
               <p class="font-bold text-gray-800 text-base truncate">心血管保健不可少：認識三高與日常管理</p>
               <p class="line-clamp-2 text-xs text-slate-500 mt-1">高血壓、高血脂、高血糖是現代人常見的慢性病，學習如何正確管理...</p>
               <p class="text-xs text-emerald-600 font-bold mt-2 flex items-center gap-0.5">閱讀更多 <i class="fas fa-arrow-up-right-from-square text-[10px]"></i></p>
             </div>
           </a>
-          <a href="#" class="bg-white rounded-xl p-4 shadow-sm flex items-start gap-3 block no-underline active:scale-[0.98] transition">
-            <div class="w-10 h-10 bg-purple-50 rounded-xl flex items-center justify-center text-xl shrink-0">🎮</div>
-            <div class="flex-1 min-w-0">
+          <a href="#" class="bg-white rounded-xl p-4 shadow-sm block no-underline active:scale-[0.98] transition">
+            <div class="min-w-0">
               <p class="font-bold text-gray-800 text-base truncate">長輩常忘東忘西？三招大腦活化小遊戲帶你在家練</p>
               <p class="line-clamp-2 text-xs text-slate-500 mt-1">每天只要十分鐘，透過簡單的互動遊戲，有效延緩認知退化...</p>
               <p class="text-xs text-emerald-600 font-bold mt-2 flex items-center gap-0.5">閱讀更多 <i class="fas fa-arrow-up-right-from-square text-[10px]"></i></p>
@@ -1403,7 +1400,10 @@ const appState = {
     const member = appState.group.members.find(m => m.id === memberId);
     if (!member) return;
 
-    member.receivedMessage = { icon, text };
+    const sender = appState.group.members.find(m => m.isYou);
+    const senderName = sender ? sender.name.replace('（你）', '').trim() : '我';
+
+    member.receivedMessage = { icon, text, senderName };
 
     // 3. Toast
     showToast(`💬 已發送關心給 ${member.name}`);
@@ -1598,8 +1598,13 @@ ${members.map(m => {
                   <p class="text-sm font-bold text-emerald-600 mt-1">本週貢獻：${m.points} 點</p>
                   ${m.latestActivity ? `
                     <p class="activity-line">
-                      ${m.latestActivity.time}剛完成了 <strong class="text-gray-700">${m.latestActivity.game}</strong> ${m.latestActivity.icon}，注入 <strong class="text-emerald-600">${m.latestActivity.points} 點</strong>健康力！
+                      ${m.name} 完成 <strong class="text-gray-700">${m.latestActivity.game}</strong> ${m.latestActivity.icon}，注入 <strong class="text-emerald-600">${m.latestActivity.points} 健康點</strong>
                     </p>
+                  ` : ''}
+                  ${m.receivedMessage ? `
+                    <div class="msg-bubble">
+                      ${m.receivedMessage.senderName || '我'} 傳來：${m.receivedMessage.icon} ${m.receivedMessage.text}
+                    </div>
                   ` : ''}
                 </div>
               </div>
