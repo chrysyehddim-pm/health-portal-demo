@@ -537,9 +537,15 @@
       <button class="text-slate-400 text-sm flex items-center active:opacity-60 transition" onclick="backToHgApp()">
         <i class="fas fa-chevron-left mr-1.5"></i> 返回
       </button>
-      <span class="font-black text-gray-800 text-base tracking-wide cursor-pointer" onclick="handleDebugTrigger()">GO HEALTH</span>
+      <div class="w-10"></div>
       <div class="w-10"></div>
     </header>
+
+    <div class="px-4 pt-4 pb-1 flex justify-center">
+      <button type="button" onclick="handleDebugTrigger()" class="inline-flex items-center justify-center active:opacity-80 transition" aria-label="GO HEALTH Logo">
+        <img src="images/logo.png" alt="GO HEALTH" class="h-9 w-auto object-contain" />
+      </button>
+    </div>
 
     <div class="bg-amber-50 text-amber-800 px-4 py-2 text-xs flex items-center border-b border-amber-100 gap-2">
       <i class="fas fa-bullhorn text-amber-500"></i>
@@ -1752,15 +1758,20 @@ ${members.map(m => {
      DEBUG ERROR MENU & GENERIC STATE LOGIC
   ═══════════════════════════════════════════════ */
 let debugClicks = 0;
+  let debugClickTimer = null;
   function handleDebugTrigger() {
     debugClicks++;
-    // 改為 >= 2 (雙擊即可觸發)
-    if (debugClicks >= 2) { 
-      showDebugMenu(); 
-      debugClicks = 0; 
+    if (debugClickTimer) clearTimeout(debugClickTimer);
+    if (debugClicks >= 3) {
+      showDebugMenu();
+      debugClicks = 0;
+      debugClickTimer = null;
+      return;
     }
-    // 延長判定時間，讓點擊不用那麼急促
-    setTimeout(() => debugClicks = 0, 800);
+    debugClickTimer = setTimeout(() => {
+      debugClicks = 0;
+      debugClickTimer = null;
+    }, 900);
   }
   function showDebugMenu() { document.getElementById('debug-menu').classList.remove('hidden'); }
   function hideDebugMenu() { document.getElementById('debug-menu').classList.add('hidden'); }
