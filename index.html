@@ -17,27 +17,25 @@
     * { box-sizing: border-box; }
 
     body {
-      background-color: #f8fafc; /* 讓全螢幕背景與 App 底色一致，自然延伸 */
+      background-color: #f8fafc; 
       font-family: 'Noto Sans TC', sans-serif;
       -webkit-tap-highlight-color: transparent;
     }
 
     .mobile-container {
-      max-width: 480px; /* 限制內容寬度，保持卡片與按鈕集中 */
+      max-width: 480px; 
       margin: 0 auto;
       background-color: #f8fafc;
       min-height: 100vh;
-      box-shadow: none; /* 移除陰影，消除小手機邊框感 */
+      box-shadow: none; 
       overflow-x: hidden;
       position: relative;
     }
 
-/* ── Animations ── */
     .fade-in { animation: fadeIn 0.3s ease-out forwards; }
     .slide-up { animation: slideUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
     .hidden-view { display: none !important; }
 
-    /* 關鍵修復：移除 fadeIn 的 transform，避免破壞 fixed 定位 */
     @keyframes fadeIn {
       from { opacity: 0; }
       to   { opacity: 1; }
@@ -71,16 +69,13 @@
 
     .pulse-pointer { animation: pulse 2s infinite; }
 
-    /* ── Scrollbar hidden ── */
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-    /* ── Custom Scrollbar for Terms ── */
     .custom-scrollbar::-webkit-scrollbar { width: 6px; }
     .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 10px; }
     .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
 
-/* ── Bottom nav (懸浮膠囊版 - Webview 相容優化) ── */
     .bottom-nav {
       position: fixed !important;
       bottom: calc(env(safe-area-inset-bottom) + 24px) !important; 
@@ -89,11 +84,9 @@
       width: calc(100% - 32px);
       max-width: 448px;
       z-index: 9999 !important;
-      
       background: rgba(255, 255, 255, 0.75) !important;
       -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
       backdrop-filter: blur(16px) saturate(180%) !important;
-      
       box-shadow: 0 12px 30px -4px rgba(0, 0, 0, 0.15), 0 4px 10px -2px rgba(0, 0, 0, 0.08);
       border: 1px solid rgba(255, 255, 255, 0.9);
       border-radius: 9999px;
@@ -118,7 +111,6 @@
     .nav-btn.active { color: var(--green-primary); }
     .nav-btn i { font-size: 21px; margin-bottom: 3px; }
 
-    /* ── Task card ── */
     .task-card {
       background: #fff;
       border: 1px solid #f1f5f9;
@@ -132,19 +124,16 @@
     }
     .task-card:active { transform: scale(0.98); box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
 
-    /* ── Shimmer badge ── */
     .shimmer-badge {
       background: linear-gradient(90deg, #dcfce7 0%, #a7f3d0 40%, #dcfce7 80%);
       background-size: 200% 100%;
       animation: shimmer 2.5s linear infinite;
     }
 
-    /* ── Points card ── */
     .points-card {
       background: linear-gradient(135deg, #059669 0%, #0d9488 55%, #0e7490 100%);
     }
 
-    /* ── Section title ── */
     .section-title {
       font-size: 1rem;
       font-weight: 700;
@@ -155,7 +144,6 @@
       margin-bottom: 0.75rem;
     }
 
-    /* ── Member card ── */
     .member-card {
       background: #fff;
       border-radius: var(--radius-card);
@@ -164,7 +152,6 @@
       box-shadow: 0 1px 6px rgba(0,0,0,0.05);
     }
 
-    /* ── Progress bar ── */
     .progress-track {
       height: 14px;
       background: #f1f5f9;
@@ -183,7 +170,6 @@
       width: 0% !important;
     }
 
-    /* ── Modal ── */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -203,7 +189,6 @@
       animation: slideUp 0.35s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
     }
 
-    /* ── Warning modal ── */
     .warn-modal-overlay {
       position: fixed;
       inset: 0;
@@ -224,7 +209,6 @@
       animation: slideUp 0.3s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
     }
 
-    /* ── Toast ── */
     .toast {
       position: fixed;
       bottom: 80px;
@@ -242,7 +226,6 @@
     }
     .toast.hiding { animation: toastOut 0.3s ease forwards; }
 
-    /* ── Invite code ── */
     .invite-code {
       letter-spacing: 0.35em;
       font-size: 2.8rem;
@@ -255,7 +238,6 @@
       text-align: center;
     }
 
-    /* ── Remove / edit btns ── */
     .kick-btn {
       font-size: 11px;
       padding: 4px 10px;
@@ -270,7 +252,6 @@
     }
     .kick-btn:active { background: #e2e8f0; color: #475569; }
 
-    /* ── Activity line ── */
     .activity-line {
       font-size: 12px;
       color: #64748b;
@@ -280,7 +261,6 @@
       border-top: 1px dashed #e2e8f0;
     }
 
-    /* ── Weekly report banner ── */
     .report-banner {
       display: flex;
       align-items: center;
@@ -295,7 +275,6 @@
     }
     .report-banner:active { transform: scale(0.98); background: #d1fae5; }
 
-    /* ── Weekly report modal ── */
     .report-modal-overlay {
       position: fixed;
       inset: 0;
@@ -317,7 +296,6 @@
       animation: slideUp 0.35s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
     }
 
-    /* ── Report stat card ── */
     .stat-card {
       background: #f8fafc;
       border: 1px solid #e2e8f0;
@@ -341,18 +319,7 @@
       font-size: 1.25rem;
       flex-shrink: 0;
     }
-    .edit-icon {
-      cursor: pointer;
-      font-size: 13px;
-      color: #94a3b8;
-      margin-left: 4px;
-      padding: 2px 4px;
-      border-radius: 4px;
-      transition: color 0.15s;
-    }
-    .edit-icon:hover { color: var(--green-primary); }
 
-    /* ── Exit btn ── */
     .exit-btn {
       width: 100%;
       border: 1.5px solid #fca5a5;
@@ -371,19 +338,6 @@
     }
     .exit-btn:active { background: #fee2e2; transform: scale(0.98); }
 
-    /* ── Cooling tag ── */
-    .cooling-tag {
-      font-size: 10px;
-      background: #fef9c3;
-      color: #92400e;
-      border: 1px solid #fde68a;
-      border-radius: 6px;
-      padding: 2px 6px;
-      font-weight: 600;
-      white-space: nowrap;
-    }
-
-    /* ── Interaction modal ── */
     .interaction-overlay {
       position: fixed;
       inset: 0;
@@ -425,7 +379,6 @@
       flex-shrink: 0;
     }
 
-    /* ── Received message bubble ── */
     .msg-bubble {
       margin-top: 8px;
       padding: 8px 12px;
@@ -472,7 +425,7 @@
 
   <div id="view-hg-app" class="relative min-h-[100vh] cursor-pointer overflow-hidden" onclick="enterHealthService()">
     <img src="images/hg_home.jpg" alt="HG App 首頁" class="w-full h-[100vh] object-cover opacity-80" onerror="this.style.display='none'">
-    <div class="absolute inset-0 bg-slate-800" style="z-index:-1;"></div> <!-- 如果圖片遺失的底色防呆 -->
+    <div class="absolute inset-0 bg-slate-800" style="z-index:-1;"></div>
     <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
     <div class="absolute inset-0 flex flex-col items-center justify-center text-white">
       <div class="mb-4 text-center">
@@ -496,8 +449,8 @@
       <div class="w-12"></div>
     </header>
 
-    <div class="flex-1 px-6 py-6 flex flex-col">
-      <div class="text-center mb-6">
+    <div class="flex-1 px-6 py-6 flex flex-col h-full overflow-hidden">
+      <div class="text-center mb-6 shrink-0">
         <div class="w-20 h-20 bg-emerald-50 text-emerald-600 rounded-3xl flex items-center justify-center text-4xl mx-auto mb-4 shadow-inner">
           <i class="fas fa-shield-heart"></i>
         </div>
@@ -505,7 +458,8 @@
         <p class="text-gray-500 text-sm mt-2 leading-relaxed">請詳細閱讀下方服務條款，<br>閱讀至底端後方可同意進入服務。</p>
       </div>
 
-      <div id="terms-content" class="bg-slate-50 rounded-2xl p-5 border border-slate-200 mb-6 flex-1 h-[40vh] overflow-y-auto custom-scrollbar" onscroll="checkTermsScroll(this)">
+      <!-- 移除了 onscroll 事件與固定高度 h-[40vh] -->
+      <div id="terms-content" class="bg-slate-50 rounded-2xl p-5 border border-slate-200 mb-6 flex-1 overflow-y-auto custom-scrollbar">
         <h3 class="font-bold text-gray-700 text-sm border-b border-slate-200 pb-2.5 flex items-center gap-2 mb-4">
           <i class="fas fa-file-contract text-green-600"></i> 正式服務條款
         </h3>
@@ -559,11 +513,12 @@
           <p><strong>其他</strong><br>
           本服務條款解釋、補充及適用均以中華民國法令為準據法。如有任何問題，請至HAPPY GO官網或App聯繫文字客服 (服務時間：週一至週五 9:00~18:00)。<br>(2026.04)</p>
           
-          <p class="text-center text-emerald-600 font-bold mt-6 pb-2">--- 已到達底端 ---</p>
+          <!-- 加上 id 以供 IntersectionObserver 監聽 -->
+          <p id="terms-bottom-marker" class="text-center text-emerald-600 font-bold mt-6 pb-2">--- 已到達底端 ---</p>
         </div>
       </div>
 
-      <div class="mt-auto">
+      <div class="mt-auto shrink-0">
         <button id="btn-agree" disabled onclick="agreeAndStart()"
           class="w-full bg-slate-300 text-white font-bold py-4 rounded-2xl shadow-none transition text-lg cursor-not-allowed">
           請先閱讀完畢並滑動到底部
@@ -1173,8 +1128,10 @@
   function isHost(member) { return member.role === '房主'; }
 
   /* ═══════════════════════════════════════════════
-     VIEW SWITCHING & TERMS SCROLL
+     VIEW SWITCHING & OBSERVER BINDING
   ═══════════════════════════════════════════════ */
+  let termsObserver = null;
+
   function showView(id) {
     ['view-hg-app','view-terms','view-dashboard','view-group'].forEach(v => {
       const el = document.getElementById(v);
@@ -1190,24 +1147,40 @@
     appState.currentView = id;
   }
 
-  function enterHealthService() { showView('view-terms'); }
+  function enterHealthService() { 
+    showView('view-terms'); 
+    
+    // 延遲 100ms 確保 DOM 已經從 display:none 變成可見，這樣 Observer 才能正確計算座標
+    setTimeout(() => {
+      const marker = document.getElementById('terms-bottom-marker');
+      const btn = document.getElementById('btn-agree');
+      const container = document.getElementById('terms-content');
+      
+      if (marker && btn && container && btn.disabled) {
+        if (!termsObserver) {
+          // 初始化 IntersectionObserver
+          termsObserver = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+              btn.disabled = false;
+              btn.classList.remove('bg-slate-300', 'cursor-not-allowed', 'shadow-none');
+              btn.classList.add('bg-green-600', 'hover:bg-green-700', 'shadow-lg', 'active:scale-95');
+              btn.textContent = '我同意並開始挑戰 🚀';
+              termsObserver.disconnect(); // 解鎖後註銷監聽器以省效能
+            }
+          }, { 
+            root: container, 
+            threshold: 0.1 // 只要底端文字露出 10% 即觸發
+          });
+        }
+        termsObserver.observe(marker);
+      }
+    }, 100);
+  }
+
   function agreeAndStart()      { showView('view-dashboard'); }
   function backToHgApp()        { showView('view-hg-app'); }
   function switchToDashboard()  { showView('view-dashboard'); }
   function switchToGroup()      { renderGroupView(); showView('view-group'); }
-
-  // 核心修復：使用 Math.ceil 並將緩衝區放大到 50px，解決瀏覽器像素計算誤差
-  function checkTermsScroll(el) {
-    if (Math.ceil(el.scrollTop + el.clientHeight) >= el.scrollHeight - 50) {
-      const btn = document.getElementById('btn-agree');
-      if (btn.disabled) {
-        btn.disabled = false;
-        btn.classList.remove('bg-slate-300', 'cursor-not-allowed', 'shadow-none');
-        btn.classList.add('bg-green-600', 'hover:bg-green-700', 'shadow-lg', 'active:scale-95');
-        btn.textContent = '我同意並開始挑戰 🚀';
-      }
-    }
-  }
 
   /* ═══════════════════════════════════════════════
      MODAL
