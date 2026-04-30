@@ -75,6 +75,11 @@
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
+    /* ── Custom Scrollbar for Terms ── */
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 10px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+
 /* ── Bottom nav (懸浮膠囊版 - Webview 相容優化) ── */
     .bottom-nav {
       position: fixed !important;
@@ -85,14 +90,10 @@
       max-width: 448px;
       z-index: 9999 !important;
       
-      /* 1. 降低背景透明度 (0.85 -> 0.75)，讓底下的內容更容易透上來 */
       background: rgba(255, 255, 255, 0.75) !important;
-      
-      /* 2. 加入 saturate(180%)，這是 iOS 做出高級毛玻璃質感的秘訣，能讓透過去的顏色更飽和 */
       -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
       backdrop-filter: blur(16px) saturate(180%) !important;
       
-      /* 3. 強化陰影：萬一使用者的舊手機真的不支援毛玻璃，強烈的立體陰影依然能確保選單漂亮懸浮 */
       box-shadow: 0 12px 30px -4px rgba(0, 0, 0, 0.15), 0 4px 10px -2px rgba(0, 0, 0, 0.08);
       border: 1px solid rgba(255, 255, 255, 0.9);
       border-radius: 9999px;
@@ -470,7 +471,8 @@
 <div class="mobile-container" id="app-root">
 
   <div id="view-hg-app" class="relative min-h-[100vh] cursor-pointer overflow-hidden" onclick="enterHealthService()">
-    <img src="images/hg_home.jpg" alt="HG App 首頁" class="w-full h-[100vh] object-cover opacity-80">
+    <img src="images/hg_home.jpg" alt="HG App 首頁" class="w-full h-[100vh] object-cover opacity-80" onerror="this.style.display='none'">
+    <div class="absolute inset-0 bg-slate-800" style="z-index:-1;"></div> <!-- 如果圖片遺失的底色防呆 -->
     <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
     <div class="absolute inset-0 flex flex-col items-center justify-center text-white">
       <div class="mb-4 text-center">
@@ -494,40 +496,79 @@
       <div class="w-12"></div>
     </header>
 
-    <div class="flex-1 px-6 py-8">
-      <div class="text-center mb-8">
-        <div class="w-24 h-24 bg-emerald-50 text-emerald-600 rounded-3xl flex items-center justify-center text-5xl mx-auto mb-5 shadow-inner">
+    <div class="flex-1 px-6 py-6 flex flex-col">
+      <div class="text-center mb-6">
+        <div class="w-20 h-20 bg-emerald-50 text-emerald-600 rounded-3xl flex items-center justify-center text-4xl mx-auto mb-4 shadow-inner">
           <i class="fas fa-shield-heart"></i>
         </div>
-        <h1 class="text-2xl font-black text-gray-800 leading-tight">GO HEALTH<br>授權同意</h1>
-        <p class="text-gray-500 text-sm mt-3 leading-relaxed">為提供最專屬的健康任務體驗，<br>我們需要您的授權同意。</p>
+        <h1 class="text-2xl font-black text-gray-800 leading-tight">GO HEALTH<br>服務授權條款</h1>
+        <p class="text-gray-500 text-sm mt-2 leading-relaxed">請詳細閱讀下方服務條款，<br>閱讀至底端後方可同意進入服務。</p>
       </div>
 
-      <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200 mb-8 space-y-4">
-        <h3 class="font-bold text-gray-700 text-sm border-b border-slate-200 pb-2.5 flex items-center gap-2">
-          <i class="fas fa-list-check text-green-600"></i> 我們將取用與紀錄：
+      <div id="terms-content" class="bg-slate-50 rounded-2xl p-5 border border-slate-200 mb-6 flex-1 h-[40vh] overflow-y-auto custom-scrollbar" onscroll="checkTermsScroll(this)">
+        <h3 class="font-bold text-gray-700 text-sm border-b border-slate-200 pb-2.5 flex items-center gap-2 mb-4">
+          <i class="fas fa-file-contract text-green-600"></i> 正式服務條款
         </h3>
-        <ul class="text-sm text-gray-600 space-y-4">
-          <li class="flex items-start gap-3">
-            <div class="w-6 h-6 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center shrink-0 mt-0.5 text-xs">
-              <i class="fas fa-check"></i>
-            </div>
-            <span><strong class="text-gray-700">匯入基本資料：</strong>同意將 HAPPY GO 註冊資料（姓名、性別、出生年月日）匯入健康服務。</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <div class="w-6 h-6 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center shrink-0 mt-0.5 text-xs">
-              <i class="fas fa-check"></i>
-            </div>
-            <span><strong class="text-gray-700">健康行為分析：</strong>蒐集您於任務中產生之互動指標，以利提供專屬推薦。</span>
-          </li>
-        </ul>
+        <div class="text-sm text-gray-600 space-y-4 leading-relaxed pb-4">
+          <p><strong>【HAPPY GO APP GO HEALTH服務條款】</strong></p>
+          <p>GO HEALTH服務(以下簡稱本服務)係由鼎鼎聯合行銷股份有限公司(以下簡稱本公司)所提供 HAPPY GO App功能之一。當您開始使用本服務時，軟體系統將依您所要求的服務內容提供相關服務，並擷取提供該等服務所必須蒐集之可供辨識個人之資料，請務必詳閱以下服務內容及個資條款，若您不同意相關內容或提供個人資料，請立即停止使用本服務，如您繼續使用本服務時，將視為同意以下內容：</p>
+          
+          <p><strong>非醫學建議聲明</strong><br>
+          GO HEALTH服務並沒有要提供醫療診斷、治療、或醫療建議的意思。GO HEALTH服務及連結之第三⽅網站所提供的資訊、服務、產品、內容應當只做為參考。如果您有任何有關於醫療、健康診斷、治療選項等問題，請務必向專業的醫師尋求諮詢與建議。</p>
+          
+          <p><strong>同意表示</strong><br>
+          使用本服務之前，您應閱讀並決定是否同意本服務各項條款。經您同意，將為有效且不可撤銷。若您未同意本服務條款，您將無法使用本服務各項功能。如您為未成年人，須經過家長或監護人同意後，方能使用本服務。本服務為快樂購聯合集點卡及 HAPPY GO App之延伸功能，除本服務條款外，您亦應遵照快樂購聯合集點卡服務辦法、HAPPY GO App 服務條款等本公司所發布之各條款、規定、辦法及說明使用本服務。</p>
+
+          <p><strong>條款的修改或變更</strong><br>
+          本公司有權利隨時修改或變更本服務條款之內容，並透過 HAPPY GO官方網站或 HAPPY GO App公告或以其他方式通知，若會員於本服務條款修改或變更公告/通知後15日內未提出反對之意思表示，視同會員已閱讀、瞭解並同意接受該等修改或變更。</p>
+
+          <p><strong>停權</strong><br>
+          本公司認為您違反本條款或有違反之虞時，得在不事先通知您的情形下停止您的使用本服務或快樂購卡卡友身分及相關權利。自停權時起，您於快樂購及本服務的所有使用權不論任何理由均為消滅。</p>
+
+          <p><strong>個資隱私權</strong><br>
+          個人資料之蒐集、處理與利用：基於提供健康內容建議、個人化服務推薦、健康趨勢分析、會員分群管理、行銷優化、廣告推播及服務改善等特定目的之合理關聯範圍內，本公司得蒐集、處理及利用您於使用本服務時所提供或產生之下列相關資訊：
+          <br>1. 帳號與基本資料：包括姓名、出生年月日、性別。
+          <br>2. 裝置與使用紀錄資料。
+          <br>3. 健康服務、問卷及態度標籤資料。
+          <br>4. 遊戲與互動行為資料。</p>
+
+          <p><strong>行銷、廣告與推播服務</strong><br>
+          為提升服務品質及使用體驗，本公司可能依據您所提供之資訊進行分析、分群及標籤建立，以提供個人化內容推薦。如您不希望接收推播通知，可自行透過HAPPY GO App之系統設定關閉推播通知功能。</p>
+
+          <p><strong>資料處理與傳輸</strong><br>
+          當您使用本服務時，您同意本服務根據本隱私權保護政策所述內容，對您的資訊進行資料處理、分享、傳輸和使用。無論您所居住的國家/地區為何，您都授權我們根據本隱私權保護條款在您所居住國家/地區以外之處傳輸、處理、儲存和使用您的資訊以及向您提供服務。</p>
+
+          <p><strong>當事人權利行使</strong><br>
+          您可隨時要求刪除您的於本服務中留存之個人資料，在您要求刪除個人資訊後，依本服務系統運作流程經過一段時間才會從伺服器中完全刪除。如擬查詢、閱覽或刪除個人資料時，請至HAPPY GO官網或App聯繫文字客服 (服務時間：週一至週五 9:00~18:00)。</p>
+
+          <p><strong>服務的提供</strong><br>
+          於本公司判斷有必要時，得在不事先通知您的情形下隨時變更本服務的全部或部分內容，並中止提供本服務。</p>
+
+          <p><strong>智慧健康服務非醫療建議之聲明</strong><br>
+          本服務所提供之一切內容，僅供一般性參考，並非醫療服務，亦不構成任何形式之醫療診斷、治療、處方、醫療建議或其他醫療行為。您使用本服務、接受相關內容或與本公司進行之任何互動，均不構成醫病關係、診療關係、諮詢關係或其他專業醫療服務關係。</p>
+
+          <p><strong>健康點數</strong><br>
+          本服務提供之「健康點數」非等同於 HAPPY GO 點數。健康點數採雙軌累積制度，除累積於個人帳戶外，亦將同步計入群組積分。群組累積積分以每週為一期進行統計，並於每週結算後重置重新計算。健康點數之有效期間，自會員取得點數之日起至次年度十二月三十一日止。</p>
+
+          <p><strong>家庭群組</strong><br>
+          嚴禁發送、分享或散布涉及暴力、歧視、騷擾或其他可能造成他人不適之內容。嚴禁偽造或冒用他人身分。</p>
+
+          <p><strong>服務停止或中斷</strong><br>
+          如遇天災或其他不可抗力之因素，或非本公司所得控制之事由，本公司將逕行暫停或中斷本服務之全部或一部。</p>
+
+          <p><strong>其他</strong><br>
+          本服務條款解釋、補充及適用均以中華民國法令為準據法。如有任何問題，請至HAPPY GO官網或App聯繫文字客服 (服務時間：週一至週五 9:00~18:00)。<br>(2026.04)</p>
+          
+          <p class="text-center text-emerald-600 font-bold mt-6 pb-2">--- 已到達底端 ---</p>
+        </div>
       </div>
 
-      <button onclick="agreeAndStart()"
-        class="w-full bg-green-600 text-white font-bold py-4 rounded-2xl shadow-lg hover:bg-green-700 transition active:scale-95 text-lg">
-        我同意並開始挑戰 🚀
-      </button>
-      <p class="text-center text-xs text-gray-400 mt-4">點擊代表您已詳閱並同意隱私權政策</p>
+      <div class="mt-auto">
+        <button id="btn-agree" disabled onclick="agreeAndStart()"
+          class="w-full bg-slate-300 text-white font-bold py-4 rounded-2xl shadow-none transition text-lg cursor-not-allowed">
+          請先閱讀完畢並滑動到底部
+        </button>
+      </div>
     </div>
   </div>
 
@@ -543,7 +584,7 @@
 
     <div class="px-4 pt-4 pb-1 flex justify-center">
       <button type="button" onclick="handleDebugTrigger()" class="inline-flex items-center justify-center active:opacity-80 transition" aria-label="GO HEALTH Logo">
-        <img src="images/logo.png" alt="GO HEALTH" class="h-9 w-auto object-contain" />
+        <img src="images/logo.png" alt="GO HEALTH" class="h-9 w-auto object-contain" onerror="this.outerHTML='<h1 class=\'text-xl font-black text-green-700 tracking-wider\'>GO HEALTH</h1>'" />
       </button>
     </div>
 
@@ -735,16 +776,16 @@
 
   <div id="view-group" class="hidden-view flex flex-col min-h-[100vh]">
 
-<header class="bg-white/96 backdrop-blur px-4 py-3.5 border-b border-slate-100 sticky top-0 z-50 flex items-center justify-between">
-  <button class="text-slate-400 text-sm flex items-center active:opacity-60 transition" onclick="backToHgApp()">
-    <i class="fas fa-chevron-left mr-1.5"></i> 返回
-  </button>
-  <div class="flex-1"></div>
-  <div class="w-10"></div>
-</header>
+    <header class="bg-white/96 backdrop-blur px-4 py-3.5 border-b border-slate-100 sticky top-0 z-50 flex items-center justify-between">
+      <button class="text-slate-400 text-sm flex items-center active:opacity-60 transition" onclick="backToHgApp()">
+        <i class="fas fa-chevron-left mr-1.5"></i> 返回
+      </button>
+      <div class="flex-1"></div>
+      <div class="w-10"></div>
+    </header>
 
     <div class="flex-1 overflow-y-auto no-scrollbar p-4 space-y-5 pb-28" id="group-content">
-      </div>
+    </div>
 
     <nav class="bottom-nav">
       <button class="nav-btn" onclick="switchToDashboard()">
@@ -758,6 +799,7 @@
 
 </div>
 
+<!-- 共用彈窗區 -->
 <div id="modal-download" class="modal-overlay hidden-view" onclick="closeModal('modal-download')">
   <div class="modal-sheet" onclick="event.stopPropagation()">
     <div class="w-12 h-1 bg-slate-200 rounded-full mx-auto mb-5"></div>
@@ -838,18 +880,17 @@
     </div>
 
     <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2.5">👨‍👩‍👧 家族活躍表現</p>
-    <div class="bg-emerald-50 border border-emerald-100 rounded-2xl p-4 mb-4">
+    <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-4">
       <div class="flex items-center gap-3 mb-3">
-        <div class="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center text-xl shrink-0">🤝</div>
+        <div class="w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center text-xl shrink-0">🤝</div>
         <div class="flex-1">
           <p class="text-xs text-slate-400 font-medium">家族活躍指數</p>
-          <p class="font-black text-gray-800 text-sm mt-0.5">全家共同參與 <span class="text-emerald-600 text-base">4 天</span></p>
+          <p class="font-black text-gray-800 text-sm mt-0.5">全家共同參與 <span class="text-slate-400 text-base">0 天</span></p>
         </div>
       </div>
-      <div class="h-3 bg-emerald-100 rounded-full overflow-hidden mb-2">
-        <div class="h-full bg-emerald-500 rounded-full" style="width:75%"></div>
+      <div class="h-3 bg-slate-200 rounded-full overflow-hidden">
+        <div class="h-full bg-emerald-500 rounded-full" style="width:0%"></div>
       </div>
-      <p class="text-xs text-emerald-700 font-bold text-center">默契極佳！本週超越 75% 的家庭用戶 🏅</p>
     </div>
 
     <div class="h-px bg-slate-100 mb-4"></div>
@@ -857,31 +898,30 @@
     <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2.5">🙋 我的個人表現</p>
     <div class="space-y-3 mb-4">
 
-      <div class="stat-card col">
+      <div class="stat-card col border-slate-200 bg-white">
         <div class="flex items-center gap-3 w-full">
-          <div class="stat-icon bg-purple-50 shrink-0">🧠</div>
+          <div class="stat-icon bg-slate-100 shrink-0 opacity-50">🧠</div>
           <div>
             <p class="text-xs text-slate-400 font-medium">大腦活化天數</p>
-            <p class="font-black text-gray-800 text-sm mt-0.5">本週累計 <span class="text-purple-600 text-base">5 天</span></p>
+            <p class="font-black text-gray-800 text-sm mt-0.5">本週累計 <span class="text-slate-400 text-base">0 天</span></p>
           </div>
         </div>
-        <div class="flex items-center gap-1.5 w-full">
-          <div class="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center text-white text-xs font-bold shrink-0">一</div>
-          <div class="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center text-white text-xs font-bold shrink-0">二</div>
-          <div class="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center text-white text-xs font-bold shrink-0">三</div>
-          <div class="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center text-white text-xs font-bold shrink-0">四</div>
-          <div class="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center text-white text-xs font-bold shrink-0">五</div>
+        <div class="flex items-center gap-1.5 w-full mt-2">
+          <div class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-400 text-xs font-bold shrink-0">一</div>
+          <div class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-400 text-xs font-bold shrink-0">二</div>
+          <div class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-400 text-xs font-bold shrink-0">三</div>
+          <div class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-400 text-xs font-bold shrink-0">四</div>
+          <div class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-400 text-xs font-bold shrink-0">五</div>
           <div class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-400 text-xs font-bold shrink-0">六</div>
           <div class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-400 text-xs font-bold shrink-0">日</div>
         </div>
       </div>
 
-      <div class="stat-card">
-        <div class="stat-icon bg-orange-50 shrink-0">🏪</div>
+      <div class="stat-card border-slate-200 bg-white">
+        <div class="stat-icon bg-slate-100 shrink-0 text-slate-400">💤</div>
         <div class="flex-1">
           <p class="text-xs text-slate-400 font-medium">本週最投入挑戰</p>
-          <p class="font-black text-gray-800 text-sm mt-0.5">24H 一日店長 🏪</p>
-          <p class="text-xs text-orange-600 font-bold mt-0.5">本週挑戰次數最多</p>
+          <p class="font-bold text-slate-500 text-sm mt-0.5">本週還沒有互動喔，趕快鍛鍊腦健康</p>
         </div>
       </div>
 
@@ -981,7 +1021,8 @@
     </div>
 
     <div class="space-y-2.5" id="interaction-options">
-      </div>
+      <!-- JS 動態寫入中性關心訊息 -->
+    </div>
 
     <div class="mt-4 pt-4 border-t border-slate-100">
       <p class="text-xs text-slate-400 font-medium mb-2">或自己輸入：</p>
@@ -1014,7 +1055,8 @@
     </div>
 
     <div id="notification-list" class="space-y-2">
-      </div>
+      <!-- JS 動態寫入 -->
+    </div>
 
     <button onclick="closeNotifications()" class="w-full text-slate-400 text-sm py-3 mt-3 active:opacity-60">關閉</button>
   </div>
@@ -1067,7 +1109,7 @@
       <span>🔧 開發者異常狀態模擬器</span>
       <button onclick="hideDebugMenu()"><i class="fas fa-times text-slate-400"></i></button>
     </div>
-  <div class="max-h-[60vh] overflow-y-auto">
+    <div class="max-h-[60vh] overflow-y-auto">
       <button class="debug-menu-item p-4 border-b border-slate-100 w-full text-left font-medium active:bg-slate-50" onclick="triggerError(0)">1. 網路斷線 (504)</button>
       <button class="debug-menu-item p-4 border-b border-slate-100 w-full text-left font-medium active:bg-slate-50" onclick="triggerError(1)">2. 伺服器錯誤 (500)</button>
       <button class="debug-menu-item p-4 border-b border-slate-100 w-full text-left font-medium active:bg-slate-50" onclick="triggerError(2)">3. 系統維護中 (503)</button>
@@ -1085,7 +1127,7 @@
   /* ═══════════════════════════════════════════════
      APP STATE
   ═══════════════════════════════════════════════ */
-const appState = {
+  const appState = {
     currentView: 'hg-app',
     group: {
       isBound: true,
@@ -1095,7 +1137,7 @@ const appState = {
       members: [
         {
           id: 1, name: 'Chrys（你）', role: '房主', points: 1200,
-          isYou: true, gender: 'F', // 增加性別欄位
+          isYou: true, gender: 'F',
           latestActivity: { game: '大腦靈活度測試', icon: '🧠', points: 200, time: '1 小時前' }
         },
         {
@@ -1105,17 +1147,15 @@ const appState = {
         },
         {
           id: 3, name: '新成員', role: '成員', points: 450,
-          isYou: false, gender: 'U', // 未知或新加入
+          isYou: false, gender: 'U',
           latestActivity: { game: '24H 一日店長', icon: '🏪', points: 150, time: '剛才' }
         }
       ]
     }
   };
 
-  // pending warn action (callback stored here)
   let pendingWarnAction = null;
 
-  // notifications state
   appState.notifications = [
     { id: 1, type: 'system',    icon: '📢', title: '本週抽獎結果出爐！',  desc: '恭喜您的群組獲得 100 點 HG 點數！',              time: '10 分鐘前', isRead: false },
     { id: 2, type: 'message',   icon: '💬', title: '爸爸 傳送了關心',     desc: '喝杯水休息一下，今天的健康任務做得很棒唷！',    time: '2 小時前',  isRead: false },
@@ -1127,21 +1167,13 @@ const appState = {
   /* ═══════════════════════════════════════════════
      COMPUTED HELPERS
   ═══════════════════════════════════════════════ */
-  function getActiveMembers() {
-    return appState.group.members.filter(m => !m.isCoolingDown);
-  }
-  function getGroupTotalPoints() {
-    return getActiveMembers().reduce((sum, m) => sum + m.points, 0);
-  }
-  function getTickets(pts) {
-    return Math.floor(pts / 1000);
-  }
-  function isHost(member) {
-    return member.role === '房主';
-  }
+  function getActiveMembers() { return appState.group.members.filter(m => !m.isCoolingDown); }
+  function getGroupTotalPoints() { return getActiveMembers().reduce((sum, m) => sum + m.points, 0); }
+  function getTickets(pts) { return Math.floor(pts / 1000); }
+  function isHost(member) { return member.role === '房主'; }
 
   /* ═══════════════════════════════════════════════
-     VIEW SWITCHING
+     VIEW SWITCHING & TERMS SCROLL
   ═══════════════════════════════════════════════ */
   function showView(id) {
     ['view-hg-app','view-terms','view-dashboard','view-group'].forEach(v => {
@@ -1163,6 +1195,19 @@ const appState = {
   function backToHgApp()        { showView('view-hg-app'); }
   function switchToDashboard()  { showView('view-dashboard'); }
   function switchToGroup()      { renderGroupView(); showView('view-group'); }
+
+  // 核心修復：使用 Math.ceil 並將緩衝區放大到 50px，解決瀏覽器像素計算誤差
+  function checkTermsScroll(el) {
+    if (Math.ceil(el.scrollTop + el.clientHeight) >= el.scrollHeight - 50) {
+      const btn = document.getElementById('btn-agree');
+      if (btn.disabled) {
+        btn.disabled = false;
+        btn.classList.remove('bg-slate-300', 'cursor-not-allowed', 'shadow-none');
+        btn.classList.add('bg-green-600', 'hover:bg-green-700', 'shadow-lg', 'active:scale-95');
+        btn.textContent = '我同意並開始挑戰 🚀';
+      }
+    }
+  }
 
   /* ═══════════════════════════════════════════════
      MODAL
@@ -1218,7 +1263,6 @@ const appState = {
     const code = appState.group.inviteCode;
     const deepLink = `「${name} 邀請你加入 GO HEALTH 群組一起賺健康！\n點擊下方連結進入 HAPPY GO APP 體驗全新健康服務，輸入群組代碼：${code}，讓關心變得更簡單！\n👉 happygo://gohealth/group」`;
     navigator.clipboard?.writeText(deepLink).catch(() => {});
-    console.log('[複製內容]', deepLink);
     closeModal('modal-invite');
     showCopyToast();
   }
@@ -1228,7 +1272,7 @@ const appState = {
   }
 
   /* ═══════════════════════════════════════════════
-     JOIN GROUP (unbound state)
+     JOIN GROUP
   ═══════════════════════════════════════════════ */
   function createGroupAndBind() {
     appState.group.isBound = true;
@@ -1241,7 +1285,6 @@ const appState = {
     const errorMsg = document.getElementById('join-error-msg');
     const val = input ? input.value.trim() : '';
 
-    // helper: show inline error
     function showJoinError(msg) {
       if (input) {
         input.classList.remove('border-slate-200', 'border-green-500');
@@ -1252,8 +1295,6 @@ const appState = {
         errorMsg.classList.remove('hidden-view');
       }
     }
-
-    // helper: clear error state
     function clearJoinError() {
       if (input) {
         input.classList.remove('border-red-500');
@@ -1265,25 +1306,10 @@ const appState = {
       }
     }
 
-    // Situation A: length < 6
-    if (val.length < 6) {
-      showJoinError('⚠️ 長度不足，請輸入 6 碼代碼');
-      return;
-    }
+    if (val.length < 6) { showJoinError('⚠️ 長度不足，請輸入 6 碼代碼'); return; }
+    if (!/^\d+$/.test(val)) { showJoinError('⚠️ 格式錯誤，請輸入純數字代碼'); return; }
+    if (val === '000000') { showJoinError('⚠️ 代碼錯誤，請確認後重新輸入'); return; }
 
-    // Situation B: non-numeric
-    if (!/^\d+$/.test(val)) {
-      showJoinError('⚠️ 格式錯誤，請輸入純數字代碼');
-      return;
-    }
-
-    // Situation C: simulated invalid code
-    if (val === '000000') {
-      showJoinError('⚠️ 代碼錯誤，請確認後重新輸入');
-      return;
-    }
-
-    // Situation D: success
     clearJoinError();
     appState.group.isBound = true;
     showToast('🎉 成功加入群組！');
@@ -1305,7 +1331,7 @@ const appState = {
   }
 
   /* ═══════════════════════════════════════════════
-     KICK MEMBER
+     KICK / EXIT MEMBER
   ═══════════════════════════════════════════════ */
   function kickMember(memberId) {
     const member = appState.group.members.find(m => m.id === memberId);
@@ -1321,10 +1347,6 @@ const appState = {
       }
     );
   }
-
-  /* ═══════════════════════════════════════════════
-     EXIT GROUP
-  ═══════════════════════════════════════════════ */
   function exitGroup() {
     openWarnModal(
       '退出群組？',
@@ -1342,41 +1364,32 @@ const appState = {
   /* ═══════════════════════════════════════════════
      WEEKLY REPORT MODAL
   ═══════════════════════════════════════════════ */
-  function openWeeklyReport() {
-    openModal('modal-weekly-report');
-  }
-  function closeWeeklyReport() {
-    closeModal('modal-weekly-report');
-  }
+  function openWeeklyReport() { openModal('modal-weekly-report'); }
+  function closeWeeklyReport() { closeModal('modal-weekly-report'); }
 
   /* ═══════════════════════════════════════════════
-     INTERACTION MODAL (罐頭心意)
+     INTERACTION MODAL (統一中性文案)
   ═══════════════════════════════════════════════ */
-  const CANNED_MESSAGES = [
-    { icon: '💪', text: '活力滿分！繼續保持，我們一起賺點數！' },
-    { icon: '🍵', text: '喝杯水休息一下，今天的健康任務做得很棒唷！' },
-    { icon: '🌟', text: '太厲害了！大腦超級靈活，健康達人非你莫屬！' }
-  ];
-
-  // store which member the sheet is currently targeting
   let _interactionTarget = null;
 
   function openInteractionModal(memberId, memberName) {
     _interactionTarget = { id: memberId, name: memberName };
-
-    // set title
     document.getElementById('interaction-title').textContent = `傳送關心給 ${memberName}`;
 
-    // render option buttons
+    const cannedMsgs = [
+      { icon: '🎮', text: '近期尚無參與任務，快來完成今天的腦健康挑戰吧！' },
+      { icon: '👀', text: '今天還沒看到你的紀錄，趕快花三分鐘動動腦！' },
+      { icon: '💪', text: '大家都準備好囉，快來解鎖今天的專屬健康任務！' }
+    ];
+
     const opts = document.getElementById('interaction-options');
-    opts.innerHTML = CANNED_MESSAGES.map((msg) => `
+    opts.innerHTML = cannedMsgs.map((msg) => `
       <button class="msg-btn" onclick="sendMessage(${memberId}, '${msg.icon}', '${msg.text.replace(/'/g, '&#39;')}')">
         <span class="msg-btn-icon">${msg.icon}</span>
         <span>${msg.text}</span>
       </button>
     `).join('');
 
-    // clear custom input
     const customInput = document.getElementById('custom-msg-input');
     if (customInput) customInput.value = '';
 
@@ -1399,22 +1412,15 @@ const appState = {
   }
 
   function sendMessage(memberId, icon, text) {
-    // 1. Close sheet
     closeInteractionModal();
-
-    // 2. Find member & update state
     const member = appState.group.members.find(m => m.id === memberId);
     if (!member) return;
 
     const sender = appState.group.members.find(m => m.isYou);
     const senderName = sender ? sender.name.replace('（你）', '').trim() : '我';
-
     member.receivedMessage = { icon, text, senderName };
 
-    // 3. Toast
     showToast(`💬 已發送關心給 ${member.name}`);
-
-    // 4. Re-render
     renderGroupView();
   }
 
@@ -1426,14 +1432,12 @@ const appState = {
     const { isBound, inviteCode, streak, maxPoints, members } = appState.group;
 
     if (!isBound) {
-      /* ── UNBOUND ── */
       container.innerHTML = `
         <div class="text-center pt-6 pb-2">
           <div class="w-24 h-24 bg-emerald-50 rounded-3xl flex items-center justify-center mx-auto mb-4 text-5xl shadow-inner">🌱</div>
           <h2 class="text-2xl font-black text-gray-800 mb-1">建立您的群組</h2>
           <p class="text-slate-500 text-sm">只需兩步，立刻開始家庭健康挑戰！</p>
         </div>
-
         <div class="space-y-3">
           <div class="flex items-start gap-3 bg-white rounded-2xl p-4 border border-slate-100 shadow-sm">
             <div class="w-9 h-9 bg-green-600 text-white rounded-full flex items-center justify-center font-black text-base shrink-0 mt-0.5">1</div>
@@ -1450,25 +1454,20 @@ const appState = {
             </div>
           </div>
         </div>
-
-        <button onclick="createGroupAndBind()"
-          class="w-full bg-green-600 text-white font-bold py-4 rounded-2xl shadow-lg active:scale-95 transition text-lg flex items-center justify-center gap-2">
+        <button onclick="createGroupAndBind()" class="w-full bg-green-600 text-white font-bold py-4 rounded-2xl shadow-lg active:scale-95 transition text-lg flex items-center justify-center gap-2 mt-4">
           <i class="fas fa-plus-circle"></i> 建立群組
         </button>
-
-        <div class="flex items-center gap-3 my-1">
+        <div class="flex items-center gap-3 my-4">
           <div class="flex-1 h-px bg-slate-200"></div>
           <span class="text-slate-400 text-xs">或輸入家人的代碼加入</span>
           <div class="flex-1 h-px bg-slate-200"></div>
         </div>
-
         <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm space-y-3">
           <input id="join-code-input" type="tel" inputmode="numeric" pattern="[0-9]*" maxlength="6"
             placeholder="輸入 6 碼群組代碼"
             class="w-full border-2 border-slate-200 rounded-xl px-4 py-3.5 text-center text-2xl font-black tracking-widest text-gray-800 focus:border-green-500 focus:outline-none transition"/>
           <p id="join-error-msg" class="text-xs text-red-500 font-bold mt-1.5 hidden-view"></p>
-          <button onclick="tryJoinGroup()"
-            class="w-full bg-slate-800 text-white font-bold py-3.5 rounded-xl active:scale-95 transition text-base">
+          <button onclick="tryJoinGroup()" class="w-full bg-slate-800 text-white font-bold py-3.5 rounded-xl active:scale-95 transition text-base">
             加入群組
           </button>
         </div>
@@ -1476,14 +1475,12 @@ const appState = {
       return;
     }
 
-    /* ── BOUND ── */
     const totalPoints = getGroupTotalPoints();
     const tickets = getTickets(totalPoints);
     const pct = Math.min(100, Math.round((totalPoints / maxPoints) * 100));
     const isUnlocked = members.length >= 2;
 
     container.innerHTML = `
-
       <div class="flex items-center justify-between mb-1">
         <h2 class="text-xl font-black text-gray-800">我的群組 👥</h2>
         <button onclick="openNotifications()" class="relative w-10 h-10 bg-white border border-slate-200 rounded-full flex items-center justify-center active:bg-slate-50 transition shadow-sm shrink-0" id="bell-btn-group">
@@ -1505,7 +1502,6 @@ const appState = {
             }
           </div>
         </div>
-
         ${!isUnlocked ? `
           <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-center">
             <p class="text-amber-800 font-bold text-base leading-snug">
@@ -1559,39 +1555,31 @@ const appState = {
 
       <section>
         <div class="flex items-center justify-between mb-3">
-          <h3 class="section-title mb-0">
-            <i class="fas fa-users text-blue-500"></i> 群組成員
-          </h3>
+          <h3 class="section-title mb-0"><i class="fas fa-users text-blue-500"></i> 群組成員</h3>
           <button onclick="showInviteModal()" class="text-xs text-green-600 font-bold flex items-center gap-1 bg-emerald-50 px-3 py-1.5 rounded-full border border-emerald-100 active:scale-95 transition">
             <i class="fas fa-plus"></i> 邀請
           </button>
         </div>
-
         <div class="space-y-3">
-${members.map(m => {
-            // 性別與 Icon 映射邏輯
+          ${members.map(m => {
             let iconClass = 'fa-solid fa-user';
-            let bgClass = 'bg-blue-100 text-blue-500'; // 預設男
-            if (m.gender === 'F') bgClass = 'bg-rose-100 text-rose-500'; // 女
+            let bgClass = 'bg-blue-100 text-blue-500';
+            if (m.gender === 'F') bgClass = 'bg-rose-100 text-rose-500';
             if (m.gender === 'U') {
-              iconClass = 'fa-solid fa-seedling'; // 新成員/未知
+              iconClass = 'fa-solid fa-seedling';
               bgClass = 'bg-emerald-100 text-emerald-500';
             }
-
             return `
             <div class="member-card">
               <div class="flex items-start gap-3">
                 <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-xl shrink-0 ${bgClass}">
                   <i class="${iconClass}"></i>
                 </div>
-
                 <div class="flex-1 min-w-0">
                   <div class="flex items-center justify-between gap-2">
                     <div class="flex items-center gap-1 flex-wrap min-w-0">
                       <span class="font-black text-gray-800 text-base">${m.name}</span>
-                      ${m.isYou 
-                        ? `<span onclick="openNicknameSheet(${m.id}, '${m.name.replace(/'/g, '&#39;')}')" class="text-slate-400 cursor-pointer text-sm ml-0.5 active:opacity-60">✏️</span>` 
-                        : '' /* 僅本人顯示編輯 Icon */}
+                      ${m.isYou ? `<span onclick="openNicknameSheet(${m.id}, '${m.name.replace(/'/g, '&#39;')}')" class="text-slate-400 cursor-pointer text-sm ml-0.5 active:opacity-60">✏️</span>` : ''}
                       <span class="text-[10px] bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded-full font-medium">${m.role}</span>
                     </div>
                     ${!m.isYou ? `
@@ -1619,8 +1607,7 @@ ${members.map(m => {
         </div>
       </section>
 
-      <button onclick="showInviteModal()"
-        class="w-full bg-emerald-50 border-2 border-emerald-200 text-emerald-700 font-bold py-3.5 rounded-2xl active:scale-95 transition flex items-center justify-center gap-2">
+      <button onclick="showInviteModal()" class="w-full bg-emerald-50 border-2 border-emerald-200 text-emerald-700 font-bold py-3.5 rounded-2xl active:scale-95 transition flex items-center justify-center gap-2">
         <i class="fas fa-share-nodes"></i> 查看我的邀請碼
       </button>
 
@@ -1641,9 +1628,7 @@ ${members.map(m => {
   /* ═══════════════════════════════════════════════
      NOTIFICATIONS
   ═══════════════════════════════════════════════ */
-  function hasUnread() {
-    return appState.notifications.some(n => !n.isRead);
-  }
+  function hasUnread() { return appState.notifications.some(n => !n.isRead); }
 
   function updateBadges() {
     const show = hasUnread();
@@ -1678,33 +1663,13 @@ ${members.map(m => {
     openModal('modal-notifications');
   }
 
-  function closeNotifications() {
-    closeModal('modal-notifications');
-  }
+  function closeNotifications() { closeModal('modal-notifications'); }
 
   function markAllRead() {
     appState.notifications.forEach(n => n.isRead = true);
     updateBadges();
     renderNotificationList();
     showToast('✅ 全部通知已設為已讀');
-  }
-
-  /* ═══════════════════════════════════════════════
-     ARTICLE TABS
-  ═══════════════════════════════════════════════ */
-  function switchArticleTab(tab) {
-    const tabs = ['recommend', 'edu'];
-    tabs.forEach(t => {
-      const btn = document.getElementById('tab-btn-' + t);
-      const content = document.getElementById('tab-content-' + t);
-      const isActive = t === tab;
-      if (btn) {
-        btn.className = isActive
-          ? 'flex-1 pb-2.5 text-sm font-bold text-green-600 border-b-2 border-green-600 transition'
-          : 'flex-1 pb-2.5 text-sm text-slate-400 border-b-2 border-transparent transition';
-      }
-      if (content) content.classList.toggle('hidden', !isActive);
-    });
   }
 
   /* ═══════════════════════════════════════════════
@@ -1757,7 +1722,7 @@ ${members.map(m => {
   /* ═══════════════════════════════════════════════
      DEBUG ERROR MENU & GENERIC STATE LOGIC
   ═══════════════════════════════════════════════ */
-let debugClicks = 0;
+  let debugClicks = 0;
   let debugClickTimer = null;
   function handleDebugTrigger() {
     debugClicks++;
@@ -1776,7 +1741,7 @@ let debugClicks = 0;
   function showDebugMenu() { document.getElementById('debug-menu').classList.remove('hidden'); }
   function hideDebugMenu() { document.getElementById('debug-menu').classList.add('hidden'); }
 
-const errorScenarios = [
+  const errorScenarios = [
     { icon: '📡', title: '系統連線異常', msg: '網路似乎有點不穩，請確認網路狀態後再試 (Err: 504/Offline)', btn: '重新載入' },
     { icon: '⚠️', title: '發生未知的錯誤', msg: '系統正在搶修中，請稍候再試 (Err: 500)', btn: '回首頁' },
     { icon: '🛠️', title: '系統維護中', msg: 'GO HEALTH 正在進行升級保養，預計於 HH:MM 恢復服務 (Err: 503)', btn: '' },
@@ -1785,7 +1750,7 @@ const errorScenarios = [
     { icon: '🔒', title: '此群組已解散', msg: '此群組已被房主解散，請向家人索取最新代碼 (Err: 410)', btn: '回首頁' }
   ];
 
-function triggerError(index) {
+  function triggerError(index) {
     hideDebugMenu();
     const s = errorScenarios[index];
     document.getElementById('state-icon').textContent = s.icon;
@@ -1793,7 +1758,6 @@ function triggerError(index) {
     document.getElementById('state-message').textContent = s.msg;
     
     const btn = document.getElementById('state-btn');
-    // 加上判斷：有文字才顯示，空字串就確實隱藏
     if (s.btn && s.btn.trim() !== '') {
       btn.textContent = s.btn;
       btn.classList.remove('hidden');
@@ -1805,14 +1769,9 @@ function triggerError(index) {
   }
   function simulateKickedOut() {
     hideDebugMenu();
-    // 1. 將狀態改為未綁定
     appState.group.isBound = false;
-    // 2. 強制重新渲染並跳轉到群組頁（會顯示建立/加入群組畫面）
     switchToGroup();
-    // 3. 彈出前端把關的 Toast 提示
-    setTimeout(() => {
-      showToast('⚠️ 您已不在原先的家庭群組中');
-    }, 300);
+    setTimeout(() => { showToast('⚠️ 您已不在原先的家庭群組中'); }, 300);
   }
   function hideGenericState() {
     document.getElementById('generic-state-template').classList.add('hidden');
