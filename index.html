@@ -709,9 +709,28 @@
             </div>
           </a>
         </div>
+
+        <!-- 合作夥伴專屬橫幅卡片 -->
+        <a href="https://www.fetnet.net/content/cbu/tw/digital-services/health/5g-telemedicine/partners/femh.html" target="_blank" 
+           class="block mt-4 bg-gradient-to-r from-teal-50 to-emerald-50 border border-teal-100 rounded-2xl p-4 shadow-sm active:scale-[0.98] transition no-underline text-inherit relative overflow-hidden">
+          <div class="flex items-center gap-4">
+            <!-- 防禦性 Logo 區塊 -->
+            <div class="w-16 h-16 bg-white rounded-xl flex items-center justify-center shrink-0 shadow-sm border border-teal-50 overflow-hidden">
+               <img src="image_af46de.png" alt="亞東紀念醫院" class="w-full h-full object-contain p-1" onerror="this.outerHTML='<i class=\\'fas fa-hospital text-2xl text-teal-600\\'></i>'">
+            </div>
+            <!-- 文案與微標籤區塊 -->
+            <div class="flex-1 min-w-0">
+              <h4 class="font-black text-teal-900 text-base leading-tight">亞東醫院 Health Online</h4>
+              <p class="text-xs text-teal-700 mt-1 font-medium">權威醫師遠距健康諮詢</p>
+              <div class="inline-flex items-center gap-1 mt-2 bg-white/60 text-teal-800 text-[10px] font-bold px-2.5 py-1 rounded-md border border-teal-100 shadow-sm">
+                前往了解 <i class="fas fa-arrow-up-right-from-square"></i>
+              </div>
+            </div>
+          </div>
+        </a>
       </section>
 
-      <div class="text-center text-[11px] text-slate-400 pb-4">
+      <div class="text-center text-[11px] text-slate-400 pb-4 mt-6">
         <span class="font-bold text-slate-300 mr-2">GO HEALTH</span>
         <a href="https://gohealth-policy-webview.vercel.app/" target="_blank" class="underline active:text-slate-500">政策與須知</a>
       </div>
@@ -830,7 +849,6 @@
       <div class="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center text-xl shrink-0">📋</div>
     </div>
     
-    <!-- 這裡將透過 JS 動態寫入週報內容 -->
     <div id="report-content-container"></div>
     
     <button onclick="closeWeeklyReport()" class="w-full text-slate-400 text-sm py-2 mt-4 active:opacity-60">關閉報告</button>
@@ -915,9 +933,7 @@
       </div>
     </div>
 
-    <div class="space-y-2.5" id="interaction-options">
-      <!-- JS 動態寫入中性關心訊息 -->
-    </div>
+    <div class="space-y-2.5" id="interaction-options"></div>
 
     <div class="mt-4 pt-4 border-t border-slate-100">
       <p class="text-xs text-slate-400 font-medium mb-2">或自己輸入：</p>
@@ -949,9 +965,7 @@
       <button onclick="markAllRead()" class="text-xs text-emerald-600 font-bold active:opacity-60 transition px-2 py-1">全部設為已讀</button>
     </div>
 
-    <div id="notification-list" class="space-y-2">
-      <!-- JS 動態寫入 -->
-    </div>
+    <div id="notification-list" class="space-y-2"></div>
 
     <button onclick="closeNotifications()" class="w-full text-slate-400 text-sm py-3 mt-3 active:opacity-60">關閉</button>
   </div>
@@ -1005,7 +1019,6 @@
       <button onclick="hideDebugMenu()"><i class="fas fa-times text-slate-400"></i></button>
     </div>
     <div class="max-h-[60vh] overflow-y-auto">
-      <!-- 新增：用來切換展示狀態的按鈕 -->
       <div class="bg-indigo-50 border-b border-indigo-100 p-4">
         <p class="text-xs text-indigo-800 font-bold mb-2">簡報展示專用</p>
         <button class="w-full bg-indigo-600 text-white font-bold py-2 rounded-lg active:scale-95 transition" onclick="toggleDemoState()">
@@ -1030,7 +1043,6 @@
   /* ═══════════════════════════════════════════════
      APP STATE & URL PARAMETERS
   ═══════════════════════════════════════════════ */
-  // 讀取 URL 參數，判斷是否為預設無資料狀態
   let isDemoEmpty = new URLSearchParams(window.location.search).get('state') === 'empty';
 
   const appState = {
@@ -1158,7 +1170,7 @@
   }
 
   /* ═══════════════════════════════════════════════
-     INTERACTION MODAL (已復原為區分房主/成員視角)
+     INTERACTION MODAL
   ═══════════════════════════════════════════════ */
   let _interactionTarget = null;
 
@@ -1166,7 +1178,6 @@
     _interactionTarget = { id: memberId, name: memberName };
     document.getElementById('interaction-title').textContent = `傳送關心給 ${memberName}`;
 
-    // 判斷當前操作者是否為房主
     const you = appState.group.members.find(m => m.isYou);
     const isHost = you && you.role === '房主';
 
@@ -1225,7 +1236,6 @@
   function openWeeklyReport() { 
     const container = document.getElementById('report-content-container');
     
-    // 定義豐富資料版 HTML
     const htmlRich = `
       <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2.5">👨‍👩‍👧 家族活躍表現</p>
       <div class="bg-emerald-50 border border-emerald-100 rounded-2xl p-4 mb-4">
@@ -1285,7 +1295,6 @@
       </div>
     `;
 
-    // 定義零數據版 HTML
     const htmlEmpty = `
       <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2.5">👨‍👩‍👧 家族活躍表現</p>
       <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-4">
@@ -1340,14 +1349,53 @@
   function closeWeeklyReport() { closeModal('modal-weekly-report'); }
 
   /* ═══════════════════════════════════════════════
-     RENDER GROUP VIEW (支援狀態切換)
+     RENDER GROUP VIEW 
   ═══════════════════════════════════════════════ */
   function renderGroupView() {
     const container = document.getElementById('group-content');
     const { isBound, streak, maxPoints, members } = appState.group;
 
     if (!isBound) {
-      // 略... 未綁定畫面保持不變
+      container.innerHTML = `
+        <div class="text-center pt-6 pb-2">
+          <div class="w-24 h-24 bg-emerald-50 rounded-3xl flex items-center justify-center mx-auto mb-4 text-5xl shadow-inner">🌱</div>
+          <h2 class="text-2xl font-black text-gray-800 mb-1">建立您的群組</h2>
+          <p class="text-slate-500 text-sm">只需兩步，立刻開始家庭健康挑戰！</p>
+        </div>
+        <div class="space-y-3">
+          <div class="flex items-start gap-3 bg-white rounded-2xl p-4 border border-slate-100 shadow-sm">
+            <div class="w-9 h-9 bg-green-600 text-white rounded-full flex items-center justify-center font-black text-base shrink-0 mt-0.5">1</div>
+            <div>
+              <p class="font-black text-gray-800 text-base">點擊「建立群組」成為房主</p>
+              <p class="text-xs text-slate-400 mt-1 leading-relaxed">系統將為您產生專屬 6 碼邀請代碼，您即成為群組房主。</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3 bg-white rounded-2xl p-4 border border-slate-100 shadow-sm">
+            <div class="w-9 h-9 bg-green-600 text-white rounded-full flex items-center justify-center font-black text-base shrink-0 mt-0.5">2</div>
+            <div>
+              <p class="font-black text-gray-800 text-base">分享代碼，邀請家人加入！</p>
+              <p class="text-xs text-slate-400 mt-1 leading-relaxed">將專屬代碼傳給家人，請他們輸入代碼加入，即可一起賺健康點！</p>
+            </div>
+          </div>
+        </div>
+        <button onclick="createGroupAndBind()" class="w-full bg-green-600 text-white font-bold py-4 rounded-2xl shadow-lg active:scale-95 transition text-lg flex items-center justify-center gap-2 mt-4">
+          <i class="fas fa-plus-circle"></i> 建立群組
+        </button>
+        <div class="flex items-center gap-3 my-4">
+          <div class="flex-1 h-px bg-slate-200"></div>
+          <span class="text-slate-400 text-xs">或輸入家人的代碼加入</span>
+          <div class="flex-1 h-px bg-slate-200"></div>
+        </div>
+        <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm space-y-3">
+          <input id="join-code-input" type="tel" inputmode="numeric" pattern="[0-9]*" maxlength="6"
+            placeholder="輸入 6 碼群組代碼"
+            class="w-full border-2 border-slate-200 rounded-xl px-4 py-3.5 text-center text-2xl font-black tracking-widest text-gray-800 focus:border-green-500 focus:outline-none transition"/>
+          <p id="join-error-msg" class="text-xs text-red-500 font-bold mt-1.5 hidden-view"></p>
+          <button onclick="tryJoinGroup()" class="w-full bg-slate-800 text-white font-bold py-3.5 rounded-xl active:scale-95 transition text-base">
+            加入群組
+          </button>
+        </div>
+      `;
       return;
     }
 
@@ -1446,7 +1494,6 @@
               bgClass = 'bg-emerald-100 text-emerald-500';
             }
 
-            // 【重點修改】根據 isDemoEmpty 切換 Activity Line 的文字
             const emptyTextHTML = `<p class="activity-line text-slate-400">近期尚無參與任務，快來完成今天的腦健康挑戰吧！</p>`;
             const richTextHTML = m.latestActivity 
               ? `<p class="activity-line">${m.name} 完成 <strong class="text-gray-700">${m.latestActivity.game}</strong> ${m.latestActivity.icon}，注入 <strong class="text-emerald-600">${m.latestActivity.points} 健康點</strong></p>` 
@@ -1509,13 +1556,12 @@
   }
 
   /* ═══════════════════════════════════════════════
-     TOGGLE DEMO STATE (切換展示狀態)
+     TOGGLE DEMO STATE
   ═══════════════════════════════════════════════ */
   function toggleDemoState() {
     hideDebugMenu();
     isDemoEmpty = !isDemoEmpty;
     
-    // 更新 URL 參數且不重新整理畫面，維持簡報順暢
     const url = new URL(window.location);
     if (isDemoEmpty) {
       url.searchParams.set('state', 'empty');
@@ -1552,7 +1598,6 @@
     renderGroupView();
   }
   function tryJoinGroup() {
-    // 省略實作細節，維持與先前一致
     appState.group.isBound = true;
     showToast('🎉 成功加入群組！');
     renderGroupView();
