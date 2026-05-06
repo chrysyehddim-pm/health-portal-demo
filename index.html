@@ -78,7 +78,6 @@
 
     .bottom-nav {
       position: fixed !important;
-      /* Safari 相容性修復：加入安全的 Fallback 與常數設定 */
       bottom: 24px !important;
       bottom: calc(constant(safe-area-inset-bottom) + 24px) !important;
       bottom: calc(env(safe-area-inset-bottom, 0px) + 24px) !important; 
@@ -173,7 +172,6 @@
       width: 0% !important;
     }
 
-    /* Safari 相容性修復：將 inset: 0 展開為上下左右 0，防止彈窗失效掉落底部 */
     .modal-overlay, .warn-modal-overlay, .report-modal-overlay, .interaction-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0; 
@@ -410,7 +408,6 @@
 
   <div id="view-hg-app" class="relative min-h-[100vh] cursor-pointer overflow-hidden" onclick="enterHealthService()">
     <img src="images/hg_home.jpg" alt="HG App 首頁" class="w-full h-[100vh] object-cover opacity-80" onerror="this.style.display='none'">
-    <!-- Safari 相容：替換 inset-0 -->
     <div class="absolute top-0 left-0 right-0 bottom-0 bg-slate-800" style="z-index:-1;"></div>
     <div class="absolute top-0 left-0 right-0 bottom-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
     <div class="absolute top-0 left-0 right-0 bottom-0 flex flex-col items-center justify-center text-white">
@@ -422,15 +419,14 @@
         <i class="fas fa-hand-pointer text-3xl text-white"></i>
       </div>
       <h2 class="text-xl font-bold mb-2 drop-shadow">點擊進入「健康挑戰」</h2>
-      <p class="text-sm text-white/80 bg-black/40 px-5 py-2 rounded-full">模擬從 HG APP 點擊 Webview 入口</p>
+      <p class="text-sm text-white/80 bg-black/40 px-5 py-2 rounded-full">模擬從外部連結/推播開啟</p>
     </div>
   </div>
 
   <div id="view-terms" class="hidden-view bg-white min-h-[100vh] flex flex-col">
+    <!-- 移除返回按鈕，保留左右墊片以置中標題 -->
     <header class="px-5 pt-5 pb-4 border-b border-slate-100 flex items-center justify-between sticky top-0 z-50 bg-white">
-      <button class="text-green-600 font-medium text-sm flex items-center active:opacity-60 transition" onclick="backToHgApp()">
-        <i class="fas fa-chevron-left mr-1.5"></i> 返回
-      </button>
+      <div class="w-12"></div>
       <span class="font-bold text-gray-800">授權服務</span>
       <div class="w-12"></div>
     </header>
@@ -513,16 +509,13 @@
 
   <div id="view-dashboard" class="hidden-view flex flex-col min-h-[100vh]">
 
+    <!-- 移除返回按鈕，保留左右墊片 -->
     <header class="bg-white/96 backdrop-blur px-4 py-3.5 border-b border-slate-100 sticky top-0 z-50 flex items-center justify-between">
-      <button class="text-slate-400 text-sm flex items-center active:opacity-60 transition" onclick="backToHgApp()">
-        <i class="fas fa-chevron-left mr-1.5"></i> 返回
-      </button>
       <div class="w-10"></div>
       <div class="w-10"></div>
     </header>
 
     <div class="px-4 pt-4 pb-1 flex justify-center">
-      <!-- Safari 相容：替換 onerror 中跳脫引號，避免 HTML 解析錯誤 -->
       <button type="button" onclick="handleDebugTrigger()" class="inline-flex items-center justify-center active:opacity-80 transition" aria-label="GO HEALTH Logo">
         <img src="images/logo.png" alt="GO HEALTH" class="h-9 w-auto object-contain" onerror="this.outerHTML='<h1 class=&quot;text-xl font-black text-green-700 tracking-wider&quot;>GO HEALTH</h1>'" />
       </button>
@@ -667,6 +660,648 @@
       </section>
 
       <section id="health-articles">
+        <div class="flex items-center justify-between mb-收到。基於你提出的現有系統慣例與使用者情境，此決策邏輯合理，權衡分析如下：
+
+### 決策與權衡分析 (Trade-offs)
+
+1. **移除頂部返回按鈕**：**正確**。外部瀏覽器無法控制 App 原生行為，移除無效的返回鍵能避免產生體驗斷點。
+2. **不新增「開啟 App」按鈕**：**可接受**。遵循 HAPPY GO 現有服務外開瀏覽器的既有慣例，能節省開發成本並維持介面乾淨。缺點是使用者需自行依賴 iOS 系統左上角的快速返回鍵，但這是 iOS 使用者的普遍習慣，風險可控。
+3. **維持現有 Toast 文案**：**正確**。考量到主要分享途徑為 LINE 等通訊軟體，過多的引導反而冗贅。
+
+### 介面結構最佳化
+
+配合「移除返回按鈕」的設定，我對介面頂部結構進行了合理化重構：
+* 將原本為了容納返回按鈕而存在的空白 `<header>` 進行整併。
+* 授權頁：置中顯示「授權服務」。
+* 首頁與群組頁：將 GO HEALTH Logo 直接上移至固定置頂的 `<header>` 內。這讓外部瀏覽器模式下的畫面更貼近標準 Web App，有效釋放了垂直螢幕空間。
+
+### 完整更新版程式碼
+
+請直接複製並覆蓋原檔案。此版本已整合外部瀏覽器 UI 調整、Safari 相容性修復、合作夥伴專屬卡片（無冗餘資訊版）以及狀態切換功能。
+
+```html
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GO HEALTH</title>
+  <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
+  <link href="[https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css](https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css)" rel="stylesheet">
+  <link href="[https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap](https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap)" rel="stylesheet">
+  <style>
+    :root {
+      --green-primary: #16a34a;
+      --green-light: #dcfce7;
+      --radius-card: 1.25rem;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      background-color: #f8fafc; 
+      font-family: 'Noto Sans TC', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .mobile-container {
+      max-width: 480px; 
+      margin: 0 auto;
+      background-color: #f8fafc;
+      min-height: 100vh;
+      box-shadow: none; 
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .fade-in { animation: fadeIn 0.3s ease-out forwards; }
+    .slide-up { animation: slideUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+    .hidden-view { display: none !important; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: none; }
+    }
+    @keyframes pulse {
+      0%   { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(22,163,74,0.65); }
+      70%  { transform: scale(1);    box-shadow: 0 0 0 18px rgba(22,163,74,0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(22,163,74,0); }
+    }
+    @keyframes shimmer {
+      0%   { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    @keyframes toastIn {
+      from { opacity: 0; transform: translateX(-50%) translateY(16px); }
+      to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+    @keyframes toastOut {
+      from { opacity: 1; transform: translateX(-50%) translateY(0); }
+      to   { opacity: 0; transform: translateX(-50%) translateY(16px); }
+    }
+    @keyframes barGrow {
+      from { width: 0%; }
+      to   { width: var(--bar-w); }
+    }
+
+    .pulse-pointer { animation: pulse 2s infinite; }
+
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 10px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+
+    .bottom-nav {
+      position: fixed !important;
+      bottom: 24px !important;
+      bottom: calc(constant(safe-area-inset-bottom) + 24px) !important;
+      bottom: calc(env(safe-area-inset-bottom, 0px) + 24px) !important; 
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+      width: calc(100% - 32px);
+      max-width: 448px;
+      z-index: 9999 !important;
+      background: rgba(255, 255, 255, 0.75) !important;
+      -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+      backdrop-filter: blur(16px) saturate(180%) !important;
+      box-shadow: 0 12px 30px -4px rgba(0, 0, 0, 0.15), 0 4px 10px -2px rgba(0, 0, 0, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      border-radius: 9999px;
+      display: flex;
+      padding: 6px 8px;
+    }
+    .nav-btn {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 0 8px;
+      cursor: pointer;
+      transition: color 0.2s;
+      font-size: 11px;
+      color: #94a3b8;
+      font-weight: 600;
+      border: none;
+      background: none;
+    }
+    .nav-btn.active { color: var(--green-primary); }
+    .nav-btn i { font-size: 21px; margin-bottom: 3px; }
+
+    .task-card {
+      background: #fff;
+      border: 1px solid #f1f5f9;
+      border-radius: var(--radius-card);
+      padding: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      transition: box-shadow 0.2s, transform 0.1s;
+      display: block;
+      text-decoration: none;
+      color: inherit;
+    }
+    .task-card:active { transform: scale(0.98); box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+
+    .shimmer-badge {
+      background: linear-gradient(90deg, #dcfce7 0%, #a7f3d0 40%, #dcfce7 80%);
+      background-size: 200% 100%;
+      animation: shimmer 2.5s linear infinite;
+    }
+
+    .points-card {
+      background: linear-gradient(135deg, #059669 0%, #0d9488 55%, #0e7490 100%);
+    }
+
+    .section-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #1e293b;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .member-card {
+      background: #fff;
+      border-radius: var(--radius-card);
+      padding: 1rem;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+    }
+
+    .progress-track {
+      height: 14px;
+      background: #f1f5f9;
+      border-radius: 9999px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      border-radius: 9999px;
+      background: linear-gradient(90deg, #16a34a, #0d9488);
+      animation: barGrow 0.8s cubic-bezier(0.34,1,0.64,1) forwards;
+    }
+    .progress-fill.locked {
+      background: #cbd5e1;
+      animation: none;
+      width: 0% !important;
+    }
+
+    .modal-overlay, .warn-modal-overlay, .report-modal-overlay, .interaction-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0; 
+      background: rgba(15,23,42,0.65);
+      z-index: 200;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      animation: fadeIn 0.2s ease;
+    }
+    .modal-sheet {
+      background: #fff;
+      border-radius: 1.5rem 1.5rem 0 0;
+      padding: 1.5rem 1.5rem 2.5rem;
+      width: 100%;
+      max-width: 414px;
+      animation: slideUp 0.35s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
+    }
+
+    .warn-modal-overlay {
+      background: rgba(15,23,42,0.7);
+      z-index: 300;
+      align-items: center;
+      padding: 1.5rem;
+    }
+    .warn-modal-box {
+      background: #fff;
+      border-radius: 1.5rem;
+      padding: 1.75rem;
+      width: 100%;
+      max-width: 360px;
+      animation: slideUp 0.3s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1e293b;
+      color: #fff;
+      padding: 10px 22px;
+      border-radius: 100px;
+      font-size: 14px;
+      z-index: 999;
+      white-space: nowrap;
+      animation: toastIn 0.3s ease forwards;
+      font-weight: 600;
+    }
+    .toast.hiding { animation: toastOut 0.3s ease forwards; }
+
+    .invite-code {
+      letter-spacing: 0.35em;
+      font-size: 2.8rem;
+      font-weight: 900;
+      color: var(--green-primary);
+      background: #f0fdf4;
+      border: 2px dashed #86efac;
+      border-radius: 1rem;
+      padding: 1rem 1.5rem;
+      text-align: center;
+    }
+
+    .kick-btn {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+      color: #64748b;
+      background: #f8fafc;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
+    .kick-btn:active { background: #e2e8f0; color: #475569; }
+
+    .activity-line {
+      font-size: 12px;
+      color: #64748b;
+      line-height: 1.5;
+      margin-top: 6px;
+      padding-top: 6px;
+      border-top: 1px dashed #e2e8f0;
+    }
+
+    .report-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(135deg, #f0fdf4, #ecfdf5);
+      border: 1.5px solid #a7f3d0;
+      border-radius: 1rem;
+      padding: 0.875rem 1rem;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      margin-top: 12px;
+    }
+    .report-banner:active { transform: scale(0.98); background: #d1fae5; }
+
+    .report-modal-overlay {
+      z-index: 250;
+    }
+    .report-modal-sheet {
+      background: #fff;
+      border-radius: 1.5rem 1.5rem 0 0;
+      padding: 1.5rem 1.5rem 2.5rem;
+      width: 100%;
+      max-width: 414px;
+      max-height: 85vh;
+      overflow-y: auto;
+      animation: slideUp 0.35s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
+    }
+
+    .stat-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 0.875rem;
+      padding: 0.875rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .stat-card.col {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .stat-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+
+    .exit-btn {
+      width: 100%;
+      border: 1.5px solid #fca5a5;
+      color: #ef4444;
+      background: #fff1f2;
+      border-radius: 1rem;
+      padding: 14px;
+      font-weight: 700;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .exit-btn:active { background: #fee2e2; transform: scale(0.98); }
+
+    .interaction-overlay {
+      z-index: 280;
+    }
+    .interaction-sheet {
+      background: #fff;
+      border-radius: 1.5rem 1.5rem 0 0;
+      padding: 1.25rem 1.25rem 2.5rem;
+      width: 100%;
+      max-width: 414px;
+      animation: slideUp 0.3s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
+    }
+    .msg-btn {
+      width: 100%;
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 1rem;
+      padding: 1rem 1.125rem;
+      text-align: left;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: #1e293b;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, transform 0.1s;
+      line-height: 1.45;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .msg-btn:active { background: #f0fdf4; border-color: #86efac; transform: scale(0.98); }
+    .msg-btn-icon {
+      font-size: 1.75rem;
+      flex-shrink: 0;
+    }
+
+    .msg-bubble {
+      margin-top: 8px;
+      padding: 8px 12px;
+      background: #fefce8;
+      border: 1px solid #fde68a;
+      border-radius: 0.75rem;
+      font-size: 12.5px;
+      color: #713f12;
+      line-height: 1.5;
+      position: relative;
+    }
+    .msg-bubble::before {
+      content: '';
+      position: absolute;
+      top: -7px;
+      left: 16px;
+      width: 0;
+      height: 0;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-bottom: 7px solid #fde68a;
+    }
+    .msg-bubble::after {
+      content: '';
+      position: absolute;
+      top: -5px;
+      left: 17px;
+      width: 0;
+      height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-bottom: 6px solid #fefce8;
+    }
+    @keyframes bubblePop {
+      0%   { opacity: 0; transform: scale(0.85) translateY(4px); }
+      70%  { transform: scale(1.03) translateY(0); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .msg-bubble { animation: bubblePop 0.35s cubic-bezier(0.34,1.4,0.64,1) forwards; }
+  </style>
+</head>
+<body>
+<div class="mobile-container" id="app-root">
+
+  <div id="view-hg-app" class="relative min-h-[100vh] cursor-pointer overflow-hidden" onclick="enterHealthService()">
+    <img src="images/hg_home.jpg" alt="HG App 首頁" class="w-full h-[100vh] object-cover opacity-80" onerror="this.style.display='none'">
+    <div class="absolute top-0 left-0 right-0 bottom-0 bg-slate-800" style="z-index:-1;"></div>
+    <div class="absolute top-0 left-0 right-0 bottom-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
+    <div class="absolute top-0 left-0 right-0 bottom-0 flex flex-col items-center justify-center text-white">
+      <div class="mb-4 text-center">
+        <p class="text-sm tracking-widest text-white/70 uppercase font-medium mb-1">Happy GO × Health</p>
+        <h1 class="text-4xl font-black drop-shadow-lg">GO HEALTH</h1>
+      </div>
+      <div class="pulse-pointer w-20 h-20 bg-green-600 rounded-full flex items-center justify-center mb-4 border-4 border-white/40 shadow-2xl">
+        <i class="fas fa-hand-pointer text-3xl text-white"></i>
+      </div>
+      <h2 class="text-xl font-bold mb-2 drop-shadow">點擊進入「健康挑戰」</h2>
+      <p class="text-sm text-white/80 bg-black/40 px-5 py-2 rounded-full">模擬從 HG APP 外開瀏覽器入口</p>
+    </div>
+  </div>
+
+  <div id="view-terms" class="hidden-view bg-white min-h-[100vh] flex flex-col">
+    <!-- 移除返回按鈕，置中顯示標題 -->
+    <header class="px-5 py-4 border-b border-slate-100 flex items-center justify-center sticky top-0 z-50 bg-white">
+      <span class="font-bold text-gray-800">授權服務</span>
+    </header>
+
+    <div class="flex-1 px-6 py-6 flex flex-col h-full overflow-hidden">
+      <div class="text-center mb-6 shrink-0">
+        <div class="w-20 h-20 bg-emerald-50 text-emerald-600 rounded-3xl flex items-center justify-center text-4xl mx-auto mb-4 shadow-inner">
+          <i class="fas fa-shield-heart"></i>
+        </div>
+        <h1 class="text-2xl font-black text-gray-800 leading-tight">GO HEALTH<br>服務授權條款</h1>
+        <p class="text-gray-500 text-sm mt-2 leading-relaxed">請詳細閱讀下方服務條款，<br>閱讀至底端後方可同意進入服務。</p>
+      </div>
+
+      <div id="terms-content" class="bg-slate-50 rounded-2xl p-5 border border-slate-200 mb-6 flex-1 overflow-y-auto custom-scrollbar">
+        <h3 class="font-bold text-gray-700 text-sm border-b border-slate-200 pb-2.5 flex items-center gap-2 mb-4">
+          <i class="fas fa-file-contract text-green-600"></i> 正式服務條款
+        </h3>
+        <div class="text-sm text-gray-600 space-y-4 leading-relaxed pb-4">
+          <p><strong>【HAPPY GO APP GO HEALTH服務條款】</strong></p>
+          <p>GO HEALTH服務(以下簡稱本服務)係由鼎鼎聯合行銷股份有限公司(以下簡稱本公司)所提供 HAPPY GO App功能之一。當您開始使用本服務時，軟體系統將依您所要求的服務內容提供相關服務，並擷取提供該等服務所必須蒐集之可供辨識個人之資料，請務必詳閱以下服務內容及個資條款，若您不同意相關內容或提供個人資料，請立即停止使用本服務，如您繼續使用本服務時，將視為同意以下內容：</p>
+          <p><strong>非醫學建議聲明</strong><br>GO HEALTH服務並沒有要提供醫療診斷、治療、或醫療建議的意思。GO HEALTH服務及連結之第三⽅網站所提供的資訊、服務、產品、內容應當只做為參考。如果您有任何有關於醫療、健康診斷、治療選項等問題，請務必向專業的醫師尋求諮詢與建議。</p>
+          <p><strong>同意表示</strong><br>使用本服務之前，您應閱讀並決定是否同意本服務各項條款。經您同意，將為有效且不可撤銷。若您未同意本服務條款，您將無法使用本服務各項功能。如您為未成年人，須經過家長或監護人同意後，方能使用本服務。本服務為快樂購聯合集點卡及 HAPPY GO App之延伸功能，除本服務條款外，您亦應遵照快樂購聯合集點卡服務辦法、HAPPY GO App 服務條款等本公司所發布之各條款、規定、辦法及說明使用本服務。</p>
+          <p><strong>條款的修改或變更</strong><br>本公司有權利隨時修改或變更本服務條款之內容，並透過 HAPPY GO官方網站或 HAPPY GO App公告或以其他方式通知，若會員於本服務條款修改或變更公告/通知後15日內未提出反對之意思表示，視同會員已閱讀、瞭解並同意接受該等修改或變更。</p>
+          <p><strong>停權</strong><br>本公司認為您違反本條款或有違反之虞時，得在不事先通知您的情形下停止您的使用本服務或快樂購卡卡友身分及相關權利。自停權時起，您於快樂購及本服務的所有使用權不論任何理由均為消滅。</p>
+          <p><strong>個資隱私權</strong><br>個人資料之蒐集、處理與利用：基於提供健康內容建議、個人化服務推薦、健康趨勢分析、會員分群管理、行銷優化、廣告推播及服務改善等特定目的之合理關聯範圍內，本公司得蒐集、處理及利用您於使用本服務時所提供或產生之下列相關資訊：<br>1. 帳號與基本資料：包括姓名、出生年月日、性別。<br>2. 裝置與使用紀錄資料。<br>3. 健康服務、問卷及態度標籤資料。<br>4. 遊戲與互動行為資料。</p>
+          <p><strong>行銷、廣告與推播服務</strong><br>為提升服務品質及使用體驗，本公司可能依據您所提供之資訊進行分析、分群及標籤建立，以提供個人化內容推薦。如您不希望接收推播通知，可自行透過HAPPY GO App之系統設定關閉推播通知功能。</p>
+          <p><strong>資料處理與傳輸</strong><br>當您使用本服務時，您同意本服務根據本隱私權保護政策所述內容，對您的資訊進行資料處理、分享、傳輸和使用。無論您所居住的國家/地區為何，您都授權我們根據本隱私權保護條款在您所居住國家/地區以外之處傳輸、處理、儲存和使用您的資訊以及向您提供服務。</p>
+          <p><strong>當事人權利行使</strong><br>您可隨時要求刪除您的於本服務中留存之個人資料，在您要求刪除個人資訊後，依本服務系統運作流程經過一段時間才會從伺服器中完全刪除。如擬查詢、閱覽或刪除個人資料時，請至HAPPY GO官網或App聯繫文字客服 (服務時間：週一至週五 9:00~18:00)。</p>
+          <p><strong>服務的提供</strong><br>於本公司判斷有必要時，得在不事先通知您的情形下隨時變更本服務的全部或部分內容，並中止提供本服務。</p>
+          <p><strong>智慧健康服務非醫療建議之聲明</strong><br>本服務所提供之一切內容，僅供一般性參考，並非醫療服務，亦不構成任何形式之醫療診斷、治療、處方、醫療建議或其他醫療行為。您使用本服務、接受相關內容或與本公司進行之任何互動，均不構成醫病關係、診療關係、諮詢關係或其他專業醫療服務關係。</p>
+          <p><strong>健康點數</strong><br>本服務提供之「健康點數」非等同於 HAPPY GO 點數。健康點數採雙軌累積制度，除累積於個人帳戶外，亦將同步計入群組積分。群組累積積分以每週為一期進行統計，並於每週結算後重置重新計算。健康點數之有效期間，自會員取得點數之日起至次年度十二月三十一日止。</p>
+          <p><strong>家庭群組</strong><br>嚴禁發送、分享或散布涉及暴力、歧視、騷擾或其他可能造成他人不適之內容。嚴禁偽造或冒用他人身分。</p>
+          <p><strong>服務停止或中斷</strong><br>如遇天災或其他不可抗力之因素，或非本公司所得控制之事由，本公司將逕行暫停或中斷本服務之全部或一部。</p>
+          <p><strong>其他</strong><br>本服務條款解釋、補充及適用均以中華民國法令為準據法。如有任何問題，請至HAPPY GO官網或App聯繫文字客服 (服務時間：週一至週五 9:00~18:00)。<br>(2026.04)</p>
+          <p id="terms-bottom-marker" class="text-center text-emerald-600 font-bold mt-6 pb-2">--- 已到達底端 ---</p>
+        </div>
+      </div>
+
+      <div class="mt-auto shrink-0">
+        <button id="btn-agree" disabled onclick="agreeAndStart()"
+          class="w-full bg-slate-300 text-white font-bold py-4 rounded-2xl shadow-none transition text-lg cursor-not-allowed">
+          請先閱讀完畢並滑動到底部
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="view-dashboard" class="hidden-view flex flex-col min-h-[100vh]">
+
+    <!-- 移除返回按鈕，整併 Logo 至 Header 以最佳化垂直空間 -->
+    <header class="bg-white/96 backdrop-blur px-4 py-3 border-b border-slate-100 sticky top-0 z-50 flex items-center justify-center">
+      <button type="button" onclick="handleDebugTrigger()" class="inline-flex items-center justify-center active:opacity-80 transition" aria-label="GO HEALTH Logo">
+        <img src="images/logo.png" alt="GO HEALTH" class="h-8 w-auto object-contain" onerror="this.outerHTML='<h1 class=&quot;text-lg font-black text-green-700 tracking-wider&quot;>GO HEALTH</h1>'" />
+      </button>
+    </header>
+
+    <div class="bg-amber-50 text-amber-800 px-4 py-2 text-xs flex items-center border-b border-amber-100 gap-2">
+      <i class="fas fa-bullhorn text-amber-500"></i>
+      <span class="truncate">🎉 歡慶上線！本月天天登入完成挑戰，再抽 1000 點</span>
+    </div>
+
+    <div class="flex-1 overflow-y-auto no-scrollbar p-4 space-y-6 pb-28">
+
+      <div>
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-xl font-black text-gray-800">早安！今天也要元氣滿滿 ☀️</h2>
+          <button onclick="openNotifications()" class="relative w-10 h-10 bg-white border border-slate-200 rounded-full flex items-center justify-center active:bg-slate-50 transition shadow-sm shrink-0" id="bell-btn-dash">
+            <i class="fas fa-bell text-slate-400 text-base"></i>
+            <span id="bell-badge-dash" class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white hidden"></span>
+          </button>
+        </div>
+        <div class="points-card rounded-2xl p-5 text-white shadow-xl relative overflow-hidden">
+          <div class="absolute -right-8 -top-8 w-36 h-36 bg-white/10 rounded-full"></div>
+          <div class="absolute right-16 -bottom-12 w-28 h-28 bg-white/10 rounded-full"></div>
+          <div class="relative z-10">
+            <p class="text-emerald-100 text-sm mb-1 font-medium flex items-center gap-1.5">
+              我的健康點 (Pts)
+              <button onclick="openModal('modal-points-info')" class="w-5 h-5 rounded-full bg-white/20 text-white/80 text-[10px] font-black flex items-center justify-center hover:bg-white/30 transition active:scale-90 shrink-0 leading-none">?</button>
+            </p>
+            <div class="flex items-baseline mb-4">
+              <span class="text-5xl font-black tracking-tight">1,200</span>
+              <span class="text-base ml-2 opacity-75">點</span>
+            </div>
+            <div class="bg-black/20 rounded-xl p-2.5 flex items-center gap-2 text-xs">
+              <i class="fa-solid fa-lock text-emerald-200"></i>
+              <span class="text-emerald-50">健康點兌換商城籌備中，敬請期待！</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section>
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="section-title mb-0">
+            <i class="fa-solid fa-star text-sky-500"></i> 新手專屬任務
+          </h3>
+          <span class="text-xs text-sky-600 bg-sky-50 px-2.5 py-1 rounded-full border border-sky-100 font-medium">僅限一次</span>
+        </div>
+
+        <div class="bg-sky-50 border border-sky-100 rounded-2xl p-4 flex items-center gap-3 shadow-sm active:scale-[0.98] transition cursor-pointer">
+          <div class="w-11 h-11 bg-sky-100 rounded-xl flex items-center justify-center shrink-0">
+            <i class="fa-solid fa-clipboard-question text-sky-500 text-lg"></i>
+          </div>
+          <div class="flex-1 min-w-0">
+            <h4 class="font-bold text-gray-800 text-base">健康大調查</h4>
+            <p class="text-xs text-slate-500 mt-0.5">只需 1 分鐘，完成即領獎勵</p>
+          </div>
+          <div class="flex flex-col items-end shrink-0 gap-1.5">
+            <span class="shimmer-badge text-emerald-700 font-bold text-xs px-2.5 py-1 rounded-full">+ 300 點</span>
+            <span class="text-sky-600 text-xs font-bold flex items-center gap-0.5">立即填寫 <i class="fa-solid fa-arrow-right text-[10px]"></i></span>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="section-title mb-0">
+            <i class="fa-solid fa-crown text-amber-500"></i> 限定健康任務
+          </h3>
+          <span class="text-xs text-slate-400 bg-amber-50 text-amber-700 px-2.5 py-1 rounded-full border border-amber-100 font-medium">每月限定</span>
+        </div>
+
+        <a href="[https://ad8test.vercel.app/](https://ad8test.vercel.app/)" target="_blank" class="task-card flex items-center gap-3">
+          <div class="w-14 h-14 bg-amber-50 rounded-2xl flex items-center justify-center shrink-0">
+            <i class="fa-solid fa-brain text-amber-500 text-2xl"></i>
+          </div>
+          <div class="flex-1 min-w-0">
+            <h4 class="font-bold text-gray-800 text-base leading-tight">幸福柑仔店<br>大腦靈活度測試</h4>
+            <p class="text-xs text-slate-400 mt-0.5">測您是不是金牌店長！</p>
+          </div>
+          <div class="flex flex-col items-end shrink-0 gap-1.5">
+            <span class="shimmer-badge text-emerald-700 font-bold text-xs px-2.5 py-1 rounded-full">+ 200 點</span>
+            <span class="text-blue-600 text-xs font-bold flex items-center gap-0.5">
+              開始測驗 <i class="fa-solid fa-arrow-right text-[10px]"></i>
+            </span>
+          </div>
+        </a>
+      </section>
+
+      <section>
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="section-title mb-0">
+            <i class="fa-regular fa-calendar-check text-blue-500"></i> 每日賺點任務
+          </h3>
+          <span class="text-xs text-slate-400 bg-slate-100 px-2.5 py-1 rounded-full">今日完成 0/3</span>
+        </div>
+
+        <div class="space-y-3">
+
+          <a href="[https://concentration-ad.vercel.app/](https://concentration-ad.vercel.app/)" target="_blank" class="task-card flex items-center gap-3">
+            <div class="w-11 h-11 bg-blue-50 rounded-xl flex items-center justify-center shrink-0">
+              <i class="fa-solid fa-eye text-blue-500 text-lg"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h4 class="font-bold text-gray-800 text-base">眼力極限考驗</h4>
+              <p class="text-xs text-slate-400 mt-0.5">專注力大挑戰</p>
+            </div>
+            <div class="flex flex-col items-end shrink-0 gap-1.5">
+              <span class="shimmer-badge text-emerald-700 font-bold text-xs px-2.5 py-1 rounded-full">+ 100 點</span>
+              <span class="text-blue-600 text-xs font-bold flex items-center gap-0.5">去挑戰 <i class="fa-solid fa-arrow-right text-[10px]"></i></span>
+            </div>
+          </a>
+
+          <a href="[https://memory-game-ad.vercel.app/](https://memory-game-ad.vercel.app/)" target="_blank" class="task-card flex items-center gap-3">
+            <div class="w-11 h-11 bg-purple-50 rounded-xl flex items-center justify-center shrink-0">
+              <i class="fa-solid fa-clock-rotate-left text-purple-500 text-lg"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h4 class="font-bold text-gray-800 text-base">生活好時光</h4>
+              <p class="text-xs text-slate-400 mt-0.5">記憶力大考驗</p>
+            </div>
+            <div class="flex flex-col items-end shrink-0 gap-1.5">
+              <span class="shimmer-badge text-emerald-700 font-bold text-xs px-2.5 py-1 rounded-full">+ 100 點</span>
+              <span class="text-blue-600 text-xs font-bold flex items-center gap-0.5">去挑戰 <i class="fa-solid fa-arrow-right text-[10px]"></i></span>
+            </div>
+          </a>
+
+          <a href="[https://execution.vercel.app/](https://execution.vercel.app/)" target="_blank" class="task-card flex items-center gap-3">
+            <div class="w-11 h-11 bg-orange-50 rounded-xl flex items-center justify-center shrink-0">
+              <i class="fa-solid fa-store text-orange-500 text-lg"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h4 class="font-bold text-gray-800 text-base">24H 一日店長</h4>
+              <p class="text-xs text-slate-400 mt-0.5">執行力大考驗</p>
+            </div>
+            <div class="flex flex-col items-end shrink-0 gap-1.5">
+              <span class="shimmer-badge text-emerald-700 font-bold text-xs px-2.5 py-1 rounded-full">+ 100 點</span>
+              <span class="text-blue-600 text-xs font-bold flex items-center gap-0.5">去挑戰 <i class="fa-solid fa-arrow-right text-[10px]"></i></span>
+            </div>
+          </a>
+
+        </div>
+      </section>
+
+      <section id="health-articles">
         <div class="flex items-center justify-between mb-3">
           <h3 class="section-title mb-0">
             <span class="text-lg">🏥</span> 醫師嚴選 ‧ 健康指南
@@ -697,11 +1332,9 @@
           </a>
         </div>
 
-        <!-- 合作夥伴專屬橫幅卡片 (Safari 相容版) -->
-        <a href="https://www.fetnet.net/content/cbu/tw/digital-services/health/5g-telemedicine/partners/femh.html" target="_blank" 
+        <a href="[https://www.fetnet.net/content/cbu/tw/digital-services/health/5g-telemedicine/partners/femh.html](https://www.fetnet.net/content/cbu/tw/digital-services/health/5g-telemedicine/partners/femh.html)" target="_blank" 
            class="block mt-4 bg-gradient-to-r from-teal-50 to-emerald-50 border border-teal-100 rounded-2xl p-4 shadow-sm active:scale-[0.98] transition no-underline text-inherit relative overflow-hidden">
           <div class="flex items-center gap-4">
-            <!-- 確保帶入正確的 images/ 路徑，防禦性 onerror 同樣更新 HTML 實體 -->
             <div class="w-16 h-16 bg-white rounded-xl flex items-center justify-center shrink-0 shadow-sm border border-teal-50 overflow-hidden">
                <img src="images/femh-icon.png" alt="亞東紀念醫院" class="w-full h-full object-contain p-1" onerror="this.outerHTML='<i class=&quot;fas fa-hospital text-2xl text-teal-600&quot;></i>'">
             </div>
@@ -718,7 +1351,7 @@
 
       <div class="text-center text-[11px] text-slate-400 pb-4 mt-6">
         <span class="font-bold text-slate-300 mr-2">GO HEALTH</span>
-        <a href="https://gohealth-policy-webview.vercel.app/" target="_blank" class="underline active:text-slate-500">政策與須知</a>
+        <a href="[https://gohealth-policy-webview.vercel.app/](https://gohealth-policy-webview.vercel.app/)" target="_blank" class="underline active:text-slate-500">政策與須知</a>
       </div>
     </div>
 
@@ -734,12 +1367,10 @@
 
   <div id="view-group" class="hidden-view flex flex-col min-h-[100vh]">
 
-    <header class="bg-white/96 backdrop-blur px-4 py-3.5 border-b border-slate-100 sticky top-0 z-50 flex items-center justify-between">
-      <button class="text-slate-400 text-sm flex items-center active:opacity-60 transition" onclick="backToHgApp()">
-        <i class="fas fa-chevron-left mr-1.5"></i> 返回
+    <header class="bg-white/96 backdrop-blur px-4 py-3 border-b border-slate-100 sticky top-0 z-50 flex items-center justify-center">
+      <button type="button" onclick="handleDebugTrigger()" class="inline-flex items-center justify-center active:opacity-80 transition" aria-label="GO HEALTH Logo">
+        <img src="images/logo.png" alt="GO HEALTH" class="h-8 w-auto object-contain" onerror="this.outerHTML='<h1 class=&quot;text-lg font-black text-green-700 tracking-wider&quot;>GO HEALTH</h1>'" />
       </button>
-      <div class="flex-1"></div>
-      <div class="w-10"></div>
     </header>
 
     <div class="flex-1 overflow-y-auto no-scrollbar p-4 space-y-5 pb-28" id="group-content">
@@ -998,7 +1629,6 @@
 </div>
 
 <div id="debug-menu" class="fixed inset-0 z-[500] hidden flex items-center justify-center p-6">
-  <!-- Safari 相容：替換 inset-0 -->
   <div class="absolute top-0 left-0 right-0 bottom-0 bg-black/60" onclick="hideDebugMenu()"></div>
   <div class="bg-white w-full rounded-[1.5rem] overflow-hidden relative z-10 max-w-[360px]">
     <div class="bg-slate-800 text-white p-4 font-bold text-sm flex justify-between items-center">
@@ -1537,7 +2167,7 @@
 
       <div class="text-center text-[11px] text-slate-400 pb-4 mt-6">
         <span class="font-bold text-slate-300 mr-2">GO HEALTH</span>
-        <a href="https://gohealth-policy-webview.vercel.app/" target="_blank" class="underline active:text-slate-500">政策與須知</a>
+        <a href="[https://gohealth-policy-webview.vercel.app/](https://gohealth-policy-webview.vercel.app/)" target="_blank" class="underline active:text-slate-500">政策與須知</a>
       </div>
     `;
   }
