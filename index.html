@@ -1507,6 +1507,39 @@
     showToast(`已切換為：${isDemoEmpty ? '無資料狀態' : '有互動紀錄狀態'}`);
   }
 
+
+  /* ═══════════════════════════════════════════════
+     GROUP MEMBER ACTIONS
+  ═══════════════════════════════════════════════ */
+  function exitGroup() {
+    openWarnModal(
+      '確認退出群組？',
+      '退出後將回到尚未建立群組狀態',
+      '退出後，您本週貢獻的健康點將從群組總分中扣除，但個人健康點不受影響。',
+      () => {
+        appState.group.isBound = false;
+        renderGroupView();
+        showToast('您已退出群組');
+      }
+    );
+  }
+
+  function kickMember(memberId) {
+    const member = appState.group.members.find(m => m.id === memberId);
+    if (!member) return;
+
+    openWarnModal(
+      '確認移出成員？',
+      member.name,
+      '移出後，該成員本週貢獻的健康點將從群組總分中扣除。',
+      () => {
+        appState.group.members = appState.group.members.filter(m => m.id !== memberId);
+        renderGroupView();
+        showToast(`已將 ${member.name} 移出群組`);
+      }
+    );
+  }
+
   /* ═══════════════════════════════════════════════
      MISC & DEBUG LOGIC
   ═══════════════════════════════════════════════ */
