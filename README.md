@@ -1,15 +1,20 @@
-# GO HEALTH MVP 前端 Prototype
+# GO HEALTH Prototype
 
-這是 GO HEALTH 專案 MVP 階段的前端展示與 UI 規格參考庫。
+## 頁面入口
 
-## 📁 重要文件導讀
-開發團隊請務必優先閱讀以下文件，以確保實作邏輯與最新規格對齊：
+- `index.html`：GO HEALTH 首頁（Vercel 預設入口）
+- `app-entry.html`：HAPPY GO APP 入口模擬，點選「健康挑戰」進入首次授權頁
+- `terms.html`：首次授權／同意頁
+- `group.html`：群組頁
+- `error-simulator.html`：錯誤情境模擬
 
-* 🔗 [GO HEALTH 架構與業務邏輯說明 (GoHealth_Architecture.md)](./GoHealth_Architecture.md)
-  * 內含最新定案之「全週點數追溯」、「1+2 文章派發機制」與「前端 UI 組件規範」。
-* 🔗 請搭配 Email 附件的 **《功能規格總表 (Excel)》** 進行開發評估。
+## 群組狀態測試
 
-## 💻 關於此代碼庫
-* 本庫採用 HTML + Tailwind CSS 構建。
-* `images/` 資料夾僅供 Demo 展示（如 HG APP 入口模擬），實作時請忽略。
-* `<script>` 區塊內的資料皆為假資料，僅供 Prototype 互動展示，實作請以 API 規格為準。
+- `group.html`：一般群組狀態
+- `group.html?state=empty`：近期無參與賺點任務狀態
+
+## 部署說明
+
+本資料夾可直接放在 Vercel 專案根目錄。CSS、JavaScript 與圖片的相對路徑已依目前資料夾結構設定。
+
+`家事達人`尚未提供正式遊戲網址，目前點擊時會顯示「遊戲連結待設定」。取得網址後，請在 `index.html` 更新該卡片的 `href`。
