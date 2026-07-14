@@ -10,6 +10,8 @@
     body {
       background-color: #f8fafc; 
       font-family: 'Noto Sans TC', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
       -webkit-tap-highlight-color: transparent;
     }
 
@@ -95,7 +97,7 @@
       padding: 10px 0 8px;
       cursor: pointer;
       transition: color 0.2s;
-      font-size: 11px;
+      font-size: 15px;
       color: #94a3b8;
       font-weight: 600;
       border: none;
@@ -108,7 +110,7 @@
       background: #fff;
       border: 1px solid #f1f5f9;
       border-radius: var(--radius-card);
-      padding: 1rem;
+      padding: 1.125rem;
       box-shadow: 0 2px 8px rgba(0,0,0,0.05);
       transition: box-shadow 0.2s, transform 0.1s;
       display: block;
@@ -128,7 +130,7 @@
     }
 
     .section-title {
-      font-size: 1rem;
+      font-size: 1.25rem;
       font-weight: 700;
       color: #1e293b;
       display: flex;
@@ -206,7 +208,7 @@
       color: #fff;
       padding: 10px 22px;
       border-radius: 100px;
-      font-size: 14px;
+      font-size: 16px;
       z-index: 999;
       white-space: nowrap;
       animation: toastIn 0.3s ease forwards;
@@ -227,7 +229,7 @@
     }
 
     .kick-btn {
-      font-size: 11px;
+      font-size: 15px;
       padding: 4px 10px;
       border-radius: 8px;
       border: 1px solid #cbd5e1;
@@ -241,13 +243,97 @@
     .kick-btn:active { background: #e2e8f0; color: #475569; }
 
     .activity-line {
-      font-size: 12px;
+      font-size: 16px;
       color: #64748b;
       line-height: 1.5;
       margin-top: 6px;
       padding-top: 6px;
       border-top: 1px dashed #e2e8f0;
     }
+
+    /* 熟齡友善閱讀規則：重要資訊不低於 16px，卡片與操作文字保持清楚行距。 */
+    body[data-page="home"] .text-xs,
+    body[data-page="group"] .text-xs,
+    body[data-page="terms"] .text-xs,
+    body[data-page="exchange"] .text-xs { font-size: 1rem !important; line-height: 1.55 !important; }
+
+    body[data-page="home"] .text-sm,
+    body[data-page="group"] .text-sm,
+    body[data-page="terms"] .text-sm,
+    body[data-page="exchange"] .text-sm { font-size: 1.0625rem !important; line-height: 1.6 !important; }
+
+    body[data-page="home"] .text-base,
+    body[data-page="group"] .text-base,
+    body[data-page="terms"] .text-base,
+    body[data-page="exchange"] .text-base { font-size: 1.125rem !important; line-height: 1.55 !important; }
+
+    body[data-page="home"] .task-card h4 { font-size: 1.125rem; line-height: 1.45; }
+    body[data-page="home"] .task-card p { color: #475569 !important; }
+    body[data-page="home"] button,
+    body[data-page="group"] button,
+    body[data-page="terms"] button,
+    body[data-page="exchange"] button { min-height: 48px; }
+    body[data-page="home"] .shimmer-badge { font-size: 0.9375rem !important; }
+    body[data-page="home"] .nav-btn,
+    body[data-page="group"] .nav-btn { min-height: 60px; }
+
+    .exchange-entry {
+      width: 100%;
+      min-height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 14px;
+      color: #065f46;
+      background: rgba(255,255,255,.94);
+      border: 1px solid rgba(167,243,208,.9);
+      border-radius: 14px;
+      font-weight: 800;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(6,95,70,.12);
+    }
+    .exchange-entry small { display: block; margin-top: 2px; color: #047857; font-size: 15px; font-weight: 600; }
+
+    .hospital-service-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px;
+      border-radius: 18px;
+      text-decoration: none;
+      transition: transform .12s ease, box-shadow .12s ease;
+    }
+    .hospital-service-card:active { transform: scale(.985); }
+    .hospital-service-card .service-action { font-size: 16px; font-weight: 800; }
+
+    .exchange-summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 12px 0;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 16px;
+    }
+    .exchange-summary-row:last-child { border-bottom: 0; }
+    .exchange-stepper {
+      display: grid;
+      grid-template-columns: 56px minmax(120px, 1fr) 56px;
+      align-items: center;
+      gap: 12px;
+    }
+    .exchange-stepper button {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      border: 2px solid #a7f3d0;
+      background: #ecfdf5;
+      color: #047857;
+      font-size: 28px;
+      font-weight: 900;
+    }
+    .exchange-stepper button:disabled { opacity: .35; }
 
     .report-banner {
       display: flex;
@@ -337,7 +423,7 @@
       border-radius: 1rem;
       padding: 1rem 1.125rem;
       text-align: left;
-      font-size: 0.9375rem;
+      font-size: 1rem;
       font-weight: 600;
       color: #1e293b;
       cursor: pointer;
@@ -359,7 +445,7 @@
       background: #fefce8;
       border: 1px solid #fde68a;
       border-radius: 0.75rem;
-      font-size: 12.5px;
+      font-size: 16px;
       color: #713f12;
       line-height: 1.5;
       position: relative;

@@ -1,5 +1,12 @@
 
 window.GOHEALTH_DATA = {
+  exchange: {
+    healthPointBalance: 1200,
+    healthPointsPerHappyGoPoint: 500,
+    limitedPointValidityDays: 180,
+    immediateCredit: true,
+    refundableAfterSuccess: false
+  },
   initialAppState: {
     group: {
       isBound: true,
