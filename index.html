@@ -17,15 +17,17 @@
 <img alt="GO HEALTH" class="h-8 w-auto object-contain" onerror="this.outerHTML='&lt;h1 class=&quot;text-lg font-black text-green-700 tracking-wider&quot;&gt;GO HEALTH&lt;/h1&gt;'" src="images/logo.png">
 </img></button>
 </header>
-<div class="bg-amber-50 text-amber-800 px-4 py-2 text-xs flex items-center border-b border-amber-100 gap-2">
-<i class="fas fa-bullhorn text-amber-500"></i>
-<span class="truncate">做任務集健康點｜建立群組週週抽 HAPPY GO 點數</span>
+<div class="announcement-bar bg-amber-50 text-amber-800 px-4 py-2 border-b border-amber-100">
+<i class="fas fa-bullhorn text-amber-500 shrink-0" aria-hidden="true"></i>
+<div class="announcement-viewport" id="announcement-viewport" tabindex="0" aria-label="最新公告">
+<div class="announcement-track" id="announcement-track"></div>
+</div>
 </div>
 <div class="flex-1 overflow-y-auto no-scrollbar p-4 space-y-6 pb-28">
 <div>
 <div class="flex items-center justify-between mb-3">
 <h2 class="text-xl font-black text-gray-800">早安！今天也要元氣滿滿 ☀️</h2>
-<button class="relative w-10 h-10 bg-white border border-slate-200 rounded-full flex items-center justify-center active:bg-slate-50 transition shadow-sm shrink-0" id="bell-btn-dash" onclick="openNotifications()">
+<button aria-label="開啟通知中心" class="round-icon-btn relative w-12 h-12 bg-white border border-slate-200 rounded-full flex items-center justify-center active:bg-slate-50 transition shadow-sm shrink-0" id="bell-btn-dash" onclick="openNotifications()">
 <i class="fas fa-bell text-slate-400 text-base"></i>
 <span class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white hidden" id="bell-badge-dash"></span>
 </button>
@@ -36,16 +38,16 @@
 <div class="relative z-10">
 <p class="text-emerald-100 text-sm mb-1 font-medium flex items-center gap-1.5">
               我的健康點 (Pts)
-              <button class="w-5 h-5 rounded-full bg-white/20 text-white/80 text-[10px] font-black flex items-center justify-center hover:bg-white/30 transition active:scale-90 shrink-0 leading-none" onclick="openModal('modal-points-info')">?</button>
+              <button aria-label="查看健康點說明" class="round-icon-btn w-8 h-8 rounded-full bg-white/20 text-white text-sm font-black flex items-center justify-center hover:bg-white/30 transition active:scale-90 shrink-0 leading-none" onclick="openModal('modal-points-info')">?</button>
 </p>
 <div class="flex items-baseline mb-4">
 <span class="text-5xl font-black tracking-tight">1,200</span>
 <span class="text-base ml-2 opacity-75">點</span>
 </div>
-<div class="bg-black/20 rounded-xl p-2.5 flex items-center gap-2 text-xs">
-<i class="fa-solid fa-lock text-emerald-200"></i>
-<span class="text-emerald-50">使用健康點兌換HAPPY GO點數 | 即將上線</span>
-</div>
+<a class="exchange-entry" href="exchange.html">
+<span><i class="fa-solid fa-arrow-right-arrow-left mr-2"></i>兌換 HAPPY GO 點數<small>500 健康點可兌換 1 點</small></span>
+<i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+</a>
 </div>
 </div>
 </div>
@@ -184,20 +186,30 @@
 </div>
 </a>
 </div>
-<a class="block mt-4 bg-gradient-to-r from-teal-50 to-emerald-50 border border-teal-100 rounded-2xl p-4 shadow-sm active:scale-[0.98] transition no-underline text-inherit relative overflow-hidden" href="https://www.fetnet.net/content/cbu/tw/digital-services/health/5g-telemedicine/partners/femh.html" target="_blank">
-<div class="flex items-center gap-4">
-<div class="w-16 h-16 bg-white rounded-xl flex items-center justify-center shrink-0 shadow-sm border border-teal-50 overflow-hidden">
-<img alt="亞東紀念醫院" class="w-full h-full object-contain p-1" onerror="this.outerHTML='&lt;i class=&quot;fas fa-hospital text-2xl text-teal-600&quot;&gt;&lt;/i&gt;'" src="images/femh-icon.png"/>
+</section>
+<section aria-labelledby="hospital-services-title">
+<div class="mb-4">
+<h3 class="section-title mb-1" id="hospital-services-title"><span class="text-xl">💚</span>需要更多健康協助？</h3>
+<p class="text-base text-slate-600 leading-relaxed">連結亞東醫院官方服務，取得健康資訊或遠距諮詢</p>
 </div>
+<div class="space-y-3">
+<a class="hospital-service-card bg-green-50 border border-green-200 shadow-sm" href="javascript:void(0)" onclick="showToast('亞東醫院 LINE 官方連結待設定')">
+<div class="w-14 h-14 rounded-2xl bg-green-500 text-white flex items-center justify-center text-2xl shrink-0"><i class="fa-brands fa-line"></i></div>
 <div class="flex-1 min-w-0">
-<h4 class="font-black text-teal-900 text-base leading-tight">亞東醫院 Health Online</h4>
-<p class="text-xs text-teal-700 mt-1 font-medium">權威醫師遠距健康諮詢</p>
-<div class="inline-flex items-center gap-1 mt-2 bg-white/60 text-teal-800 text-[10px] font-bold px-2.5 py-1 rounded-md border border-teal-100 shadow-sm">
-                前往了解 <i class="fas fa-arrow-up-right-from-square"></i>
-</div>
-</div>
+<h4 class="font-black text-green-900 text-lg">加入亞東醫院 LINE 好友</h4>
+<p class="text-base text-green-800 mt-1">掌握健康資訊與院方最新服務</p>
+<span class="service-action inline-flex items-center gap-1 mt-2 text-green-700">加入好友 <i class="fa-solid fa-chevron-right text-sm"></i></span>
 </div>
 </a>
+<a class="hospital-service-card bg-teal-50 border border-teal-200 shadow-sm" href="https://www.fetnet.net/content/cbu/tw/digital-services/health/5g-telemedicine/partners/femh.html" target="_blank" rel="noopener noreferrer">
+<div class="w-14 h-14 rounded-2xl bg-white border border-teal-100 flex items-center justify-center shrink-0 overflow-hidden"><img alt="亞東紀念醫院" class="w-full h-full object-contain p-1" src="images/femh-icon.png"/></div>
+<div class="flex-1 min-w-0">
+<h4 class="font-black text-teal-900 text-lg">亞東醫院 Health Online</h4>
+<p class="text-base text-teal-800 mt-1">由專業醫療團隊提供遠距健康諮詢</p>
+<span class="service-action inline-flex items-center gap-1 mt-2 text-teal-700">了解遠距諮詢 <i class="fa-solid fa-arrow-up-right-from-square text-sm"></i></span>
+</div>
+</a>
+</div>
 </section>
 <div class="text-center text-[11px] text-slate-400 pb-4 mt-6">
 <span class="font-bold text-slate-300 mr-2">GO HEALTH</span>
@@ -224,13 +236,13 @@
 </div>
 <div class="bg-slate-50 rounded-2xl p-4 border border-slate-100 mb-5">
 <p class="text-sm text-slate-700 leading-relaxed">
-        健康點是 GO HEALTH 專屬點數，不等同於 HAPPY GO 點數。完成任務可累積健康點，未來可於兌換商城兌換 <strong class="text-emerald-600">HAPPY GO 點數</strong>或<strong class="text-emerald-600">專屬獎勵</strong>；兌換功能準備中。
+        健康點是 GO HEALTH 專屬點數，不等同於 HAPPY GO 點數。完成指定任務可累積健康點，並可依兌換比例兌換 <strong class="text-emerald-600">HAPPY GO 點數</strong>。
       </p>
 </div>
 <div class="space-y-4 mb-5">
 <div class="flex items-start gap-3">
 <div class="w-8 h-8 bg-amber-50 rounded-xl flex items-center justify-center text-base shrink-0 mt-0.5">💰</div>
-<p class="text-sm text-gray-700 leading-relaxed"><strong>個人累積：</strong>完成 GO HEALTH 內標示可獲得健康點的任務，即可累積個人健康點。未來使用個人健康點兌換獎勵時，也不會影響群組抽獎進度。（點數具使用效期，詳見政策與須知的健康點使用說明）</p>
+<p class="text-sm text-gray-700 leading-relaxed"><strong>個人累積：</strong>完成 GO HEALTH 內標示可獲得健康點的任務，即可累積個人健康點。使用個人健康點兌換獎勵時，也不會影響群組抽獎進度。（點數具使用效期，詳見政策與須知的健康點使用說明）</p>
 </div>
 <div class="flex items-start gap-3">
 <div class="w-8 h-8 bg-blue-50 rounded-xl flex items-center justify-center text-base shrink-0 mt-0.5">👥</div>
@@ -238,7 +250,7 @@
 </div>
 <div class="flex items-start gap-3">
 <div class="w-8 h-8 bg-purple-50 rounded-xl flex items-center justify-center text-base shrink-0 mt-0.5">🎁</div>
-<p class="text-sm text-gray-700 leading-relaxed">兌換 HAPPY GO 點數與專屬獎勵功能準備中，敬請期待。</p>
+<p class="text-sm text-gray-700 leading-relaxed"><strong>點數兌換：</strong>每 500 健康點可兌換 1 點 HAPPY GO 點數，兌換後不影響已累積的群組抽獎進度。兌換取得的 HAPPY GO 點數為限時點數，使用期限為入點後 180 天；逾期未使用將失效，無法延長或返還。</p>
 </div>
 </div>
 <button class="w-full bg-green-600 text-white font-bold py-3.5 rounded-2xl active:scale-95 transition" onclick="closeModal('modal-points-info')">我知道了</button>

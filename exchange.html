@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>健康點兌換｜GO HEALTH</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link href="assets/shared.css" rel="stylesheet">
+</head>
+<body data-page="exchange">
+<div class="mobile-container" id="app-root">
+  <header class="bg-white/95 backdrop-blur px-4 py-3 border-b border-slate-100 sticky top-0 z-50 flex items-center gap-3">
+    <button aria-label="返回首頁" class="w-12 h-12 rounded-full bg-slate-50 text-slate-700 flex items-center justify-center" onclick="navigateTo('index.html')"><i class="fa-solid fa-chevron-left"></i></button>
+    <h1 class="text-xl font-black text-gray-800">健康點兌換</h1>
+  </header>
+
+  <main class="p-4 pb-10 space-y-5">
+    <section class="points-card rounded-3xl p-5 text-white shadow-xl relative overflow-hidden">
+      <div class="absolute -right-8 -top-8 w-36 h-36 bg-white/10 rounded-full"></div>
+      <div class="relative z-10">
+        <p class="text-base text-emerald-100 font-bold">目前可用健康點</p>
+        <div class="flex items-baseline gap-2 mt-1"><span class="text-5xl font-black" id="health-balance">1,200</span><span class="text-lg">點</span></div>
+        <div class="mt-4 bg-black/20 rounded-2xl p-3 text-base">最多可兌換 <strong id="max-hg-points">2</strong> 點 HAPPY GO 點數</div>
+      </div>
+    </section>
+
+    <section class="bg-white border border-slate-100 rounded-3xl p-5 shadow-sm">
+      <div class="mb-5">
+        <h2 class="text-xl font-black text-gray-800">選擇兌換點數</h2>
+        <p class="text-base text-slate-600 mt-1">每 <span id="rate-copy">500</span> 健康點可兌換 1 點</p>
+      </div>
+      <div class="exchange-stepper">
+        <button id="decrease-btn" aria-label="減少兌換點數" type="button">−</button>
+        <div class="text-center"><strong class="text-4xl text-emerald-700" id="exchange-amount">1</strong><p class="text-base text-slate-600 mt-1">HAPPY GO 點數</p></div>
+        <button id="increase-btn" aria-label="增加兌換點數" type="button">＋</button>
+      </div>
+      <div class="grid grid-cols-3 gap-2 mt-5">
+        <button class="quick-amount border-2 border-emerald-100 bg-emerald-50 text-emerald-700 rounded-xl font-bold px-2 py-2" data-amount="1">1 點</button>
+        <button class="quick-amount border-2 border-emerald-100 bg-emerald-50 text-emerald-700 rounded-xl font-bold px-2 py-2" data-amount="2">2 點</button>
+        <button class="quick-amount border-2 border-emerald-100 bg-emerald-50 text-emerald-700 rounded-xl font-bold px-2 py-2" data-amount="max">全部可兌換</button>
+      </div>
+    </section>
+
+    <section class="bg-white border border-slate-100 rounded-3xl p-5 shadow-sm">
+      <h2 class="text-xl font-black text-gray-800 mb-2">兌換摘要</h2>
+      <div class="exchange-summary-row"><span class="text-slate-600">兌換比例</span><strong class="text-right"><span id="rate-summary">500</span> 健康點：1 點</strong></div>
+      <div class="exchange-summary-row"><span class="text-slate-600">本次扣除</span><strong class="text-right text-amber-700"><span id="deduct-points">500</span> 健康點</strong></div>
+      <div class="exchange-summary-row"><span class="text-slate-600">獲得點數</span><strong class="text-right text-emerald-700"><span id="receive-points">1</span> 點 HAPPY GO 限時點數</strong></div>
+      <div class="exchange-summary-row"><span class="text-slate-600">兌換後餘額</span><strong class="text-right"><span id="remaining-points">700</span> 健康點</strong></div>
+    </section>
+
+    <section class="bg-amber-50 border border-amber-200 rounded-3xl p-5">
+      <h2 class="text-lg font-black text-amber-900 flex items-center gap-2"><i class="fa-solid fa-circle-exclamation"></i>重要提醒</h2>
+      <ul class="text-base text-amber-900 leading-relaxed mt-3 space-y-2 list-disc pl-5">
+        <li>兌換取得的 HAPPY GO 點數為限時點數，使用期限為入點後 <span id="validity-days">180</span> 天。</li>
+        <li>逾期未使用之限時點數將失效，無法延長或返還。</li>
+        <li>兌換完成後無法取消或返還健康點，請確認內容後再送出。</li>
+        <li>兌換不影響已累積的群組抽獎進度。</li>
+      </ul>
+    </section>
+
+    <button class="w-full bg-emerald-600 text-white text-lg font-black py-4 rounded-2xl shadow-lg active:scale-[0.98] transition" id="exchange-submit">確認兌換 1 點 HAPPY GO 點數</button>
+    <button class="w-full text-slate-500 text-base font-bold py-3" id="history-demo" type="button">查看兌換紀錄</button>
+
+    <aside class="bg-slate-100 rounded-2xl p-4 text-center" aria-label="Prototype 測試工具">
+      <p class="text-base text-slate-600 font-bold mb-2">Prototype 測試情境</p>
+      <button class="text-base text-red-600 font-bold underline" id="simulate-failure" type="button">模擬入點失敗</button>
+    </aside>
+  </main>
+
+  <div class="warn-modal-overlay hidden-view" id="exchange-confirm-modal">
+    <div class="warn-modal-box" onclick="event.stopPropagation()">
+      <div class="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center text-2xl text-emerald-600 mb-4"><i class="fa-solid fa-arrow-right-arrow-left"></i></div>
+      <h2 class="text-xl font-black text-gray-800">確認兌換？</h2>
+      <p class="text-base text-slate-600 mt-2 leading-relaxed">本次將使用 <strong id="confirm-deduct">500</strong> 健康點，兌換 <strong id="confirm-receive">1</strong> 點 HAPPY GO 限時點數。兌換完成後無法取消。</p>
+      <div class="flex gap-3 mt-5">
+        <button class="flex-1 border-2 border-slate-200 text-slate-700 font-bold rounded-xl" id="cancel-exchange">再確認一下</button>
+        <button class="flex-1 bg-emerald-600 text-white font-bold rounded-xl" id="confirm-exchange">確認兌換</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden-view" id="exchange-result-modal">
+    <div class="modal-sheet text-center" onclick="event.stopPropagation()">
+      <div class="w-20 h-20 rounded-full flex items-center justify-center text-4xl mx-auto mb-4" id="result-icon"></div>
+      <h2 class="text-2xl font-black text-gray-800" id="result-title"></h2>
+      <p class="text-base text-slate-600 mt-3 leading-relaxed" id="result-message"></p>
+      <button class="w-full bg-emerald-600 text-white text-lg font-bold py-4 rounded-2xl mt-6" id="result-action"></button>
+    </div>
+  </div>
+  <div id="toast-container"></div>
+</div>
+<script src="assets/data.js"></script>
+<script src="assets/shared.js"></script>
+<script src="assets/exchange.js"></script>
+</body>
+</html>
