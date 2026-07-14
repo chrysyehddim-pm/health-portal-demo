@@ -13,6 +13,41 @@
   function currentQuery() { return window.location.search || ''; }
   window.navigateTo = function(page) { window.location.href = page + currentQuery(); };
 
+  function initAnnouncement(){
+    const viewport=document.getElementById('announcement-viewport');
+    const track=document.getElementById('announcement-track');
+    if(!viewport || !track) return;
+    const config=window.GOHEALTH_DATA?.announcement || {};
+    const messages=(config.messages || []).filter(Boolean);
+    if(!messages.length) return;
+    const text=messages.join('　｜　');
+    const gap=Number(config.messageGapPixels) || 56;
+    const speed=Math.max(20, Number(config.pixelsPerSecond) || 38);
+    const pause=Math.max(0, Number(config.pauseMilliseconds) || 0);
+    track.innerHTML=`<span class="announcement-message">${text}</span><span class="announcement-message" aria-hidden="true">${text}</span>`;
+    track.style.gap=`${gap}px`;
+    const first=track.querySelector('.announcement-message');
+    if(!first) return;
+    const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const distance=first.getBoundingClientRect().width + gap;
+    if(reduceMotion || first.getBoundingClientRect().width <= viewport.clientWidth){
+      track.classList.add('announcement-static');
+      return;
+    }
+    const scrollDuration=(distance / speed) * 1000;
+    const totalDuration=scrollDuration + pause;
+    const holdPct=Math.min(35, (pause / totalDuration) * 100);
+    const animation=track.animate([
+      { transform:'translateX(0)', offset:0 },
+      { transform:'translateX(0)', offset:holdPct/100 },
+      { transform:`translateX(-${distance}px)`, offset:1 }
+    ], { duration:totalDuration, iterations:Infinity, easing:'linear' });
+    viewport.addEventListener('mouseenter',()=>animation.pause());
+    viewport.addEventListener('mouseleave',()=>animation.play());
+    viewport.addEventListener('focusin',()=>animation.pause());
+    viewport.addEventListener('focusout',()=>animation.play());
+  }
+
   function syncModalNavState() {
     const hasOpenModal = !!document.querySelector('.modal-overlay:not(.hidden-view), .report-modal-overlay:not(.hidden-view), .interaction-overlay:not(.hidden-view), .warn-modal-overlay:not(.hidden-view)');
     document.body.classList.toggle('modal-open', hasOpenModal);
@@ -232,7 +267,7 @@
     container.innerHTML = `
       <div class="flex items-center justify-between mb-1">
         <h2 class="text-xl font-black text-gray-800">我的群組 👥</h2>
-        <button onclick="openNotifications()" class="relative w-10 h-10 bg-white border border-slate-200 rounded-full flex items-center justify-center active:bg-slate-50 transition shadow-sm shrink-0" id="bell-btn-group">
+        <button aria-label="開啟通知中心" onclick="openNotifications()" class="round-icon-btn relative w-12 h-12 bg-white border border-slate-200 rounded-full flex items-center justify-center active:bg-slate-50 transition shadow-sm shrink-0" id="bell-btn-group">
           <i class="fas fa-bell text-slate-400 text-base"></i>
           <span id="bell-badge-group" class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white ${hasUnread() ? '' : 'hidden'}"></span>
         </button>
@@ -255,7 +290,7 @@
             <div class="progress-track"><div class="progress-fill" style="--bar-w:${pct}%; width:${pct}%"></div></div>
             <div class="flex justify-between text-xs text-slate-400 mt-1"><span>0</span><span>${maxPoints.toLocaleString()} 點上限</span></div>
           </div>
-          <div class="bg-emerald-50 rounded-xl p-3 text-center mt-3"><p class="text-emerald-800 font-bold text-base">🎫 目前累積 <span class="text-2xl font-black text-emerald-600">${tickets}</span> 張抽獎券</p><p class="text-xs text-slate-500 mt-0.5">每 1,000 健康點獲得 1 張抽獎券，週週抽 100 點 HAPPY GO 點數<br>券數越多，中獎機會越高！</p></div>`}
+          <div class="bg-emerald-50 rounded-xl p-3 text-center mt-3"><p class="text-emerald-800 font-bold text-base">🎫 目前累積 <span class="text-2xl font-black text-emerald-600">${tickets}</span> 張抽獎券</p><p class="text-base text-emerald-800 mt-1 leading-relaxed">每 1,000 健康點獲得 1 張<br><strong>券數越多，中獎機會越高！</strong></p></div>`}
       </section>
       ${isUnlocked ? `<div class="bg-orange-50 border border-orange-100 rounded-xl p-3.5 flex items-center justify-center gap-2"><i class="fas fa-fire-flame-curved text-orange-500 text-base"></i><p class="text-orange-600 font-bold text-sm">群組已連續打卡 ${streak} 天</p></div>` : ''}
       ${isUnlocked ? `<div class="report-banner" onclick="openWeeklyReport()"><div class="flex items-center gap-2.5"><div class="w-9 h-9 bg-emerald-100 rounded-xl flex items-center justify-center text-lg shrink-0">📊</div><div><p class="font-bold text-emerald-800 text-sm">查看本週群組健康週報</p><p class="text-xs text-emerald-600 mt-0.5">認知表現 · 活躍指數 · 健康趨勢</p></div></div><i class="fas fa-chevron-right text-emerald-400 text-sm shrink-0"></i></div>` : ''}
@@ -287,6 +322,7 @@
     const warn=document.getElementById('warn-confirm-btn');
     if(warn) warn.onclick = () => { if(pendingWarnAction) pendingWarnAction(); closeWarnModal(); };
     updateBadges();
+    initAnnouncement();
     if(document.body.dataset.page === 'group') renderGroupView();
     if(document.body.dataset.page === 'terms') initTermsPage();
   });

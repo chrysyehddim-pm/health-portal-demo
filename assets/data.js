@@ -1,5 +1,13 @@
 
 window.GOHEALTH_DATA = {
+  announcement: {
+    messages: [
+      '做任務集健康點｜建立群組週週抽 HAPPY GO 點數'
+    ],
+    pixelsPerSecond: 38,
+    pauseMilliseconds: 1200,
+    messageGapPixels: 56
+  },
   exchange: {
     healthPointBalance: 1200,
     healthPointsPerHappyGoPoint: 500,
