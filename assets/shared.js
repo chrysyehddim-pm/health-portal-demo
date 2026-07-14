@@ -30,7 +30,7 @@
     if(!first) return;
     const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const distance=first.getBoundingClientRect().width + gap;
-    if(reduceMotion || first.getBoundingClientRect().width <= viewport.clientWidth){
+    if(reduceMotion){
       track.classList.add('announcement-static');
       return;
     }
@@ -290,7 +290,7 @@
             <div class="progress-track"><div class="progress-fill" style="--bar-w:${pct}%; width:${pct}%"></div></div>
             <div class="flex justify-between text-xs text-slate-400 mt-1"><span>0</span><span>${maxPoints.toLocaleString()} 點上限</span></div>
           </div>
-          <div class="bg-emerald-50 rounded-xl p-3 text-center mt-3"><p class="text-emerald-800 font-bold text-base">🎫 目前累積 <span class="text-2xl font-black text-emerald-600">${tickets}</span> 張抽獎券</p><p class="text-base text-emerald-800 mt-1 leading-relaxed">每 1,000 健康點獲得 1 張<br><strong>券數越多，中獎機會越高！</strong></p></div>`}
+          <div class="bg-emerald-50 rounded-xl p-3 text-center mt-3"><p class="text-emerald-800 font-bold text-base">🎫 目前累積 <span class="text-2xl font-black text-emerald-600">${tickets}</span> 張抽獎券</p><p class="text-base text-emerald-800 mt-1 leading-relaxed">每 1,000 健康點獲得 1 張<br><strong>週週抽 100 點 HAPPY GO 點數</strong><br>券數越多，中獎機會越高！</p></div>`}
       </section>
       ${isUnlocked ? `<div class="bg-orange-50 border border-orange-100 rounded-xl p-3.5 flex items-center justify-center gap-2"><i class="fas fa-fire-flame-curved text-orange-500 text-base"></i><p class="text-orange-600 font-bold text-sm">群組已連續打卡 ${streak} 天</p></div>` : ''}
       ${isUnlocked ? `<div class="report-banner" onclick="openWeeklyReport()"><div class="flex items-center gap-2.5"><div class="w-9 h-9 bg-emerald-100 rounded-xl flex items-center justify-center text-lg shrink-0">📊</div><div><p class="font-bold text-emerald-800 text-sm">查看本週群組健康週報</p><p class="text-xs text-emerald-600 mt-0.5">認知表現 · 活躍指數 · 健康趨勢</p></div></div><i class="fas fa-chevron-right text-emerald-400 text-sm shrink-0"></i></div>` : ''}
