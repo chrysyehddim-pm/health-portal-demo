@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GO HEALTH</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link href="assets/shared.css" rel="stylesheet">
+</head>
+
+<body data-page="error-simulator">
+<div class="mobile-container min-h-screen p-4 pb-8">
+  <div class="mb-4">
+    <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm">
+      <h1 class="text-lg font-black text-slate-800 mb-1">異常狀態模擬 / 驗收頁</h1>
+      <p class="text-xs text-slate-500">提供 6 種全螢幕錯誤狀態切換，並保留「被踢出群組」Toast 示意。</p>
+    </div>
+  </div>
+  <div id="scenario-buttons" class="space-y-2 mb-4"></div>
+  <button onclick="simulateKickedOut()" class="w-full bg-orange-50 text-orange-700 border border-orange-200 rounded-xl px-4 py-3 text-sm font-bold active:scale-[0.98] transition mb-4">
+    7. 模擬被踢出群組（Toast）
+  </button>
+  <div id="generic-state-template" class="bg-white rounded-2xl border border-slate-200 min-h-[420px] flex flex-col items-center justify-center text-center px-6 shadow-sm">
+    <div id="state-icon" class="text-6xl mb-2">⚠️</div>
+    <h2 id="state-title" class="text-lg font-bold text-slate-800 mt-4">發生錯誤</h2>
+    <p id="state-message" class="text-sm text-slate-500 mt-2 px-2 leading-relaxed">請稍後再試，或重新整理頁面。</p>
+    <button id="state-btn" class="hidden mt-6 px-6 py-2.5 bg-green-600 text-white font-bold rounded-full active:scale-95 transition text-sm">重試</button>
+  </div>
+  <div id="toast-container"></div>
+</div>
+<script src="assets/data.js"></script>
+<script src="assets/error-simulator.js"></script>
+</body>
+</html>

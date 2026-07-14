@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HAPPY GO APP｜GO HEALTH 入口模擬</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; background: #eef0f7; font-family: Arial, "Microsoft JhengHei", sans-serif; }
+    body { display: flex; justify-content: center; }
+    .phone { position: relative; width: min(100%, 430px); min-height: 100vh; background: #fff; overflow: hidden; box-shadow: 0 0 28px rgba(15, 23, 42, .16); }
+    .app-screen { display: block; width: 100%; height: auto; }
+    .health-entry {
+      position: absolute;
+      left: 3.5%;
+      top: 33.2%;
+      width: 21%;
+      height: 10.5%;
+      border: 0;
+      border-radius: 18px;
+      background: transparent;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .health-entry:focus-visible { outline: 4px solid #0f766e; outline-offset: 2px; }
+    .hint {
+      position: fixed;
+      left: 50%;
+      bottom: 20px;
+      transform: translateX(-50%);
+      z-index: 5;
+      padding: 10px 16px;
+      border-radius: 999px;
+      color: #fff;
+      background: rgba(15, 23, 42, .88);
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, .2);
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <main class="phone" aria-label="HAPPY GO APP 首頁入口模擬">
+    <img class="app-screen" src="images/hg_home.jpg" alt="HAPPY GO APP 首頁">
+    <button class="health-entry" type="button" aria-label="進入健康挑戰" onclick="window.location.href='terms.html'"></button>
+  </main>
+  <div class="hint">點選「健康挑戰」進入 GO HEALTH</div>
+</body>
+</html>

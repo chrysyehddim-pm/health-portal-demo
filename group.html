@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GO HEALTH</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link href="assets/shared.css" rel="stylesheet">
+</head>
+<body data-page="group">
+<div class="mobile-container" id="app-root">
+
+<header class="bg-white/96 backdrop-blur px-4 py-3 border-b border-slate-100 sticky top-0 z-50 flex items-center justify-center">
+<button aria-label="GO HEALTH Logo" class="inline-flex items-center justify-center active:opacity-80 transition" type="button">
+<img alt="GO HEALTH" class="h-8 w-auto object-contain" onerror="this.outerHTML='&lt;h1 class=&quot;text-lg font-black text-green-700 tracking-wider&quot;&gt;GO HEALTH&lt;/h1&gt;'" src="images/logo.png">
+</img></button>
+</header>
+<div class="flex-1 overflow-y-auto no-scrollbar p-4 space-y-5 pb-28" id="group-content">
+</div>
+<nav class="bottom-nav">
+<button class="nav-btn" onclick="navigateTo('index.html')">
+<i class="fas fa-house"></i><span>首頁</span>
+</button>
+<button class="nav-btn active" onclick="navigateTo('group.html')">
+<i class="fas fa-users"></i><span>我的群組</span>
+</button>
+</nav>
+<div class="modal-overlay hidden-view" id="modal-invite" onclick="closeModal('modal-invite')">
+<div class="modal-sheet" onclick="event.stopPropagation()">
+<div class="w-12 h-1 bg-slate-200 rounded-full mx-auto mb-5"></div>
+<div class="text-center mb-4">
+<h3 class="text-xl font-black text-gray-800 mb-1">我的邀請碼</h3>
+<p class="text-sm text-slate-500">分享給家人，讓他們加入您的群組</p>
+</div>
+<div class="invite-code mb-5" id="modal-invite-code">839201</div>
+<button class="w-full bg-slate-100 text-slate-600 font-bold py-3 rounded-2xl active:bg-slate-200 transition flex items-center justify-center gap-2 mb-3" onclick="copyInviteCode()">
+<i class="fas fa-copy"></i> 複製邀請碼
+    </button>
+<button class="w-full text-slate-400 text-sm py-2 active:opacity-60" onclick="closeModal('modal-invite')">關閉</button>
+</div>
+</div><div class="warn-modal-overlay hidden-view" id="modal-warn">
+<div class="warn-modal-box" onclick="event.stopPropagation()">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-12 h-12 bg-red-50 rounded-2xl flex items-center justify-center shrink-0">
+<i class="fas fa-triangle-exclamation text-red-500 text-xl"></i>
+</div>
+<div>
+<h3 class="font-black text-gray-800 text-lg" id="warn-title">確認執行？</h3>
+<p class="text-xs text-slate-400" id="warn-subtitle"></p>
+</div>
+</div>
+<div class="bg-red-50 rounded-xl p-3.5 mb-5 border border-red-100">
+<p class="text-sm text-red-700 leading-relaxed" id="warn-body">
+        退出後，該成員本週貢獻的點數將從群組總分中扣除！
+      </p>
+</div>
+<div class="flex gap-3">
+<button class="flex-1 border border-slate-200 text-slate-600 font-bold py-3 rounded-xl active:bg-slate-50 transition" onclick="closeWarnModal()">
+        取消
+      </button>
+<button class="flex-1 bg-red-500 text-white font-bold py-3 rounded-xl active:bg-red-600 transition" id="warn-confirm-btn">
+        確認執行
+      </button>
+</div>
+</div>
+</div><div class="report-modal-overlay hidden-view" id="modal-weekly-report" onclick="closeWeeklyReport()">
+<div class="report-modal-sheet" onclick="event.stopPropagation()">
+<div class="w-12 h-1 bg-slate-200 rounded-full mx-auto mb-5"></div>
+<div class="flex items-center justify-between mb-5">
+<div>
+<h3 class="text-xl font-black text-gray-800">本週群組健康週報</h3>
+<p class="text-xs text-slate-400 mt-0.5">2026年 第14週 (03/30 - 04/05) · 統計至昨日</p>
+</div>
+<div class="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center text-xl shrink-0">📋</div>
+</div>
+<div id="report-content-container"></div>
+<button class="w-full text-slate-400 text-sm py-2 mt-4 active:opacity-60" onclick="closeWeeklyReport()">關閉報告</button>
+</div>
+</div><div class="modal-overlay hidden-view" id="modal-lottery-rules" onclick="closeModal('modal-lottery-rules')">
+<div class="modal-sheet" onclick="event.stopPropagation()">
+<div class="w-12 h-1 bg-slate-200 rounded-full mx-auto mb-5"></div>
+<div class="flex items-center gap-3 mb-5">
+<div class="w-12 h-12 bg-amber-50 rounded-2xl flex items-center justify-center text-2xl shrink-0">🎟️</div>
+<div>
+<h3 class="text-lg font-black text-gray-800">抽獎規則說明</h3>
+<p class="text-xs text-slate-400 mt-0.5">每週限定 · 滾動更新</p>
+</div>
+</div>
+<div class="space-y-3 mb-5">
+<div class="flex items-start gap-3 bg-amber-50 rounded-xl p-3.5 border border-amber-100">
+<span class="text-xl shrink-0">📅</span>
+<p class="text-sm text-amber-900 leading-relaxed"><strong>結算時間：</strong>每週日 23:59 進行當週群組總分結算。</p>
+</div>
+<div class="flex items-start gap-3 bg-emerald-50 rounded-xl p-3.5 border border-emerald-100">
+<span class="text-xl shrink-0">🎫</span>
+<p class="text-sm text-emerald-900 leading-relaxed"><strong>抽獎券累積規則：</strong>群組進度每滿 1,000 健康點，即自動轉化為 1 張抽獎券。</p>
+</div>
+<div class="flex items-start gap-3 bg-blue-50 rounded-xl p-3.5 border border-blue-100">
+<span class="text-xl shrink-0">🏆</span>
+<p class="text-sm text-blue-900 leading-relaxed"><strong>抽獎方式：</strong>每週抽出多組幸運群組；中獎群組內所有成員，每人皆可獲得 100 點 HAPPY GO 點數。</p>
+</div>
+<div class="flex items-start gap-3 bg-slate-50 rounded-xl p-3.5 border border-slate-100">
+<span class="text-xl shrink-0">⚖️</span>
+<p class="text-sm text-slate-700 leading-relaxed"><strong>公平原則：</strong>抽獎券越多，中獎機率越高！為鼓勵參與，每週每個群組限中獎一次。（獎項將滾動更新）</p>
+</div>
+</div>
+<button class="w-full bg-slate-800 text-white font-bold py-3.5 rounded-2xl active:scale-95 transition" onclick="closeModal('modal-lottery-rules')">了解了！</button>
+</div>
+</div><div class="interaction-overlay hidden-view" id="modal-interaction" onclick="closeInteractionModal()">
+<div class="interaction-sheet" onclick="event.stopPropagation()">
+<div class="w-12 h-1 bg-slate-200 rounded-full mx-auto mb-4"></div>
+<div class="flex items-center gap-2.5 mb-4">
+<div class="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center text-xl shrink-0">💬</div>
+<div>
+<h3 class="font-black text-gray-800 text-base" id="interaction-title">傳送關心給...</h3>
+<p class="text-xs text-slate-400">選擇一則罐頭心意，立即傳送</p>
+</div>
+</div>
+<div class="space-y-2.5" id="interaction-options"></div>
+<div class="mt-4 pt-4 border-t border-slate-100">
+<p class="text-xs text-slate-400 font-medium mb-2">或自己輸入：</p>
+<div class="flex items-center gap-2">
+<input class="flex-1 border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm text-gray-800 focus:border-emerald-400 focus:outline-none transition placeholder:text-slate-300" id="custom-msg-input" maxlength="30" placeholder="自己輸入關心… (最多 30 字)" type="text"/>
+<button class="bg-emerald-600 text-white font-bold px-4 py-2.5 rounded-xl text-sm active:scale-95 active:bg-emerald-700 transition shrink-0" onclick="sendCustomMessage()">
+          傳送
+        </button>
+</div>
+</div>
+<button class="w-full text-slate-400 text-sm py-3 mt-2 active:opacity-60" onclick="closeInteractionModal()">取消</button>
+</div>
+</div><div class="modal-overlay hidden-view" id="modal-notifications" onclick="closeNotifications()" style="align-items:flex-end;">
+<div class="modal-sheet" onclick="event.stopPropagation()" style="max-height:85vh; overflow-y:auto; padding-bottom:2.5rem;">
+<div class="w-12 h-1 bg-slate-200 rounded-full mx-auto mb-4"></div>
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-lg font-black text-gray-800">通知中心</h3>
+<button class="text-xs text-emerald-600 font-bold active:opacity-60 transition px-2 py-1" onclick="markAllRead()">全部設為已讀</button>
+</div>
+<div class="space-y-2" id="notification-list"></div>
+<button class="w-full text-slate-400 text-sm py-3 mt-3 active:opacity-60" onclick="closeNotifications()">關閉</button>
+</div>
+</div><div class="interaction-overlay hidden-view" id="sheet-edit-nickname" onclick="closeNicknameSheet()">
+<div class="interaction-sheet" onclick="event.stopPropagation()">
+<div class="w-12 h-1 bg-slate-200 rounded-full mx-auto mb-5"></div>
+<div class="flex items-center gap-3 mb-5">
+<div class="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center text-xl shrink-0">✏️</div>
+<div>
+<h3 class="font-black text-gray-800 text-base">修改群組暱稱</h3>
+<p class="text-xs text-slate-400 mt-0.5">此暱稱僅在群組內顯示</p>
+</div>
+</div>
+<input class="w-full border-2 border-slate-200 rounded-xl px-4 py-3.5 text-base font-bold text-gray-800 focus:border-emerald-400 focus:outline-none transition mb-2" id="nickname-input" maxlength="10" placeholder="請輸入暱稱 (最多 10 字)" type="text"/>
+<p class="text-xs text-slate-400 text-right mb-4" id="nickname-count">0 / 10</p>
+<button class="w-full bg-green-600 text-white font-bold py-3.5 rounded-2xl active:scale-95 active:bg-green-700 transition text-base" onclick="saveNickname()">
+      儲存修改
+    </button>
+<button class="w-full text-slate-400 text-sm py-3 mt-1 active:opacity-60" onclick="closeNicknameSheet()">取消</button>
+</div>
+</div><div class="fixed bottom-24 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-sm font-bold px-5 py-3 rounded-full shadow-xl flex items-center gap-2 z-[999] hidden" id="toast-copy-success" style="white-space:nowrap;">
+  ✅ 邀請碼已複製
+</div><div id="toast-container"></div>
+</div>
+<script src="assets/data.js"></script>
+<script src="assets/shared.js"></script>
+</body>
+</html>
