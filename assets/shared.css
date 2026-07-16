@@ -258,17 +258,20 @@
     body[data-page="home"] .text-xs,
     body[data-page="group"] .text-xs,
     body[data-page="terms"] .text-xs,
-    body[data-page="exchange"] .text-xs { font-size: 1rem !important; line-height: 1.55 !important; }
+    body[data-page="exchange"] .text-xs,
+    body[data-page="exchange-history"] .text-xs { font-size: 1rem !important; line-height: 1.55 !important; }
 
     body[data-page="home"] .text-sm,
     body[data-page="group"] .text-sm,
     body[data-page="terms"] .text-sm,
-    body[data-page="exchange"] .text-sm { font-size: 1.0625rem !important; line-height: 1.6 !important; }
+    body[data-page="exchange"] .text-sm,
+    body[data-page="exchange-history"] .text-sm { font-size: 1.0625rem !important; line-height: 1.6 !important; }
 
     body[data-page="home"] .text-base,
     body[data-page="group"] .text-base,
     body[data-page="terms"] .text-base,
-    body[data-page="exchange"] .text-base { font-size: 1.125rem !important; line-height: 1.55 !important; }
+    body[data-page="exchange"] .text-base,
+    body[data-page="exchange-history"] .text-base { font-size: 1.125rem !important; line-height: 1.55 !important; }
 
     body[data-page="home"] .task-card h4 { font-size: 1.125rem; line-height: 1.45; }
     body[data-page="home"] .task-card p { color: #475569 !important; }
@@ -344,6 +347,41 @@
       font-weight: 900;
     }
     .exchange-stepper button:disabled { opacity: .35; }
+
+    .history-filters {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      padding: 6px;
+      background: #e2e8f0;
+      border-radius: 16px;
+    }
+    .history-filter {
+      min-height: 48px;
+      border: 0;
+      border-radius: 12px;
+      background: transparent;
+      color: #475569;
+      font-size: 16px;
+      font-weight: 800;
+    }
+    .history-filter.active { background: #fff; color: #047857; box-shadow: 0 2px 8px rgba(15,23,42,.08); }
+    .history-card {
+      width: 100%;
+      min-height: 0 !important;
+      display: block;
+      padding: 18px;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(15,23,42,.05);
+    }
+    .history-status { display: inline-flex; align-items: center; min-height: 32px; padding: 4px 10px; border-radius: 999px; font-size: 15px; font-weight: 900; }
+    .history-status-success { color: #047857; background: #d1fae5; }
+    .history-status-pending { color: #a16207; background: #fef3c7; }
+    .history-status-failed { color: #dc2626; background: #fee2e2; }
+    .history-conversion { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 16px; font-size: 18px; color: #1e293b; }
+    .copy-record-id { min-height: 36px !important; min-width: 36px; border-radius: 10px; color: #047857; background: #d1fae5; }
 
     .announcement-bar {
       display: flex;

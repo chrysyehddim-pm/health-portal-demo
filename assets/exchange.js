@@ -41,13 +41,32 @@
     const icon = $('result-icon');
     const action = $('result-action');
     if(success){
+      const balanceBefore = balance;
       balance -= amount * rate;
+      const now = new Date();
+      const dateTime = new Intl.DateTimeFormat('zh-TW', { year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit', hour12:false }).format(now).replace(/\//g, '/');
+      const recordId = `GH${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}${String(now.getHours()).padStart(2,'0')}${String(now.getMinutes()).padStart(2,'0')}`;
+      sessionStorage.setItem('gohealth_latest_exchange', JSON.stringify({
+        id: recordId,
+        status: 'success',
+        requestedAt: dateTime,
+        creditedAt: dateTime,
+        healthPointsUsed: amount * rate,
+        exchangeRate: rate,
+        happyGoPoints: amount,
+        balanceBefore,
+        balanceAfter: balance,
+        expiresAt: expiryDate(),
+        note: '兌換已完成。'
+      }));
       icon.className = 'w-20 h-20 rounded-full flex items-center justify-center text-4xl mx-auto mb-4 bg-emerald-50 text-emerald-600';
       icon.innerHTML = '<i class="fa-solid fa-check"></i>';
       $('result-title').textContent = '兌換成功！';
       $('result-message').innerHTML = `已取得 <strong>${amount} 點 HAPPY GO 限時點數</strong><br>使用期限至 ${expiryDate()}<br>剩餘 ${format(balance)} 健康點`;
       action.textContent = '完成並返回首頁';
       action.onclick = () => navigateTo('index.html');
+      $('result-history-link').classList.remove('hidden');
+      $('result-history-link').classList.add('block');
     } else {
       icon.className = 'w-20 h-20 rounded-full flex items-center justify-center text-4xl mx-auto mb-4 bg-red-50 text-red-500';
       icon.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
@@ -55,6 +74,8 @@
       $('result-message').innerHTML = 'HAPPY GO 點數入點失敗，<strong>健康點不會扣除</strong>。請稍後再試。';
       action.textContent = '返回兌換頁';
       action.onclick = () => { $('exchange-result-modal').classList.add('hidden-view'); shouldFail = false; render(); };
+      $('result-history-link').classList.add('hidden');
+      $('result-history-link').classList.remove('block');
     }
     $('exchange-result-modal').classList.remove('hidden-view');
   }
@@ -69,7 +90,6 @@
     $('cancel-exchange').onclick = () => $('exchange-confirm-modal').classList.add('hidden-view');
     $('confirm-exchange').onclick = () => openResult(!shouldFail);
     $('simulate-failure').onclick = () => { shouldFail = true; $('exchange-confirm-modal').classList.remove('hidden-view'); };
-    $('history-demo').onclick = () => showToast('兌換紀錄頁將於正式規格確認後串接');
     render();
   });
 })();

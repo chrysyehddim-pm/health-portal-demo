@@ -7,12 +7,14 @@
 - `terms.html`：首次授權／同意頁
 - `group.html`：群組頁
 - `exchange.html`：健康點兌換 HAPPY GO 點數流程 Demo
+- `exchange-history.html`：兌換紀錄、狀態篩選與紀錄詳情
 - `error-simulator.html`：錯誤情境模擬
 
 ## 群組狀態測試
 
 - `group.html`：一般群組狀態
 - `group.html?state=empty`：近期無參與賺點任務狀態
+- `exchange-history.html?state=empty`：尚無兌換紀錄的空白狀態
 
 ## 部署說明
 
@@ -23,6 +25,8 @@
 亞東醫院 LINE 官方連結尚未提供，目前點擊「加入好友」會顯示待設定提示。取得正式網址後，請在 `index.html` 更新 LINE 服務卡的 `href`，並移除原本的 `onclick` 提示。
 
 健康點兌換 Demo 的餘額、匯率與限時點數效期集中設定於 `assets/data.js` 的 `exchange` 區塊。目前假設為：500 健康點兌換 1 點、最低兌換 1 點、整數兌換、餘數保留、立即入點、成功後不可取消、入點失敗不扣健康點。
+
+兌換紀錄範例集中設定於 `assets/data.js` 的 `exchangeHistory`，包含成功、處理中與失敗三種狀態。每筆紀錄保留申請／入點時間、當次匯率、兌換點數、前後餘額、效期、狀態與唯一紀錄編號。
 
 首頁公告文字與輪播參數集中設定於 `assets/data.js` 的 `announcement` 區塊：`messages` 管理公告內容，`pixelsPerSecond` 控制移動速度，`pauseMilliseconds` 控制每輪開始前停留時間，`messageGapPixels` 控制兩輪文字間距。使用者開啟「減少動態效果」時，公告將停止自動輪播並可手動橫向查看。
 

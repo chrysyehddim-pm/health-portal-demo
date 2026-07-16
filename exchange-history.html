@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>兌換紀錄｜GO HEALTH</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link href="assets/shared.css" rel="stylesheet">
+</head>
+<body data-page="exchange-history">
+<div class="mobile-container" id="app-root">
+  <header class="bg-white/95 backdrop-blur px-4 py-3 border-b border-slate-100 sticky top-0 z-50 flex items-center gap-3">
+    <button aria-label="返回健康點兌換" class="round-icon-btn w-12 h-12 rounded-full bg-slate-50 text-slate-700 flex items-center justify-center" onclick="navigateTo('exchange.html')"><i class="fa-solid fa-chevron-left"></i></button>
+    <h1 class="text-xl font-black text-gray-800">兌換紀錄</h1>
+  </header>
+
+  <main class="p-4 pb-12">
+    <nav class="history-filters" aria-label="兌換紀錄篩選">
+      <button class="history-filter active" data-filter="all" type="button">全部</button>
+      <button class="history-filter" data-filter="success" type="button">成功</button>
+      <button class="history-filter" data-filter="incomplete" type="button">未完成</button>
+    </nav>
+
+    <p class="text-base text-slate-600 mt-4 mb-3" id="history-count"></p>
+    <section class="space-y-3" id="history-list" aria-live="polite"></section>
+    <button class="hidden w-full min-h-12 mt-4 border-2 border-emerald-200 bg-white text-emerald-700 text-base font-bold rounded-2xl" id="history-load-more" type="button">載入更多</button>
+
+    <section class="hidden text-center pt-14 px-5" id="history-empty">
+      <div class="w-24 h-24 bg-emerald-50 rounded-3xl flex items-center justify-center mx-auto text-5xl">🧾</div>
+      <h2 class="text-2xl font-black text-gray-800 mt-5">目前還沒有兌換紀錄</h2>
+      <p class="text-base text-slate-600 mt-2 leading-relaxed">完成健康任務累積健康點，<br>即可兌換 HAPPY GO 點數。</p>
+      <a class="inline-flex min-h-12 items-center justify-center bg-emerald-600 text-white text-lg font-bold px-6 py-3 rounded-2xl mt-6 no-underline" href="index.html">開始累積健康點</a>
+    </section>
+  </main>
+
+  <div class="modal-overlay hidden-view" id="history-detail-modal" onclick="closeHistoryDetail()">
+    <div class="modal-sheet" onclick="event.stopPropagation()">
+      <div class="w-12 h-1 bg-slate-200 rounded-full mx-auto mb-5"></div>
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl" id="detail-status-icon"></div>
+        <div><h2 class="text-xl font-black text-gray-800">兌換詳情</h2><p class="text-base mt-0.5" id="detail-status"></p></div>
+      </div>
+      <div class="bg-slate-50 border border-slate-100 rounded-2xl p-4" id="detail-content"></div>
+      <p class="text-base text-slate-600 leading-relaxed mt-4" id="detail-note"></p>
+      <div class="bg-amber-50 border border-amber-200 rounded-2xl p-4 mt-4 text-base text-amber-900 leading-relaxed hidden" id="detail-expiry-note">本次取得的 HAPPY GO 點數為限時點數，逾期未使用將失效，無法延長或返還。</div>
+      <a class="hidden w-full min-h-12 items-center justify-center bg-emerald-600 text-white text-lg font-bold rounded-2xl mt-5 no-underline" href="exchange.html" id="detail-retry">重新兌換</a>
+      <button class="w-full text-slate-600 text-base font-bold py-3 mt-2" onclick="closeHistoryDetail()">關閉</button>
+    </div>
+  </div>
+  <div id="toast-container"></div>
+</div>
+<script src="assets/data.js"></script>
+<script src="assets/shared.js"></script>
+<script src="assets/exchange-history.js"></script>
+</body>
+</html>

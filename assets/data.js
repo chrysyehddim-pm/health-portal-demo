@@ -15,6 +15,48 @@ window.GOHEALTH_DATA = {
     immediateCredit: true,
     refundableAfterSuccess: false
   },
+  exchangeHistory: [
+    {
+      id: 'GH202607160003',
+      status: 'pending',
+      requestedAt: '2026/07/16 09:45',
+      creditedAt: null,
+      healthPointsUsed: 500,
+      exchangeRate: 500,
+      happyGoPoints: 1,
+      balanceBefore: 1200,
+      balanceAfter: null,
+      expiresAt: null,
+      note: '點數入點處理中，確認成功後才會扣除健康點。'
+    },
+    {
+      id: 'GH202607120002',
+      status: 'failed',
+      requestedAt: '2026/07/12 18:20',
+      creditedAt: null,
+      healthPointsUsed: 500,
+      exchangeRate: 500,
+      happyGoPoints: 1,
+      balanceBefore: 1200,
+      balanceAfter: 1200,
+      expiresAt: null,
+      failureCode: 'HG_CREDIT_TIMEOUT',
+      note: 'HAPPY GO 點數入點失敗，健康點未扣除。'
+    },
+    {
+      id: 'GH202607100001',
+      status: 'success',
+      requestedAt: '2026/07/10 14:30',
+      creditedAt: '2026/07/10 14:31',
+      healthPointsUsed: 1000,
+      exchangeRate: 500,
+      happyGoPoints: 2,
+      balanceBefore: 2200,
+      balanceAfter: 1200,
+      expiresAt: '2027/01/06',
+      note: '兌換已完成。'
+    }
+  ],
   initialAppState: {
     group: {
       isBound: true,
