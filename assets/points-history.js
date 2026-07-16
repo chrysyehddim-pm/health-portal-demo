@@ -9,29 +9,35 @@
   let visibleCount = 10;
 
   const records = [...(data.pointHistory || [])];
-  (data.exchangeHistory || []).forEach(record => records.push({
+  (data.exchangeHistory || []).filter(record => record.status === 'success').forEach(record => records.push({
     ...record,
-    type: record.status === 'success' ? 'use' : 'exchange-attempt',
-    title: record.status === 'success' ? '兌換 HAPPY GO 點數' : record.status === 'pending' ? 'HAPPY GO 點數兌換處理中' : 'HAPPY GO 點數兌換未完成',
+    type: 'use',
+    title: '兌換 HAPPY GO 點數',
     occurredAt: record.requestedAt,
-    points: record.status === 'success' ? -record.healthPointsUsed : 0
+    points: -record.healthPointsUsed
   }));
   try {
     const latest = JSON.parse(sessionStorage.getItem('gohealth_latest_exchange') || 'null');
     if(latest?.id && !records.some(record => record.id === latest.id)) records.push({ ...latest, type:'use', title:'兌換 HAPPY GO 點數', occurredAt:latest.requestedAt, points:-latest.healthPointsUsed });
   } catch (error) {}
   records.sort((a, b) => String(b.occurredAt).localeCompare(String(a.occurredAt)));
+  const cutoff = new Date();
+  cutoff.setMonth(cutoff.getMonth() - 3);
+  const recentRecords = records.filter(record => {
+    const parsed = new Date(String(record.occurredAt).replace(' ', 'T').replaceAll('/', '-'));
+    return Number.isNaN(parsed.getTime()) || parsed >= cutoff;
+  });
+  records.splice(0, records.length, ...recentRecords);
+  records.splice(100);
 
   const meta = {
-    earn: { label:'累積', badge:'history-status-earned', icon:'fa-plus', iconClass:'bg-emerald-50 text-emerald-600' },
-    use: { label:'兌換使用', badge:'history-status-used', icon:'fa-arrow-right-arrow-left', iconClass:'bg-blue-50 text-blue-600' },
-    expired: { label:'點數到期', badge:'history-status-expired', icon:'fa-hourglass-end', iconClass:'bg-slate-100 text-slate-500' },
-    'exchange-attempt': { label:'未完成', badge:'history-status-pending', icon:'fa-clock', iconClass:'bg-amber-50 text-amber-600' }
+    earn: { label:'累點', badge:'history-status-earned', icon:'fa-plus', iconClass:'bg-emerald-50 text-emerald-600' },
+    use: { label:'兌點', badge:'history-status-used', icon:'fa-arrow-right-arrow-left', iconClass:'bg-blue-50 text-blue-600' }
   };
 
   function filtered(){
     if(currentFilter === 'earn') return records.filter(record => record.type === 'earn');
-    if(currentFilter === 'use') return records.filter(record => record.type !== 'earn');
+    if(currentFilter === 'use') return records.filter(record => record.type === 'use');
     return records;
   }
 
@@ -45,13 +51,12 @@
     $('history-list').innerHTML = shown.map(record => {
       const style = meta[record.type] || meta.use;
       const amount = Number(record.points || 0);
-      const amountCopy = amount === 0 ? '未扣點' : `${amount > 0 ? '+' : '−'}${format(Math.abs(amount))}`;
-      const amountClass = amount > 0 ? 'text-emerald-700' : amount < 0 ? 'text-blue-700' : 'text-slate-500';
-      const subline = record.type === 'earn' ? `效期至 ${safe(record.expiresAt)}` : record.type === 'use' ? `兌換 ${format(record.happyGoPoints)} 點 HAPPY GO` : safe(record.note || '健康點未扣除');
+      const amountCopy = `${amount > 0 ? '+' : '−'}${format(Math.abs(amount))}`;
+      const amountClass = amount > 0 ? 'text-emerald-700' : 'text-blue-700';
+      const subline = record.type === 'earn' ? `效期至 ${safe(record.expiresAt)}` : `兌換 ${format(record.happyGoPoints)} 點 HAPPY GO`;
       return `<button class="history-card" type="button" onclick="openPointDetail('${safe(record.id)}')">
-        <div class="flex items-center justify-between gap-3"><span class="history-status ${style.badge}">${style.label}</span><time class="text-base text-slate-500">${safe(String(record.occurredAt).split(' ')[0])}</time></div>
-        <div class="flex items-start justify-between gap-3 mt-4"><div class="min-w-0 text-left"><h2 class="text-lg font-black text-slate-800">${safe(record.title)}</h2><p class="text-base text-slate-600 mt-1">${subline}</p></div><strong class="point-ledger-amount ${amountClass}">${amountCopy}</strong></div>
-        <div class="text-right mt-3 text-emerald-700 text-base font-bold">查看詳情 <i class="fa-solid fa-chevron-right text-sm"></i></div>
+        <div class="flex items-start justify-between gap-3"><h2 class="min-w-0 text-left font-black text-slate-800">${safe(record.title)}</h2><strong class="point-ledger-amount ${amountClass}">${amountCopy}</strong></div>
+        <div class="history-card-meta flex items-center justify-between gap-3 mt-1.5 text-slate-600 text-left"><span><time>${safe(String(record.occurredAt).split(' ')[0])}</time><span aria-hidden="true"> ・ </span>${subline}</span><i class="fa-solid fa-chevron-right text-emerald-700 shrink-0" aria-hidden="true"></i></div>
       </button>`;
     }).join('');
   }
@@ -73,11 +78,10 @@
       row('健康點異動', amount === 0 ? '0 點（未扣點）' : `${amount > 0 ? '+' : '−'}${format(Math.abs(amount))} 點`),
       row('兌換結果', record.happyGoPoints ? `${format(record.happyGoPoints)} 點 HAPPY GO` : null),
       row('健康點效期', record.type === 'earn' ? safe(record.expiresAt) : null),
-      row('HAPPY GO 點數效期', record.type === 'use' ? safe(record.expiresAt) : null),
-      row('異動後餘額', record.balanceAfter === null ? null : `${format(record.balanceAfter)} 點`),
-      row('紀錄編號', `<span class="break-all">${safe(record.id)}</span>`)
+      row('異動後餘額', record.balanceAfter === null ? null : `${format(record.balanceAfter)} 點`)
     ].join('');
-    $('detail-note').textContent = record.note || '';
+    $('detail-note').textContent = '';
+    $('detail-note').classList.add('hidden');
     $('history-detail-modal').classList.remove('hidden-view');
     document.body.classList.add('modal-open');
   };

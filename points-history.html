@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>健康點紀錄｜GO HEALTH</title>
+  <title>累兌點紀錄｜GO HEALTH</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -13,7 +13,7 @@
 <div class="mobile-container" id="app-root">
   <header class="bg-white/95 backdrop-blur px-4 py-3 border-b border-slate-100 sticky top-0 z-50 grid grid-cols-[48px_1fr_48px] items-center gap-3">
     <button aria-label="返回首頁" class="round-icon-btn w-12 h-12 rounded-full bg-slate-50 text-slate-700 flex items-center justify-center" onclick="navigateTo('index.html')"><i class="fa-solid fa-chevron-left"></i></button>
-    <h1 class="text-xl font-black text-gray-800 text-center">健康點紀錄</h1>
+    <h1 class="text-xl font-black text-gray-800 text-center">累兌點紀錄</h1>
     <span aria-hidden="true"></span>
   </header>
 
@@ -31,12 +31,13 @@
       </div>
     </section>
 
-    <nav class="history-filters" aria-label="健康點紀錄篩選">
-      <button class="history-filter active" data-filter="all" type="button">全部</button>
-      <button class="history-filter" data-filter="earn" type="button">累積</button>
-      <button class="history-filter" data-filter="use" type="button">使用與到期</button>
+    <nav class="history-filters" aria-label="累兌點紀錄篩選">
+      <button class="history-filter active" data-filter="all" type="button">所有紀錄</button>
+      <button class="history-filter" data-filter="earn" type="button">累點紀錄</button>
+      <button class="history-filter" data-filter="use" type="button">兌點紀錄</button>
     </nav>
 
+    <p class="history-query-note">僅開放查詢三個月內累點和兌點最新 100 筆紀錄</p>
     <p class="text-base text-slate-600" id="history-count"></p>
     <section class="space-y-3" id="history-list" aria-live="polite"></section>
     <button class="hidden w-full min-h-12 border-2 border-emerald-200 bg-white text-emerald-700 text-base font-bold rounded-2xl" id="history-load-more" type="button">載入更多</button>
