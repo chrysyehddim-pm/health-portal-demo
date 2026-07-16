@@ -11,10 +11,10 @@
 </head>
 <body data-page="exchange">
 <div class="mobile-container" id="app-root">
-  <header class="bg-white/95 backdrop-blur px-4 py-3 border-b border-slate-100 sticky top-0 z-50 grid grid-cols-[48px_1fr_auto] items-center gap-3">
+  <header class="bg-white/95 backdrop-blur px-4 py-3 border-b border-slate-100 sticky top-0 z-50 grid grid-cols-[48px_1fr_48px] items-center gap-3">
     <button aria-label="返回首頁" class="w-12 h-12 rounded-full bg-slate-50 text-slate-700 flex items-center justify-center" onclick="navigateTo('index.html')"><i class="fa-solid fa-chevron-left"></i></button>
     <h1 class="text-xl font-black text-gray-800">健康點兌換</h1>
-    <a class="min-h-12 px-3 rounded-xl bg-emerald-50 text-emerald-700 font-bold text-base flex items-center gap-2 no-underline" href="exchange-history.html"><i class="fa-solid fa-clock-rotate-left"></i><span>兌換紀錄</span></a>
+    <span aria-hidden="true"></span>
   </header>
 
   <main class="p-4 pb-10 space-y-5">
@@ -55,7 +55,7 @@
     <section class="bg-amber-50 border border-amber-200 rounded-3xl p-5">
       <h2 class="text-lg font-black text-amber-900 flex items-center gap-2"><i class="fa-solid fa-circle-exclamation"></i>重要提醒</h2>
       <ul class="text-base text-amber-900 leading-relaxed mt-3 space-y-2 list-disc pl-5">
-        <li>兌換取得的 HAPPY GO 點數為限時點數，使用期限為入點後 <span id="validity-days">180</span> 天。</li>
+        <li>兌換取得的 HAPPY GO 點數為限時點數，使用期限為入點後 <span id="validity-days">90</span> 天。</li>
         <li>逾期未使用之限時點數將失效，無法延長或返還。</li>
         <li>兌換完成後無法取消或返還健康點，請確認內容後再送出。</li>
         <li>兌換不影響已累積的群組抽獎進度。</li>
@@ -87,7 +87,6 @@
       <h2 class="text-2xl font-black text-gray-800" id="result-title"></h2>
       <p class="text-base text-slate-600 mt-3 leading-relaxed" id="result-message"></p>
       <button class="w-full bg-emerald-600 text-white text-lg font-bold py-4 rounded-2xl mt-6" id="result-action"></button>
-      <a class="hidden w-full text-emerald-700 text-base font-bold py-3 mt-2" href="exchange-history.html" id="result-history-link">查看兌換紀錄</a>
     </div>
   </div>
   <div id="toast-container"></div>

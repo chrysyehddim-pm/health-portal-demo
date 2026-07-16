@@ -11,10 +11,47 @@ window.GOHEALTH_DATA = {
   exchange: {
     healthPointBalance: 1200,
     healthPointsPerHappyGoPoint: 500,
-    limitedPointValidityDays: 180,
+    limitedPointValidityDays: 90,
     immediateCredit: true,
     refundableAfterSuccess: false
   },
+  healthPointExpiry: {
+    rule: '健康點依取得年度分批計算效期，原則上於取得年度的次年 12 月 31 日到期。',
+    nextExpiryDate: '2027/12/31',
+    nextExpiryPoints: 700
+  },
+  pointHistory: [
+    {
+      id: 'PT202607150003',
+      type: 'earn',
+      title: '眼力極限考驗',
+      occurredAt: '2026/07/15 10:20',
+      points: 100,
+      balanceAfter: 1200,
+      expiresAt: '2027/12/31',
+      note: '完成每日賺點任務。'
+    },
+    {
+      id: 'PT202607130002',
+      type: 'earn',
+      title: '幸福柑仔店｜腦力靈活挑戰',
+      occurredAt: '2026/07/13 19:05',
+      points: 200,
+      balanceAfter: 1100,
+      expiresAt: '2027/12/31',
+      note: '完成每月賺點任務。'
+    },
+    {
+      id: 'PT202607010001',
+      type: 'earn',
+      title: '我的健康起點',
+      occurredAt: '2026/07/01 09:10',
+      points: 300,
+      balanceAfter: 900,
+      expiresAt: '2027/12/31',
+      note: '完成新手賺點任務。'
+    }
+  ],
   exchangeHistory: [
     {
       id: 'GH202607160003',
@@ -53,7 +90,7 @@ window.GOHEALTH_DATA = {
       happyGoPoints: 2,
       balanceBefore: 2200,
       balanceAfter: 1200,
-      expiresAt: '2027/01/06',
+      expiresAt: '2026/10/08',
       note: '兌換已完成。'
     }
   ],

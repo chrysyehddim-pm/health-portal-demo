@@ -307,6 +307,13 @@
       box-shadow: 0 4px 12px rgba(6,95,70,.12);
     }
     .exchange-entry small { display: block; margin-top: 2px; color: #047857; font-size: 15px; font-weight: 600; }
+    .points-history-entry {
+      display: inline-flex; align-items: center; gap: 6px; flex: 0 0 auto;
+      min-height: 36px; padding: 6px 10px; border-radius: 999px;
+      background: rgba(255,255,255,.18); color: #fff; font-size: 15px; font-weight: 800;
+      text-decoration: none;
+    }
+    .points-history-entry:active { background: rgba(255,255,255,.28); transform: scale(.97); }
 
     .hospital-service-card {
       display: flex;
@@ -380,7 +387,12 @@
     .history-status-success { color: #047857; background: #d1fae5; }
     .history-status-pending { color: #a16207; background: #fef3c7; }
     .history-status-failed { color: #dc2626; background: #fee2e2; }
+    .history-status-earned { color: #047857; background: #d1fae5; }
+    .history-status-used { color: #1d4ed8; background: #dbeafe; }
+    .history-status-expired { color: #64748b; background: #e2e8f0; }
     .history-conversion { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 16px; font-size: 18px; color: #1e293b; }
+    .point-ledger-amount { font-size: 22px; font-weight: 900; white-space: nowrap; }
+    .expiry-summary { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center; }
     .copy-record-id { min-height: 36px !important; min-width: 36px; border-radius: 10px; color: #047857; background: #d1fae5; }
 
     .announcement-bar {

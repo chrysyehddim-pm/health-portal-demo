@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>健康點紀錄｜GO HEALTH</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link href="assets/shared.css" rel="stylesheet">
+</head>
+<body data-page="exchange-history">
+<div class="mobile-container" id="app-root">
+  <header class="bg-white/95 backdrop-blur px-4 py-3 border-b border-slate-100 sticky top-0 z-50 grid grid-cols-[48px_1fr_48px] items-center gap-3">
+    <button aria-label="返回首頁" class="round-icon-btn w-12 h-12 rounded-full bg-slate-50 text-slate-700 flex items-center justify-center" onclick="navigateTo('index.html')"><i class="fa-solid fa-chevron-left"></i></button>
+    <h1 class="text-xl font-black text-gray-800 text-center">健康點紀錄</h1>
+    <span aria-hidden="true"></span>
+  </header>
+
+  <main class="p-4 pb-12 space-y-4">
+    <section class="points-card rounded-3xl p-5 text-white shadow-xl relative overflow-hidden">
+      <div class="absolute -right-8 -top-8 w-36 h-36 bg-white/10 rounded-full"></div>
+      <div class="relative z-10">
+        <p class="text-base text-emerald-100 font-bold">目前可用健康點</p>
+        <div class="flex items-baseline gap-2 mt-1"><strong class="text-5xl font-black" id="ledger-balance">1,200</strong><span class="text-lg">點</span></div>
+        <div class="expiry-summary mt-4 bg-black/20 rounded-2xl p-3">
+          <div><p class="text-sm text-emerald-100">最近到期</p><p class="text-base font-bold"><span id="next-expiry-points">700</span> 點將於 <span id="next-expiry-date">2027/12/31</span> 到期</p></div>
+          <button class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center shrink-0" id="expiry-info" aria-label="查看效期規則"><i class="fa-solid fa-circle-info"></i></button>
+        </div>
+        <a class="exchange-entry mt-4" href="exchange.html"><span><i class="fa-solid fa-arrow-right-arrow-left mr-2"></i>兌換 HAPPY GO 點數<small>500 健康點可兌換 1 點</small></span><i class="fa-solid fa-chevron-right"></i></a>
+      </div>
+    </section>
+
+    <nav class="history-filters" aria-label="健康點紀錄篩選">
+      <button class="history-filter active" data-filter="all" type="button">全部</button>
+      <button class="history-filter" data-filter="earn" type="button">累積</button>
+      <button class="history-filter" data-filter="use" type="button">使用與到期</button>
+    </nav>
+
+    <p class="text-base text-slate-600" id="history-count"></p>
+    <section class="space-y-3" id="history-list" aria-live="polite"></section>
+    <button class="hidden w-full min-h-12 border-2 border-emerald-200 bg-white text-emerald-700 text-base font-bold rounded-2xl" id="history-load-more" type="button">載入更多</button>
+
+    <section class="hidden text-center pt-12 px-5" id="history-empty">
+      <div class="w-24 h-24 bg-emerald-50 rounded-3xl flex items-center justify-center mx-auto text-5xl">🧾</div>
+      <h2 class="text-2xl font-black text-gray-800 mt-5">目前沒有符合的紀錄</h2>
+      <p class="text-base text-slate-600 mt-2">切換其他分類查看健康點明細。</p>
+    </section>
+  </main>
+
+  <div class="modal-overlay hidden-view" id="history-detail-modal" onclick="closePointDetail()">
+    <div class="modal-sheet" onclick="event.stopPropagation()">
+      <div class="w-12 h-1 bg-slate-200 rounded-full mx-auto mb-5"></div>
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl" id="detail-icon"></div>
+        <div><h2 class="text-xl font-black text-gray-800" id="detail-title"></h2><p class="text-base mt-0.5 font-bold" id="detail-type"></p></div>
+      </div>
+      <div class="bg-slate-50 border border-slate-100 rounded-2xl p-4" id="detail-content"></div>
+      <p class="text-base text-slate-600 leading-relaxed mt-4" id="detail-note"></p>
+      <button class="w-full text-slate-600 text-base font-bold py-3 mt-3" onclick="closePointDetail()">關閉</button>
+    </div>
+  </div>
+
+  <div class="warn-modal-overlay hidden-view" id="expiry-modal" onclick="closeExpiryInfo()">
+    <div class="warn-modal-box" onclick="event.stopPropagation()">
+      <div class="w-14 h-14 bg-amber-50 rounded-2xl flex items-center justify-center text-2xl text-amber-600 mb-4"><i class="fa-solid fa-hourglass-half"></i></div>
+      <h2 class="text-xl font-black text-gray-800">健康點效期說明</h2>
+      <p class="text-base text-slate-600 mt-3 leading-relaxed" id="expiry-rule"></p>
+      <p class="text-base text-slate-600 mt-3 leading-relaxed">使用健康點時，系統會自動優先扣除最早到期的點數；逾期未使用的健康點將自動失效。</p>
+      <button class="w-full bg-emerald-600 text-white text-base font-bold py-3 rounded-2xl mt-5" onclick="closeExpiryInfo()">我知道了</button>
+    </div>
+  </div>
+  <div id="toast-container"></div>
+</div>
+<script src="assets/data.js"></script>
+<script src="assets/shared.js"></script>
+<script src="assets/points-history.js"></script>
+</body>
+</html>

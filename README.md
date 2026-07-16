@@ -7,14 +7,14 @@
 - `terms.html`：首次授權／同意頁
 - `group.html`：群組頁
 - `exchange.html`：健康點兌換 HAPPY GO 點數流程 Demo
-- `exchange-history.html`：兌換紀錄、狀態篩選與紀錄詳情
+- `points-history.html`：健康點累積、兌換使用與到期紀錄整合頁
+- `exchange-history.html`：舊網址相容轉址，會導向健康點紀錄
 - `error-simulator.html`：錯誤情境模擬
 
 ## 群組狀態測試
 
 - `group.html`：一般群組狀態
 - `group.html?state=empty`：近期無參與賺點任務狀態
-- `exchange-history.html?state=empty`：尚無兌換紀錄的空白狀態
 
 ## 部署說明
 
@@ -26,7 +26,7 @@
 
 健康點兌換 Demo 的餘額、匯率與限時點數效期集中設定於 `assets/data.js` 的 `exchange` 區塊。目前假設為：500 健康點兌換 1 點、最低兌換 1 點、整數兌換、餘數保留、立即入點、成功後不可取消、入點失敗不扣健康點。
 
-兌換紀錄範例集中設定於 `assets/data.js` 的 `exchangeHistory`，包含成功、處理中與失敗三種狀態。每筆紀錄保留申請／入點時間、當次匯率、兌換點數、前後餘額、效期、狀態與唯一紀錄編號。
+健康點累積範例集中設定於 `assets/data.js` 的 `pointHistory`，兌換紀錄則位於 `exchangeHistory`；`points-history.html` 會依時間整合顯示。健康點依取得年度分批計算效期，兌換時優先扣除最早到期批次。HAPPY GO 限時點數效期為入點後 90 天。
 
 首頁公告文字與輪播參數集中設定於 `assets/data.js` 的 `announcement` 區塊：`messages` 管理公告內容，`pixelsPerSecond` 控制移動速度，`pauseMilliseconds` 控制每輪開始前停留時間，`messageGapPixels` 控制兩輪文字間距。使用者開啟「減少動態效果」時，公告將停止自動輪播並可手動橫向查看。
 

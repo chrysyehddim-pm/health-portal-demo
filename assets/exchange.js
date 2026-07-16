@@ -1,7 +1,7 @@
 (function(){
   const config = window.GOHEALTH_DATA?.exchange || {};
   const rate = config.healthPointsPerHappyGoPoint || 500;
-  const validityDays = config.limitedPointValidityDays || 180;
+  const validityDays = config.limitedPointValidityDays || 90;
   let balance = config.healthPointBalance || 1200;
   let amount = 1;
   let shouldFail = false;
@@ -65,8 +65,6 @@
       $('result-message').innerHTML = `已取得 <strong>${amount} 點 HAPPY GO 限時點數</strong><br>使用期限至 ${expiryDate()}<br>剩餘 ${format(balance)} 健康點`;
       action.textContent = '完成並返回首頁';
       action.onclick = () => navigateTo('index.html');
-      $('result-history-link').classList.remove('hidden');
-      $('result-history-link').classList.add('block');
     } else {
       icon.className = 'w-20 h-20 rounded-full flex items-center justify-center text-4xl mx-auto mb-4 bg-red-50 text-red-500';
       icon.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
@@ -74,8 +72,6 @@
       $('result-message').innerHTML = 'HAPPY GO 點數入點失敗，<strong>健康點不會扣除</strong>。請稍後再試。';
       action.textContent = '返回兌換頁';
       action.onclick = () => { $('exchange-result-modal').classList.add('hidden-view'); shouldFail = false; render(); };
-      $('result-history-link').classList.add('hidden');
-      $('result-history-link').classList.remove('block');
     }
     $('exchange-result-modal').classList.remove('hidden-view');
   }
