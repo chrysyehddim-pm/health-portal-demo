@@ -583,3 +583,109 @@ body.modal-open .bottom-nav {
   transform: translateX(-50%) translateY(24px) !important;
   transition: opacity .18s ease, transform .18s ease;
 }
+
+/* 第二階段熟齡友善字級：放大可閱讀內容，固定圖示與圓形控制尺寸避免變形。 */
+body[data-page="home"] .text-xs,
+body[data-page="group"] .text-xs,
+body[data-page="terms"] .text-xs,
+body[data-page="exchange"] .text-xs,
+body[data-page="exchange-history"] .text-xs {
+  font-size: 1.0625rem !important;
+  line-height: 1.6 !important;
+}
+
+body[data-page="home"] .text-sm,
+body[data-page="group"] .text-sm,
+body[data-page="terms"] .text-sm,
+body[data-page="exchange"] .text-sm,
+body[data-page="exchange-history"] .text-sm {
+  font-size: 1.125rem !important;
+  line-height: 1.65 !important;
+}
+
+body[data-page="home"] .text-base,
+body[data-page="group"] .text-base,
+body[data-page="terms"] .text-base,
+body[data-page="exchange"] .text-base,
+body[data-page="exchange-history"] .text-base {
+  font-size: 1.1875rem !important;
+  line-height: 1.6 !important;
+}
+
+body[data-page="home"] .text-lg,
+body[data-page="group"] .text-lg,
+body[data-page="terms"] .text-lg,
+body[data-page="exchange"] .text-lg,
+body[data-page="exchange-history"] .text-lg {
+  font-size: 1.25rem !important;
+  line-height: 1.5 !important;
+}
+
+body[data-page="home"] .text-xl,
+body[data-page="group"] .text-xl,
+body[data-page="terms"] .text-xl,
+body[data-page="exchange"] .text-xl,
+body[data-page="exchange-history"] .text-xl {
+  font-size: 1.375rem !important;
+  line-height: 1.45 !important;
+}
+
+.section-title { font-size: 1.375rem; line-height: 1.45; }
+body[data-page="home"] .task-card h4 { font-size: 1.1875rem; line-height: 1.5; overflow-wrap: anywhere; }
+body[data-page="home"] .task-card p { font-size: 1.0625rem !important; line-height: 1.6 !important; overflow-wrap: anywhere; }
+body[data-page="home"] .shimmer-badge { font-size: 1rem !important; line-height: 1.4 !important; }
+
+.announcement-bar { min-height: 50px; }
+.announcement-track { font-size: 1.125rem; line-height: 1.55; }
+.nav-btn { font-size: 1.0625rem; line-height: 1.35; }
+.nav-btn i { font-size: 22px; }
+.points-history-entry { min-height: 44px; font-size: 1.0625rem; line-height: 1.35; }
+.exchange-entry { font-size: 1.125rem; line-height: 1.45; }
+.exchange-entry small { font-size: 1rem; line-height: 1.5; }
+.hospital-service-card h4 { overflow-wrap: anywhere; }
+.hospital-service-card .service-action { font-size: 1.0625rem; }
+
+.history-query-note { font-size: 1.0625rem; line-height: 1.6; }
+.history-filter { min-height: 52px; font-size: 1.0625rem; line-height: 1.35; padding: 6px 4px; }
+body[data-page="exchange-history"] .history-card h2 { font-size: 1.1875rem; line-height: 1.5; overflow-wrap: anywhere; }
+body[data-page="exchange-history"] .history-card .history-card-meta { font-size: 1.0625rem; line-height: 1.55; }
+.point-ledger-amount { font-size: 1.375rem; }
+.exchange-summary-row { font-size: 1.125rem; line-height: 1.55; }
+.msg-btn, .msg-bubble, .activity-line { font-size: 1.0625rem; line-height: 1.6; }
+.kick-btn { font-size: 1rem; min-height: 40px; }
+
+.round-icon-btn,
+#expiry-info {
+  aspect-ratio: 1 / 1;
+  flex: 0 0 auto;
+  padding: 0 !important;
+  line-height: 1 !important;
+}
+
+.toast {
+  max-width: calc(100vw - 32px);
+  white-space: normal;
+  text-align: center;
+  font-size: 1.0625rem;
+  line-height: 1.5;
+}
+
+body[data-page="home"] #health-articles .truncate {
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: clip;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+@media (max-width: 380px) {
+  body[data-page="home"] section > .flex.items-center.justify-between { flex-wrap: wrap; gap: 8px; }
+  body[data-page="home"] h2 { min-width: 0; overflow-wrap: anywhere; }
+  .points-history-entry { padding-inline: 10px; }
+  body[data-page="home"] .task-card { gap: 10px; padding: 15px; }
+  body[data-page="home"] .task-card > div:first-child { width: 42px; height: 42px; }
+  .history-filters { gap: 5px; padding: 5px; }
+  .history-filter { font-size: 1rem; }
+  .expiry-summary { grid-template-columns: minmax(0, 1fr) 40px; }
+}
