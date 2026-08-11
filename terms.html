@@ -1,61 +1,302 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
+<!doctype html>
+<html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GO HEALTH</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link href="assets/shared.css" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>GO HEALTH｜服務授權條款</title>
+  <style>
+    :root {
+      /* 可點擊狀態：GO HEALTH 綠色；停用狀態仍使用灰色。 */
+      --brand: #25834f;
+      --brand-dark: #1d6b40;
+      --text: #262626;
+      --muted: #666;
+      --border: #e7e7e7;
+      --disabled: #d9d9d9;
+      --surface: #fff;
+      --action-height: 84px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      background: #f4f5f7;
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC",
+        "PingFang TC", "Microsoft JhengHei", sans-serif;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100dvh;
+      background: var(--surface);
+    }
+
+    /*
+      關鍵：頁面只保留 body 這一層捲動。
+      請勿在 .terms、main 或其他父層加入固定高度、overflow-y:auto/scroll。
+    */
+    main {
+      width: min(100%, 720px);
+      margin: 0 auto;
+      padding: 20px 20px calc(var(--action-height) + 28px + env(safe-area-inset-bottom));
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 24px;
+      line-height: 1.35;
+      letter-spacing: .01em;
+    }
+
+    .lead {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    /*
+      使用純文字保留 Safari Reader 的復原指引。
+      Reader 可能移除原頁面的操作按鈕，但通常會保留本文文字。
+    */
+    .reader-help {
+      margin: -8px 0 18px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .terms {
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .terms h2 {
+      margin: 22px 0 6px;
+      font-size: 17px;
+      line-height: 1.5;
+    }
+
+    .terms p,
+    .terms li { margin-top: 0; }
+
+    .terms ul,
+    .terms ol {
+      margin: 6px 0 0;
+      padding-left: 1.4em;
+    }
+
+    .document-note {
+      margin: 0 0 16px;
+      padding: 10px 12px;
+      border: 1px solid #f3cad8;
+      border-radius: 10px;
+      background: #fff7fa;
+      color: #7c3651;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .end-marker {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .end-marker::before,
+    .end-marker::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .action-bar {
+      position: fixed;
+      z-index: 10;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      padding: 12px 20px calc(12px + env(safe-area-inset-bottom));
+      border-top: 1px solid var(--border);
+      background: rgba(255, 255, 255, .96);
+      box-shadow: 0 -4px 18px rgba(0, 0, 0, .06);
+      backdrop-filter: blur(8px);
+    }
+
+    .action-inner {
+      width: min(100%, 680px);
+      margin: 0 auto;
+    }
+
+    .primary-button {
+      width: 100%;
+      min-height: 52px;
+      padding: 12px 16px;
+      border: 0;
+      border-radius: 12px;
+      background: var(--brand);
+      color: #fff;
+      font: inherit;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color .2s ease, transform .1s ease;
+    }
+
+    .primary-button:active:not(:disabled) { transform: scale(.99); }
+    .primary-button:hover:not(:disabled) { background: var(--brand-dark); }
+
+    .primary-button:disabled {
+      background: var(--disabled);
+      color: #777;
+      cursor: not-allowed;
+    }
+
+    .primary-button:focus-visible {
+      outline: 3px solid rgba(37, 131, 79, .28);
+      outline-offset: 2px;
+    }
+
+    @media (min-width: 721px) {
+      body {
+        width: min(100%, 720px);
+        margin: 0 auto;
+        box-shadow: 0 0 28px rgba(0, 0, 0, .08);
+      }
+
+      .action-bar {
+        right: 50%;
+        left: 50%;
+        width: min(100%, 720px);
+        transform: translateX(-50%);
+      }
+    }
+  </style>
 </head>
-<body data-page="terms">
-<div class="mobile-container" id="app-root">
+<body>
+  <main id="terms-page">
+    <header>
+      <h1>服務授權條款</h1>
+      <p class="lead">請閱讀至底部並同意，即可進入服務。</p>
+      <p class="reader-help">若頁面未顯示同意按鈕，請關閉 Safari「閱讀器」後再繼續。</p>
+    </header>
 
-<header class="px-5 py-4 border-b border-slate-100 flex items-center justify-center sticky top-0 z-50 bg-white">
-<span class="font-bold text-gray-800">授權服務</span>
-</header>
-<div class="flex-1 px-6 py-6 flex flex-col h-full overflow-hidden">
-<div class="text-center mb-6 shrink-0">
-<div class="w-20 h-20 bg-emerald-50 text-emerald-600 rounded-3xl flex items-center justify-center text-4xl mx-auto mb-4 shadow-inner">
-<i class="fas fa-shield-heart"></i>
-</div>
-<h1 class="text-2xl font-black text-gray-800 leading-tight">GO HEALTH<br/>服務授權條款</h1>
-<p class="text-gray-500 text-sm mt-2 leading-relaxed">請詳細閱讀下方服務條款，<br/>閱讀至底端後方可同意進入服務。</p>
-</div>
-<div class="bg-slate-50 rounded-2xl p-5 border border-slate-200 mb-6 flex-1 overflow-y-auto custom-scrollbar" id="terms-content">
-<h3 class="font-bold text-gray-700 text-sm border-b border-slate-200 pb-2.5 flex items-center gap-2 mb-4">
-<i class="fas fa-file-contract text-green-600"></i> 正式服務條款
-        </h3>
-<div class="text-sm text-gray-600 space-y-4 leading-relaxed pb-4">
-<p><strong>【HAPPY GO APP GO HEALTH服務條款】</strong></p>
-<p>GO HEALTH服務(以下簡稱本服務)係由鼎鼎聯合行銷股份有限公司(以下簡稱本公司)所提供 HAPPY GO App功能之一。當您開始使用本服務時，軟體系統將依您所要求的服務內容提供相關服務，並擷取提供該等服務所必須蒐集之可供辨識個人之資料，請務必詳閱以下服務內容及個資條款，若您不同意相關內容或提供個人資料，請立即停止使用本服務，如您繼續使用本服務時，將視為同意以下內容：</p>
-<p><strong>非醫學建議聲明</strong><br/>GO HEALTH服務並沒有要提供醫療診斷、治療、或醫療建議的意思。GO HEALTH服務及連結之第三⽅網站所提供的資訊、服務、產品、內容應當只做為參考。如果您有任何有關於醫療、健康診斷、治療選項等問題，請務必向專業的醫師尋求諮詢與建議。</p>
-<p><strong>同意表示</strong><br/>使用本服務之前，您應閱讀並決定是否同意本服務各項條款。經您同意，將為有效且不可撤銷。若您未同意本服務條款，您將無法使用本服務各項功能。如您為未成年人，須經過家長或監護人同意後，方能使用本服務。本服務為快樂購聯合集點卡及 HAPPY GO App之延伸功能，除本服務條款外，您亦應遵照快樂購聯合集點卡服務辦法、HAPPY GO App 服務條款等本公司所發布之各條款、規定、辦法及說明使用本服務。</p>
-<p><strong>條款的修改或變更</strong><br/>本公司有權利隨時修改或變更本服務條款之內容，並透過 HAPPY GO官方網站或 HAPPY GO App公告或以其他方式通知，若會員於本服務條款修改或變更公告/通知後15日內未提出反對之意思表示，視同會員已閱讀、瞭解並同意接受該等修改或變更。</p>
-<p><strong>停權</strong><br/>本公司認為您違反本條款或有違反之虞時，得在不事先通知您的情形下停止您的使用本服務或快樂購卡卡友身分及相關權利。自停權時起，您於快樂購及本服務的所有使用權不論任何理由均為消滅。</p>
-<p><strong>個資隱私權</strong><br/>個人資料之蒐集、處理與利用：基於提供健康內容建議、個人化服務推薦、健康趨勢分析、會員分群管理、行銷優化、廣告推播及服務改善等特定目的之合理關聯範圍內，本公司得蒐集、處理及利用您於使用本服務時所提供或產生之下列相關資訊：<br/>1. 帳號與基本資料：包括姓名、出生年月日、性別。<br/>2. 裝置與使用紀錄資料。<br/>3. 健康服務、問卷及態度標籤資料。<br/>4. 遊戲與互動行為資料。</p>
-<p><strong>行銷、廣告與推播服務</strong><br/>為提升服務品質及使用體驗，本公司可能依據您所提供之資訊進行分析、分群及標籤建立，以提供個人化內容推薦。如您不希望接收推播通知，可自行透過HAPPY GO App之系統設定關閉推播通知功能。</p>
-<p><strong>資料處理與傳輸</strong><br/>當您使用本服務時，您同意本服務根據本隱私權保護政策所述內容，對您的資訊進行資料處理、分享、傳輸和使用。無論您所居住的國家/地區為何，您都授權我們根據本隱私權保護條款在您所居住國家/地區以外之處傳輸、處理、儲存和使用您的資訊以及向您提供服務。</p>
-<p><strong>當事人權利行使</strong><br/>您可隨時要求刪除您的於本服務中留存之個人資料，在您要求刪除個人資訊後，依本服務系統運作流程經過一段時間才會從伺服器中完全刪除。如擬查詢、閱覽或刪除個人資料時，請至HAPPY GO官網或App聯繫文字客服 (服務時間：週一至週五 9:00~18:00)。</p>
-<p><strong>服務的提供</strong><br/>於本公司判斷有必要時，得在不事先通知您的情形下隨時變更本服務的全部或部分內容，並中止提供本服務。</p>
-<p><strong>智慧健康服務非醫療建議之聲明</strong><br/>本服務所提供之一切內容，僅供一般性參考，並非醫療服務，亦不構成任何形式之醫療診斷、治療、處方、醫療建議或其他醫療行為。您使用本服務、接受相關內容或與本公司進行之任何互動，均不構成醫病關係、診療關係、諮詢關係或其他專業醫療服務關係。</p>
-<p><strong>健康點數</strong><br/>本服務提供之「健康點數」非等同於 HAPPY GO 點數。健康點數採雙軌累積制度，除累積於個人帳戶外，亦將同步計入群組積分。群組累積積分以每週為一期進行統計，並於每週結算後重置重新計算。健康點數之有效期間，自會員取得點數之日起至次年度十二月三十一日止。</p>
-<p><strong>家庭群組</strong><br/>嚴禁發送、分享或散布涉及暴力、歧視、騷擾或其他可能造成他人不適之內容。嚴禁偽造或冒用他人身分。</p>
-<p><strong>服務停止或中斷</strong><br/>如遇天災或其他不可抗力之因素，或非本公司所得控制之事由，本公司將逕行暫停或中斷本服務之全部或一部。</p>
-<p><strong>其他</strong><br/>本服務條款解釋、補充及適用均以中華民國法令為準據法。如有任何問題，請至HAPPY GO官網或App聯繫文字客服 (服務時間：週一至週五 9:00~18:00)。<br/>(2026.04)</p>
-<p class="text-center text-emerald-600 font-bold mt-6 pb-2" id="terms-bottom-marker">--- 已到達底端 ---</p>
-</div>
-</div>
-<div class="mt-auto shrink-0">
-<button class="w-full bg-slate-300 text-white font-bold py-4 rounded-2xl shadow-none transition text-lg cursor-not-allowed" disabled="" id="btn-agree" onclick="navigateTo('index.html')">
-          請先閱讀完畢並滑動到底部
-        </button>
-</div>
-</div>
+    <article class="terms" aria-label="服務授權條款全文">
+      <p><strong>【HAPPY GO APP GO HEALTH服務條款】</strong></p>
+      <p>GO HEALTH服務(以下簡稱本服務)係由鼎鼎聯合行銷股份有限公司(以下簡稱本公司)所提供 HAPPY GO App功能之一。當您開始使用本服務時，軟體系統將依您所要求的服務內容提供相關服務，並擷取提供該等服務所必須蒐集之可供辨識個人之資料，請務必詳閱以下服務內容及個資條款，若您不同意相關內容或提供個人資料，請立即停止使用本服務，如您繼續使用本服務時，將視為同意以下內容：</p>
 
-</div>
-<script src="assets/data.js"></script>
-<script src="assets/shared.js"></script>
+      <h2>非醫學建議聲明</h2>
+      <p>GO HEALTH服務並沒有要提供醫療診斷、治療、或醫療建議的意思。GO HEALTH服務及連結之第三⽅網站所提供的資訊、服務、產品、內容應當只做為參考。如果您有任何有關於醫療、健康診斷、治療選項等問題，請務必向專業的醫師尋求諮詢與建議。</p>
+
+      <h2>同意表示</h2>
+      <p>使用本服務之前，您應閱讀並決定是否同意本服務各項條款。經您同意，將為有效且不可撤銷。若您未同意本服務條款，您將無法使用本服務各項功能。如您為未成年人，須經過家長或監護人同意後，方能使用本服務。本服務為快樂購聯合集點卡及 HAPPY GO App之延伸功能，除本服務條款外，您亦應遵照快樂購聯合集點卡服務辦法、HAPPY GO App 服務條款等本公司所發布之各條款、規定、辦法及說明使用本服務。</p>
+
+      <h2>條款的修改或變更</h2>
+      <p>本公司有權利隨時修改或變更本服務條款之內容，並透過 HAPPY GO官方網站或 HAPPY GO App公告或以其他方式通知，若會員於本服務條款修改或變更公告/通知後15日內未提出反對之意思表示，視同會員已閱讀、瞭解並同意接受該等修改或變更。</p>
+
+      <h2>停權</h2>
+      <p>本公司認為您違反本條款或有違反之虞時，得在不事先通知您的情形下停止您的使用本服務或快樂購卡卡友身分及相關權利。自停權時起，您於快樂購及本服務的所有使用權不論任何理由均為消滅。</p>
+
+      <h2>個資隱私權</h2>
+      <p>個人資料之蒐集、處理與利用：基於提供健康內容建議、個人化服務推薦、健康趨勢分析、會員分群管理、行銷優化、廣告推播及服務改善等特定目的之合理關聯範圍內，本公司得蒐集、處理及利用您於使用本服務時所提供或產生之下列相關資訊：</p>
+      <ol>
+        <li>帳號與基本資料：包括姓名、出生年月日、性別。</li>
+        <li>裝置與使用紀錄資料。</li>
+        <li>健康服務、問卷及態度標籤資料。</li>
+        <li>遊戲與互動行為資料。</li>
+      </ol>
+
+      <h2>行銷、廣告與推播服務</h2>
+      <p>為提升服務品質及使用體驗，本公司可能依據您所提供之資訊進行分析、分群及標籤建立，以提供個人化內容推薦。如您不希望接收推播通知，可自行透過HAPPY GO App之系統設定關閉推播通知功能。</p>
+
+      <h2>資料處理與傳輸</h2>
+      <p>當您使用本服務時，您同意本服務根據本隱私權保護政策所述內容，對您的資訊進行資料處理、分享、傳輸和使用。無論您所居住的國家/地區為何，您都授權我們根據本隱私權保護條款在您所居住國家/地區以外之處傳輸、處理、儲存和使用您的資訊以及向您提供服務。</p>
+
+      <h2>當事人權利行使</h2>
+      <p>您可隨時要求刪除您的於本服務中留存之個人資料，在您要求刪除個人資訊後，依本服務系統運作流程經過一段時間才會從伺服器中完全刪除。如擬查詢、閱覽或刪除個人資料時，請至HAPPY GO官網或App聯繫文字客服 (服務時間：週一至週五 9:00~18:00)。</p>
+
+      <h2>服務的提供</h2>
+      <p>於本公司判斷有必要時，得在不事先通知您的情形下隨時變更本服務的全部或部分內容，並中止提供本服務。</p>
+
+      <h2>智慧健康服務非醫療建議之聲明</h2>
+      <p>本服務所提供之一切內容，僅供一般性參考，並非醫療服務，亦不構成任何形式之醫療診斷、治療、處方、醫療建議或其他醫療行為。您使用本服務、接受相關內容或與本公司進行之任何互動，均不構成醫病關係、診療關係、諮詢關係或其他專業醫療服務關係。</p>
+
+      <h2>健康點數</h2>
+      <p>本服務提供之「健康點數」非等同於 HAPPY GO 點數。健康點數採雙軌累積制度，除累積於個人帳戶外，亦將同步計入群組積分。群組累積積分以每週為一期進行統計，並於每週結算後重置重新計算。健康點數之有效期間，自會員取得點數之日起至次年度十二月三十一日止。</p>
+
+      <h2>家庭群組</h2>
+      <p>嚴禁發送、分享或散布涉及暴力、歧視、騷擾或其他可能造成他人不適之內容。嚴禁偽造或冒用他人身分。</p>
+
+      <h2>服務停止或中斷</h2>
+      <p>如遇天災或其他不可抗力之因素，或非本公司所得控制之事由，本公司將逕行暫停或中斷本服務之全部或一部。</p>
+
+      <h2>其他</h2>
+      <p>本服務條款解釋、補充及適用均以中華民國法令為準據法。如有任何問題，請至HAPPY GO官網或App聯繫文字客服 (服務時間：週一至週五 9:00~18:00)。<br>(2026.04)</p>
+
+      <!-- JS 觀察此元素是否進入可視區域，以判定已閱讀到底。 -->
+      <div id="terms-end" class="end-marker" tabindex="-1">條款已閱讀完畢</div>
+    </article>
+  </main>
+
+  <!-- 按鈕固定在 viewport 底部，進入頁面首屏即可看見。 -->
+  <div class="action-bar">
+    <div class="action-inner">
+      <button id="agree-button" class="primary-button" type="button" disabled aria-disabled="true">
+        請閱讀至底部
+      </button>
+    </div>
+  </div>
+
+  <script>
+    (() => {
+      const button = document.getElementById('agree-button');
+      const endMarker = document.getElementById('terms-end');
+      let hasReachedEnd = false;
+
+      function enableAgreement() {
+        if (hasReachedEnd) return;
+        hasReachedEnd = true;
+        button.disabled = false;
+        button.setAttribute('aria-disabled', 'false');
+        button.textContent = '同意並進入服務';
+      }
+
+      // 主要判定：最後一個標記實際進入畫面，不受瀏覽器工具列高度變化影響。
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+          if (entries.some((entry) => entry.isIntersecting)) {
+            enableAgreement();
+            observer.disconnect();
+          }
+        }, { threshold: 0.6 });
+
+        observer.observe(endMarker);
+      }
+
+      // 相容舊版 WebView 的備援判定。只監聽 window，代表整頁單層捲動。
+      function checkPageEnd() {
+        const currentBottom = window.scrollY + window.innerHeight;
+        const pageBottom = document.documentElement.scrollHeight;
+        if (currentBottom >= pageBottom - 8) enableAgreement();
+      }
+
+      window.addEventListener('scroll', checkPageEnd, { passive: true });
+      window.addEventListener('resize', checkPageEnd);
+      checkPageEnd();
+
+      button.addEventListener('click', () => {
+        if (!hasReachedEnd) return;
+
+        // TODO：請工程師在此串接正式授權 API 與成功後的導頁流程。
+        alert('已同意服務授權條款');
+      });
+    })();
+  </script>
 </body>
 </html>
