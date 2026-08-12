@@ -14,7 +14,7 @@
       --border: #e7e7e7;
       --disabled: #d9d9d9;
       --surface: #fff;
-      --action-height: 84px;
+      --action-height: 174px;
     }
 
     * { box-sizing: border-box; }
@@ -134,6 +134,64 @@
       margin: 0 auto;
     }
 
+    .scroll-guide {
+      display: flex;
+      width: 100%;
+      min-height: 76px;
+      margin: 0 0 10px;
+      padding: 2px 12px 4px;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 7px;
+      border: 0;
+      border-radius: 14px;
+      background: transparent;
+      color: var(--brand-dark);
+      font: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    .scroll-guide:hover { background: #f1f8f4; }
+
+    .scroll-guide:focus-visible {
+      outline: 3px solid rgba(37, 131, 79, .28);
+      outline-offset: 1px;
+    }
+
+    .scroll-guide-label {
+      line-height: 1.35;
+    }
+
+    .scroll-guide-circle {
+      display: grid;
+      width: 52px;
+      height: 52px;
+      place-items: center;
+      border: 2px solid var(--brand);
+      border-radius: 50%;
+      background: #f1f8f4;
+      box-shadow: 0 3px 10px rgba(37, 131, 79, .14);
+    }
+
+    .scroll-guide-icon {
+      display: block;
+      font-size: 25px;
+      line-height: 1;
+      animation: guide-bounce 1.25s ease-in-out infinite;
+    }
+
+    .scroll-guide[hidden] { display: none; }
+
+    @keyframes guide-bounce {
+      0%, 100% { transform: translateY(-2px); }
+      50% { transform: translateY(3px); }
+    }
+
     .primary-button {
       width: 100%;
       min-height: 52px;
@@ -161,6 +219,18 @@
     .primary-button:focus-visible {
       outline: 3px solid rgba(37, 131, 79, .28);
       outline-offset: 2px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+
+      .scroll-guide-icon {
+        animation: none;
+      }
+
+      .primary-button {
+        transition: none;
+      }
     }
 
     @media (min-width: 721px) {
@@ -247,6 +317,13 @@
   <!-- 按鈕固定在 viewport 底部，進入頁面首屏即可看見。 -->
   <div class="action-bar">
     <div class="action-inner">
+      <button id="scroll-guide" class="scroll-guide" type="button"
+        aria-label="點此前往條款底部" aria-controls="terms-end">
+        <span class="scroll-guide-label">點此前往底部</span>
+        <span class="scroll-guide-circle" aria-hidden="true">
+          <span class="scroll-guide-icon">↓</span>
+        </span>
+      </button>
       <button id="agree-button" class="primary-button" type="button" disabled aria-disabled="true">
         請閱讀至底部
       </button>
@@ -256,15 +333,30 @@
   <script>
     (() => {
       const button = document.getElementById('agree-button');
+      const scrollGuide = document.getElementById('scroll-guide');
       const endMarker = document.getElementById('terms-end');
       let hasReachedEnd = false;
 
       function enableAgreement() {
         if (hasReachedEnd) return;
         hasReachedEnd = true;
+        scrollGuide.hidden = true;
         button.disabled = false;
         button.setAttribute('aria-disabled', 'false');
         button.textContent = '同意並進入服務';
+      }
+
+      function goToTermsEnd() {
+        const reduceMotion = window.matchMedia &&
+          window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const supportsSmoothScroll = 'scrollBehavior' in document.documentElement.style;
+
+        if (!reduceMotion && supportsSmoothScroll) {
+          endMarker.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+          // 舊版 Safari／Android WebView 或偏好減少動態時，直接跳至底部。
+          endMarker.scrollIntoView();
+        }
       }
 
       // 主要判定：最後一個標記實際進入畫面，不受瀏覽器工具列高度變化影響。
@@ -288,6 +380,7 @@
 
       window.addEventListener('scroll', checkPageEnd, { passive: true });
       window.addEventListener('resize', checkPageEnd);
+      scrollGuide.addEventListener('click', goToTermsEnd);
       checkPageEnd();
 
       button.addEventListener('click', () => {
