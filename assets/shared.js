@@ -201,7 +201,7 @@
             <div class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-400 text-xs font-bold shrink-0">日</div>
           </div>
         </div>
-        <div class="stat-card border-slate-200 bg-white"><div class="stat-icon bg-slate-100 shrink-0 text-slate-400">💤</div><div class="flex-1"><p class="text-xs text-slate-400 font-medium">本週最投入挑戰</p><p class="font-bold text-slate-500 text-sm mt-0.5">本週還沒有互動喔，趕快鍛鍊腦健康</p></div></div>
+        <div class="stat-card border-slate-200 bg-white"><div class="stat-icon bg-slate-100 shrink-0 text-slate-400">💤</div><div class="flex-1"><p class="text-xs text-slate-400 font-medium">本週最投入挑戰</p><p class="font-bold text-slate-500 text-sm mt-0.5">本週還沒有互動喔，有空來動動腦</p></div></div>
       </div>`;
     container.innerHTML = isDemoEmpty ? htmlEmpty : htmlRich;
     openModal('modal-weekly-report');

@@ -257,18 +257,21 @@
     /* 熟齡友善閱讀規則：重要資訊不低於 16px，卡片與操作文字保持清楚行距。 */
     body[data-page="home"] .text-xs,
     body[data-page="group"] .text-xs,
+    body[data-page="records"] .text-xs,
     body[data-page="terms"] .text-xs,
     body[data-page="exchange"] .text-xs,
     body[data-page="exchange-history"] .text-xs { font-size: 1rem !important; line-height: 1.55 !important; }
 
     body[data-page="home"] .text-sm,
     body[data-page="group"] .text-sm,
+    body[data-page="records"] .text-sm,
     body[data-page="terms"] .text-sm,
     body[data-page="exchange"] .text-sm,
     body[data-page="exchange-history"] .text-sm { font-size: 1.0625rem !important; line-height: 1.6 !important; }
 
     body[data-page="home"] .text-base,
     body[data-page="group"] .text-base,
+    body[data-page="records"] .text-base,
     body[data-page="terms"] .text-base,
     body[data-page="exchange"] .text-base,
     body[data-page="exchange-history"] .text-base { font-size: 1.125rem !important; line-height: 1.55 !important; }
@@ -288,7 +291,8 @@
     }
     body[data-page="home"] .shimmer-badge { font-size: 0.9375rem !important; }
     body[data-page="home"] .nav-btn,
-    body[data-page="group"] .nav-btn { min-height: 60px; }
+    body[data-page="group"] .nav-btn,
+    body[data-page="records"] .nav-btn { min-height: 60px; }
 
     .exchange-entry {
       width: 100%;
@@ -587,6 +591,7 @@ body.modal-open .bottom-nav {
 /* 第二階段熟齡友善字級：放大可閱讀內容，固定圖示與圓形控制尺寸避免變形。 */
 body[data-page="home"] .text-xs,
 body[data-page="group"] .text-xs,
+body[data-page="records"] .text-xs,
 body[data-page="terms"] .text-xs,
 body[data-page="exchange"] .text-xs,
 body[data-page="exchange-history"] .text-xs {
@@ -596,6 +601,7 @@ body[data-page="exchange-history"] .text-xs {
 
 body[data-page="home"] .text-sm,
 body[data-page="group"] .text-sm,
+body[data-page="records"] .text-sm,
 body[data-page="terms"] .text-sm,
 body[data-page="exchange"] .text-sm,
 body[data-page="exchange-history"] .text-sm {
@@ -605,6 +611,7 @@ body[data-page="exchange-history"] .text-sm {
 
 body[data-page="home"] .text-base,
 body[data-page="group"] .text-base,
+body[data-page="records"] .text-base,
 body[data-page="terms"] .text-base,
 body[data-page="exchange"] .text-base,
 body[data-page="exchange-history"] .text-base {
@@ -614,6 +621,7 @@ body[data-page="exchange-history"] .text-base {
 
 body[data-page="home"] .text-lg,
 body[data-page="group"] .text-lg,
+body[data-page="records"] .text-lg,
 body[data-page="terms"] .text-lg,
 body[data-page="exchange"] .text-lg,
 body[data-page="exchange-history"] .text-lg {
@@ -623,6 +631,7 @@ body[data-page="exchange-history"] .text-lg {
 
 body[data-page="home"] .text-xl,
 body[data-page="group"] .text-xl,
+body[data-page="records"] .text-xl,
 body[data-page="terms"] .text-xl,
 body[data-page="exchange"] .text-xl,
 body[data-page="exchange-history"] .text-xl {
@@ -688,4 +697,302 @@ body[data-page="home"] #health-articles .truncate {
   .history-filters { gap: 5px; padding: 5px; }
   .history-filter { font-size: 1rem; }
   .expiry-summary { grid-template-columns: minmax(0, 1fr) 40px; }
+}
+
+/* 我的動腦紀錄 */
+.records-main {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding: 20px 16px 124px;
+}
+.records-main > section:first-child {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+.records-heading-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  color: #047857;
+  background: linear-gradient(135deg, #dcfce7, #ccfbf1);
+  font-size: 22px;
+}
+.records-title {
+  margin: 0;
+  color: #1e293b;
+  font-size: 1.6rem;
+  font-weight: 900;
+  line-height: 1.35;
+}
+.records-subtitle {
+  margin-top: 3px;
+  color: #64748b;
+  font-size: 1rem;
+  line-height: 1.55;
+}
+.records-overview {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.overview-card {
+  min-width: 0;
+  min-height: 148px;
+  padding: 15px;
+  border: 1px solid #e2e8f0;
+  border-radius: 19px;
+  background: #fff;
+  box-shadow: 0 3px 10px rgba(15, 23, 42, .045);
+}
+.overview-card p {
+  margin-top: 10px;
+  color: #64748b;
+  font-size: .95rem;
+  font-weight: 700;
+  line-height: 1.45;
+}
+.overview-card strong {
+  display: inline-block;
+  margin-top: 3px;
+  color: #1e293b;
+  font-size: 1.75rem;
+  font-weight: 900;
+  line-height: 1.2;
+}
+.overview-card span {
+  margin-left: 4px;
+  color: #64748b;
+  font-size: 1rem;
+  font-weight: 700;
+}
+.overview-card .overview-date,
+.overview-card .overview-game {
+  display: block;
+  overflow-wrap: anywhere;
+  font-size: 1.16rem;
+  line-height: 1.42;
+}
+.overview-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+}
+.overview-card-green .overview-icon { color: #047857; background: #d1fae5; }
+.overview-card-blue .overview-icon { color: #2563eb; background: #dbeafe; }
+.overview-card-amber .overview-icon { color: #b45309; background: #fef3c7; }
+.overview-card-purple .overview-icon { color: #7c3aed; background: #ede9fe; }
+
+.records-section-heading h2,
+.selected-game-heading h2,
+.record-card-heading h3 {
+  margin: 0;
+  color: #1e293b;
+  font-weight: 900;
+}
+.records-section-heading h2,
+.selected-game-heading h2 { font-size: 1.28rem; line-height: 1.4; }
+.records-section-heading p,
+.record-card-heading p {
+  margin-top: 2px;
+  color: #64748b;
+  font-size: .94rem;
+  line-height: 1.5;
+}
+.game-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 12px;
+}
+.game-tab {
+  min-width: 0;
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  padding: 9px 11px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 15px;
+  color: #475569;
+  background: #fff;
+  font-size: .94rem;
+  font-weight: 800;
+  line-height: 1.35;
+  text-align: left;
+  transition: border-color .15s, background .15s, color .15s, transform .1s;
+}
+.game-tab:active { transform: scale(.98); }
+.game-tab i { width: 20px; flex: 0 0 auto; text-align: center; font-size: 17px; }
+.game-tab.active { color: #047857; border-color: #6ee7b7; background: #ecfdf5; box-shadow: 0 3px 10px rgba(5, 150, 105, .08); }
+
+.game-record-panel { display: flex; flex-direction: column; gap: 14px; }
+.selected-game-heading {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+.selected-game-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  font-size: 19px;
+}
+.selected-game-kicker {
+  color: #059669;
+  font-size: .86rem;
+  font-weight: 900;
+  letter-spacing: .04em;
+}
+.accent-blue { color: #2563eb; background: #dbeafe; }
+.accent-purple { color: #7c3aed; background: #ede9fe; }
+.accent-orange { color: #c2410c; background: #ffedd5; }
+.accent-emerald { color: #047857; background: #d1fae5; }
+
+.game-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+.game-stat {
+  min-width: 0;
+  min-height: 132px;
+  padding: 13px 10px;
+  border: 1px solid #e2e8f0;
+  border-radius: 17px;
+  background: #fff;
+}
+.game-stat > p {
+  min-height: 44px;
+  color: #64748b;
+  font-size: .86rem;
+  font-weight: 700;
+  line-height: 1.45;
+}
+.game-stat > div { margin-top: 5px; white-space: nowrap; }
+.game-stat strong { color: #1e293b; font-size: 1.55rem; font-weight: 900; line-height: 1; }
+.game-stat span { margin-left: 2px; color: #64748b; font-size: .82rem; font-weight: 700; }
+.game-stat small {
+  display: block;
+  margin-top: 8px;
+  color: #059669;
+  font-size: .75rem;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.record-chart-card,
+.record-list-card {
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 3px 10px rgba(15, 23, 42, .04);
+}
+.record-card-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 16px 16px 10px;
+}
+.record-card-heading h3 { font-size: 1.13rem; line-height: 1.4; }
+.chart-scroll-hint {
+  padding: 5px 8px;
+  border-radius: 999px;
+  color: #64748b;
+  background: #f1f5f9;
+  font-size: .72rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+.record-chart-scroll {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  padding: 0 4px 3px;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+#record-chart { display: block; width: 720px; height: 260px; }
+.chart-grid { stroke: #e2e8f0; stroke-width: 1; stroke-dasharray: 4 5; }
+.chart-axis-label { fill: #94a3b8; font-size: 12px; font-weight: 700; }
+.chart-line { fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.chart-dot { stroke: #fff; stroke-width: 3; }
+.chart-level { fill: #475569; font-size: 11px; font-weight: 900; text-anchor: middle; }
+.record-comparison-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 2px 12px 13px;
+  padding: 11px 12px;
+  border-radius: 13px;
+  color: #475569;
+  background: #f8fafc;
+  font-size: .85rem;
+  font-weight: 600;
+  line-height: 1.55;
+}
+.record-comparison-note i { margin-top: 4px; color: #059669; }
+
+.record-list-header,
+.record-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(84px, .9fr) minmax(88px, .9fr);
+  align-items: center;
+  gap: 8px;
+}
+.record-list-header {
+  margin: 0 14px;
+  padding: 9px 4px;
+  border-bottom: 1px solid #e2e8f0;
+  color: #94a3b8;
+  font-size: .78rem;
+  font-weight: 800;
+}
+.record-list-header span:last-child,
+.record-row > strong { text-align: right; }
+.record-list { padding: 0 14px 8px; }
+.record-row {
+  min-height: 62px;
+  padding: 10px 4px;
+  border-bottom: 1px solid #f1f5f9;
+}
+.record-row:last-child { border-bottom: 0; }
+.record-row time { color: #475569; font-size: .92rem; font-weight: 700; }
+.level-badge {
+  justify-self: start;
+  padding: 5px 8px;
+  border-radius: 999px;
+  color: #075985;
+  background: #e0f2fe;
+  font-size: .78rem;
+  font-weight: 900;
+  white-space: nowrap;
+}
+.record-row > strong { color: #1e293b; font-size: 1rem; font-weight: 900; white-space: nowrap; }
+.record-row > strong span { color: #64748b; font-size: .78rem; font-weight: 700; }
+
+@media (max-width: 370px) {
+  .records-main { padding-inline: 12px; }
+  .overview-card { padding: 13px; }
+  .game-tab { padding-inline: 9px; font-size: .86rem; }
+  .game-stats { grid-template-columns: 1fr; }
+  .game-stat { min-height: 0; }
+  .game-stat > p { min-height: 0; }
+  .record-list-header,
+  .record-row { grid-template-columns: minmax(0, 1fr) 82px 82px; gap: 5px; }
 }

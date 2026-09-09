@@ -8,6 +8,100 @@ window.GOHEALTH_DATA = {
     pauseMilliseconds: 1200,
     messageGapPixels: 56
   },
+  brainRecords: {
+    summary: {
+      interactionDays: 9,
+      completedGames: 28,
+      lastInteractionDate: '2026/09/08',
+      favoriteGame: '眼力極限考驗'
+    },
+    games: [
+      {
+        id: 'focus',
+        name: '眼力極限考驗',
+        icon: 'fa-eye',
+        accent: 'blue',
+        totalChallenges: 42,
+        records: [
+          { date: '2026/09/08', level: 'Level 2', seconds: 68 },
+          { date: '2026/09/06', level: 'Level 1', seconds: 51 },
+          { date: '2026/09/04', level: 'Level 3', seconds: 89 },
+          { date: '2026/09/01', level: 'Level 2', seconds: 72 },
+          { date: '2026/08/29', level: 'Level 1', seconds: 55 },
+          { date: '2026/08/26', level: 'Level 3', seconds: 94 },
+          { date: '2026/08/22', level: 'Level 2', seconds: 76 },
+          { date: '2026/08/19', level: 'Level 1', seconds: 49 },
+          { date: '2026/08/15', level: 'Level 2', seconds: 70 },
+          { date: '2026/08/12', level: 'Level 3', seconds: 97 },
+          { date: '2026/08/09', level: 'Level 1', seconds: 53 },
+          { date: '2026/08/05', level: 'Level 2', seconds: 74 }
+        ]
+      },
+      {
+        id: 'memory',
+        name: '生活好時光',
+        icon: 'fa-clock-rotate-left',
+        accent: 'purple',
+        totalChallenges: 31,
+        records: [
+          { date: '2026/09/07', level: 'Level 2', seconds: 82 },
+          { date: '2026/09/03', level: 'Level 1', seconds: 64 },
+          { date: '2026/08/31', level: 'Level 3', seconds: 111 },
+          { date: '2026/08/27', level: 'Level 2', seconds: 88 },
+          { date: '2026/08/24', level: 'Level 1', seconds: 61 },
+          { date: '2026/08/20', level: 'Level 3', seconds: 118 },
+          { date: '2026/08/16', level: 'Level 2', seconds: 85 },
+          { date: '2026/08/13', level: 'Level 1', seconds: 66 },
+          { date: '2026/08/10', level: 'Level 2', seconds: 91 },
+          { date: '2026/08/06', level: 'Level 3', seconds: 115 },
+          { date: '2026/08/02', level: 'Level 1', seconds: 63 },
+          { date: '2026/07/29', level: 'Level 2', seconds: 87 }
+        ]
+      },
+      {
+        id: 'shop',
+        name: '24H 一日店長',
+        icon: 'fa-store',
+        accent: 'orange',
+        totalChallenges: 26,
+        records: [
+          { date: '2026/09/05', level: 'Level 3', seconds: 126 },
+          { date: '2026/09/02', level: 'Level 2', seconds: 96 },
+          { date: '2026/08/30', level: 'Level 1', seconds: 73 },
+          { date: '2026/08/25', level: 'Level 3', seconds: 133 },
+          { date: '2026/08/21', level: 'Level 2', seconds: 101 },
+          { date: '2026/08/18', level: 'Level 1', seconds: 76 },
+          { date: '2026/08/14', level: 'Level 2', seconds: 99 },
+          { date: '2026/08/11', level: 'Level 3', seconds: 129 },
+          { date: '2026/08/07', level: 'Level 1', seconds: 71 },
+          { date: '2026/08/03', level: 'Level 2', seconds: 104 },
+          { date: '2026/07/30', level: 'Level 3', seconds: 137 },
+          { date: '2026/07/26', level: 'Level 1', seconds: 79 }
+        ]
+      },
+      {
+        id: 'housework',
+        name: '家事達人',
+        icon: 'fa-broom',
+        accent: 'emerald',
+        totalChallenges: 18,
+        records: [
+          { date: '2026/09/08', level: 'Level 1', seconds: 58 },
+          { date: '2026/09/01', level: 'Level 2', seconds: 79 },
+          { date: '2026/08/28', level: 'Level 1', seconds: 62 },
+          { date: '2026/08/23', level: 'Level 3', seconds: 105 },
+          { date: '2026/08/17', level: 'Level 2', seconds: 83 },
+          { date: '2026/08/12', level: 'Level 1', seconds: 60 },
+          { date: '2026/08/08', level: 'Level 2', seconds: 86 },
+          { date: '2026/08/04', level: 'Level 3', seconds: 109 },
+          { date: '2026/07/31', level: 'Level 1', seconds: 65 },
+          { date: '2026/07/27', level: 'Level 2', seconds: 81 },
+          { date: '2026/07/22', level: 'Level 3', seconds: 112 },
+          { date: '2026/07/18', level: 'Level 1', seconds: 63 }
+        ]
+      }
+    ]
+  },
   exchange: {
     healthPointBalance: 1200,
     healthPointsPerHappyGoPoint: 500,
