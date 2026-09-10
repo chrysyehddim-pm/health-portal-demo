@@ -49,9 +49,13 @@
       </article>
     </section>
 
-    <section aria-labelledby="game-filter-title">
-      <h2 class="sr-only" id="game-filter-title">選擇遊戲</h2>
+    <section class="game-picker-section" aria-labelledby="game-filter-title">
+      <div class="game-picker-heading">
+        <h2 id="game-filter-title">選擇遊戲查看紀錄</h2>
+        <p>點選下方遊戲，即可查看該遊戲的近期紀錄</p>
+      </div>
       <div class="game-tabs" id="game-tabs" role="tablist" aria-label="選擇遊戲"></div>
+      <p class="game-switch-feedback" id="game-switch-feedback" role="status" aria-live="polite"></p>
     </section>
 
     <section class="game-record-panel" id="game-record-panel" aria-labelledby="selected-game-name">

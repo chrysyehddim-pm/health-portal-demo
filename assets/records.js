@@ -4,6 +4,7 @@
   const games = Array.isArray(recordsData.games) ? recordsData.games : [];
   const summary = recordsData.summary || {};
   let selectedGameId = games[0]?.id || '';
+  let feedbackTimer = null;
 
   const safe = (value) => String(value ?? '').replace(/[&<>'"]/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[char]));
   const chartColors = {
@@ -70,7 +71,10 @@
     $('game-tabs').innerHTML = games.map((game, index) => `
       <button class="game-tab ${game.id === selectedGameId ? 'active' : ''}" id="game-tab-${safe(game.id)}" type="button" role="tab" aria-selected="${game.id === selectedGameId}" aria-controls="game-record-panel" data-game-id="${safe(game.id)}" tabindex="${game.id === selectedGameId ? '0' : '-1'}">
         <i class="fa-solid ${safe(game.icon)}" aria-hidden="true"></i>
-        <span>${safe(game.name)}</span>
+        <span class="game-tab-copy">
+          <span>${safe(game.name)}</span>
+          <small class="game-tab-status"><i class="fa-solid fa-check" aria-hidden="true"></i> 已選擇</small>
+        </span>
       </button>
     `).join('');
 
@@ -86,6 +90,19 @@
         document.getElementById(`game-tab-${nextGame.id}`)?.focus();
       });
     });
+  }
+
+  function showSwitchFeedback(game, switched = false){
+    const feedback = $('game-switch-feedback');
+    if(!feedback || !game) return;
+    clearTimeout(feedbackTimer);
+    const setMessage = prefix => {
+      feedback.innerHTML = `<i class="fa-solid fa-circle-check" aria-hidden="true"></i> ${prefix}<strong>${safe(game.name)}</strong>`;
+    };
+    setMessage(switched ? '已切換為：' : '目前查看：');
+    if(switched){
+      feedbackTimer = window.setTimeout(() => setMessage('目前查看：'), 1800);
+    }
   }
 
   function renderChart(game){
@@ -179,11 +196,13 @@
     selectedGameId = gameId;
     renderTabs();
     renderGame();
+    showSwitchFeedback(games.find(game => game.id === gameId), true);
   }
 
   document.addEventListener('DOMContentLoaded', () => {
     renderSummary();
     renderTabs();
     renderGame();
+    showSwitchFeedback(games.find(game => game.id === selectedGameId));
   });
 })();
