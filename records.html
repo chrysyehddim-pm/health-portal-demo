@@ -44,28 +44,35 @@
       </article>
       <article class="overview-card overview-card-purple">
         <div class="overview-icon"><i class="fa-solid fa-star"></i></div>
-        <p>最常玩的遊戲</p>
+        <p>本月最常玩的遊戲</p>
         <strong class="overview-game" id="summary-favorite">—</strong>
       </article>
     </section>
 
     <section aria-labelledby="game-filter-title">
-      <div class="records-section-heading">
-        <div>
-          <h2 id="game-filter-title">選擇遊戲</h2>
-          <p>切換查看各遊戲的最近互動紀錄</p>
-        </div>
-      </div>
+      <h2 class="sr-only" id="game-filter-title">選擇遊戲</h2>
       <div class="game-tabs" id="game-tabs" role="tablist" aria-label="選擇遊戲"></div>
     </section>
 
     <section class="game-record-panel" id="game-record-panel" aria-labelledby="selected-game-name">
-      <div class="selected-game-heading">
-        <div class="selected-game-icon" id="selected-game-icon" aria-hidden="true"></div>
-        <div>
-          <p class="selected-game-kicker">最近表現</p>
-          <h2 id="selected-game-name">—</h2>
+      <div class="record-chart-card">
+        <div class="record-card-heading">
+          <div class="chart-title-row">
+            <div class="selected-game-icon" id="selected-game-icon" aria-hidden="true"></div>
+            <div>
+              <p class="selected-game-kicker">最近 10 次完成時間</p>
+              <h2 id="selected-game-name">—</h2>
+            </div>
+          </div>
+          <div class="chart-scroll-hint">較早 → 最近</div>
         </div>
+        <div class="record-chart-scroll" aria-label="最近 10 次完成時間折線圖">
+          <svg id="record-chart" role="img" aria-labelledby="chart-title chart-description" viewBox="0 0 360 180" preserveAspectRatio="xMidYMid meet">
+            <title id="chart-title">近期完成時間折線圖</title>
+            <desc id="chart-description">顯示最近三個月內最多十筆完成秒數，每個資料點皆標示挑戰 Level，右側為最近一次。</desc>
+          </svg>
+        </div>
+        <p class="record-comparison-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> 最近三個月最多 10 筆；不同 Level 的完成秒數不直接比較。</p>
       </div>
 
       <div class="game-stats">
@@ -75,7 +82,7 @@
           <small id="latest-level">—</small>
         </article>
         <article class="game-stat">
-          <p>個人最佳完成秒數</p>
+          <p>同 Level 個人最佳</p>
           <div><strong id="best-seconds">—</strong><span>秒</span></div>
           <small id="best-level">—</small>
         </article>
@@ -86,32 +93,15 @@
         </article>
       </div>
 
-      <div class="record-chart-card">
-        <div class="record-card-heading">
-          <div>
-            <h3>近期完成時間</h3>
-            <p>最近 12 筆紀錄・單位：秒</p>
-          </div>
-          <div class="chart-scroll-hint"><i class="fa-solid fa-arrows-left-right"></i> 左右查看</div>
-        </div>
-        <div class="record-chart-scroll" tabindex="0" aria-label="近期完成時間折線圖，可左右捲動">
-          <svg id="record-chart" role="img" aria-labelledby="chart-title chart-description" viewBox="0 0 720 260" preserveAspectRatio="xMidYMid meet">
-            <title id="chart-title">近期完成時間折線圖</title>
-            <desc id="chart-description">顯示最近十二筆完成秒數，每個資料點皆標示挑戰 Level。</desc>
-          </svg>
-        </div>
-        <p class="record-comparison-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> 不同 Level 的挑戰強度不同，完成秒數僅供個人紀錄查看，不直接解讀為變好或變差。</p>
-      </div>
-
       <div class="record-list-card">
         <div class="record-card-heading">
           <div>
             <h3>最近互動紀錄</h3>
-            <p>最新紀錄顯示於最上方</p>
+            <p>顯示最近三個月內最多 10 筆完成紀錄，最新紀錄列於最上方</p>
           </div>
         </div>
         <div class="record-list-header" aria-hidden="true">
-          <span>日期</span><span>Level</span><span>完成秒數</span>
+          <span>完成時間</span><span>Level</span><span>完成秒數</span>
         </div>
         <div class="record-list" id="record-list"></div>
       </div>
