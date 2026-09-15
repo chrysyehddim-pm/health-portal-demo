@@ -26,6 +26,17 @@
       </div>
     </section>
 
+    <section class="prototype-switcher" aria-label="Prototype 情境切換">
+      <div>
+        <strong>Prototype 情境</strong>
+        <span>切換比較兩階段畫面</span>
+      </div>
+      <div class="prototype-switcher-actions">
+        <a class="prototype-switch" id="stage-p15-link" href="records.html">紀錄＋同齡 PR</a>
+        <a class="prototype-switch" id="stage-p16-link" href="records.html?stage=p16">加入徽章</a>
+      </div>
+    </section>
+
     <section class="records-overview" aria-label="本月動腦紀錄總覽">
       <article class="overview-card overview-card-green">
         <div class="overview-icon"><i class="fa-regular fa-calendar-check"></i></div>
@@ -49,6 +60,19 @@
       </article>
     </section>
 
+    <section class="badges-section hidden-view" id="badges-section" aria-labelledby="badges-title">
+      <div class="records-section-heading badges-heading">
+        <div>
+          <p class="section-kicker">下一階段展示</p>
+          <h2 id="badges-title">我的動腦徽章</h2>
+          <p>每一次互動，都是值得收藏的小足跡</p>
+        </div>
+        <span class="badge-earned-count" id="badge-earned-count">—</span>
+      </div>
+      <div class="badge-grid" id="badge-grid"></div>
+      <p class="badge-section-note"><i class="fa-regular fa-hand-pointer" aria-hidden="true"></i> 點選徽章，可查看取得方式與目前進度</p>
+    </section>
+
     <section class="game-picker-section" aria-labelledby="game-filter-title">
       <div class="game-picker-heading">
         <h2 id="game-filter-title">選擇遊戲查看紀錄</h2>
@@ -59,14 +83,63 @@
     </section>
 
     <section class="game-record-panel" id="game-record-panel" aria-labelledby="selected-game-name">
+      <div class="selected-game-heading">
+        <div class="selected-game-icon" id="selected-game-icon" aria-hidden="true"></div>
+        <div>
+          <p class="selected-game-kicker">目前查看</p>
+          <h2 id="selected-game-name">—</h2>
+        </div>
+      </div>
+
+      <div class="game-stats">
+        <article class="game-stat">
+          <p>最近一次完成</p>
+          <div><strong id="latest-seconds">—</strong><span>秒</span></div>
+          <small id="latest-level">—</small>
+        </article>
+        <article class="game-stat">
+          <p>同 Level 個人最佳</p>
+          <div><strong id="best-seconds">—</strong><span>秒</span></div>
+          <small id="best-level">—</small>
+        </article>
+        <article class="game-stat game-stat-wide">
+          <p>累積挑戰次數</p>
+          <div><strong id="challenge-count">—</strong><span>次</span></div>
+          <small>包含不同挑戰強度</small>
+        </article>
+      </div>
+
+      <article class="peer-card" aria-labelledby="peer-title">
+        <div class="peer-card-heading">
+          <div class="peer-card-title">
+            <span class="peer-icon" aria-hidden="true"><i class="fa-solid fa-people-arrows"></i></span>
+            <div>
+              <p>同齡參考位置</p>
+              <h3 id="peer-title">看看相同挑戰的參考位置</h3>
+            </div>
+          </div>
+          <button class="peer-info-button" id="peer-info-button" type="button" aria-label="查看同齡 PR 計算說明"><i class="fa-solid fa-circle-info"></i></button>
+        </div>
+        <div class="peer-result">
+          <div class="peer-score"><span>約</span><strong id="peer-pr">PR —</strong></div>
+          <div class="peer-context">
+            <strong id="peer-context">—</strong>
+            <span>以這個 Level 的個人最佳完成時間比較</span>
+          </div>
+        </div>
+        <div class="peer-scale" aria-hidden="true">
+          <div class="peer-scale-track"><span id="peer-scale-fill"></span><i id="peer-scale-marker"></i></div>
+          <div class="peer-scale-labels"><span>PR 0</span><span>PR 50</span><span>PR 100</span></div>
+        </div>
+        <p class="peer-note"><i class="fa-solid fa-shield-heart" aria-hidden="true"></i><span>僅比較相同遊戲、相同 Level 與同年齡區間；不同 Level 不直接比較。</span></p>
+        <small class="peer-updated" id="peer-updated">—</small>
+      </article>
+
       <div class="record-chart-card">
         <div class="record-card-heading">
-          <div class="chart-title-row">
-            <div class="selected-game-icon" id="selected-game-icon" aria-hidden="true"></div>
-            <div>
-              <p class="selected-game-kicker">最近 10 次完成時間</p>
-              <h2 id="selected-game-name">—</h2>
-            </div>
+          <div>
+            <h3>最近 10 次完成時間</h3>
+            <p>右側是最近一次，每個點都標示 Level</p>
           </div>
           <div class="chart-scroll-hint">較早 → 最近</div>
         </div>
@@ -77,24 +150,6 @@
           </svg>
         </div>
         <p class="record-comparison-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> 最近三個月最多 10 筆；不同 Level 的完成秒數不直接比較。</p>
-      </div>
-
-      <div class="game-stats">
-        <article class="game-stat">
-          <p>最近一次完成秒數</p>
-          <div><strong id="latest-seconds">—</strong><span>秒</span></div>
-          <small id="latest-level">—</small>
-        </article>
-        <article class="game-stat">
-          <p>同 Level 個人最佳</p>
-          <div><strong id="best-seconds">—</strong><span>秒</span></div>
-          <small id="best-level">—</small>
-        </article>
-        <article class="game-stat">
-          <p>累積挑戰次數</p>
-          <div><strong id="challenge-count">—</strong><span>次</span></div>
-          <small>包含不同挑戰強度</small>
-        </article>
       </div>
 
       <div class="record-list-card">
@@ -123,6 +178,52 @@
       <i class="fas fa-chart-line"></i><span>紀錄</span>
     </button>
   </nav>
+
+  <div class="modal-overlay hidden-view" id="modal-peer-info" role="dialog" aria-modal="true" aria-labelledby="peer-info-title">
+    <div class="modal-sheet records-info-sheet" onclick="event.stopPropagation()">
+      <div class="w-12 h-1 bg-slate-200 rounded-full mx-auto mb-5"></div>
+      <div class="records-modal-heading">
+        <span class="peer-icon" aria-hidden="true"><i class="fa-solid fa-people-arrows"></i></span>
+        <div>
+          <h3 id="peer-info-title">同齡 PR 怎麼計算？</h3>
+          <p>這是同齡參考位置，不代表能力好壞</p>
+        </div>
+      </div>
+      <ol class="peer-rule-list">
+        <li><strong>相同條件：</strong>只比較同一款遊戲、相同 Level 與相同年齡區間。</li>
+        <li><strong>每人一筆：</strong>每位會員只取近 90 天內該 Level 最短的完成時間；比較人數不含本人。</li>
+        <li><strong>同分處理：</strong>同秒數採共同排名，放在同分區間的中間位置。</li>
+        <li><strong>更新方式：</strong>個人紀錄完成後更新；同齡母體每日批次更新一次。</li>
+      </ol>
+      <div class="peer-formula">
+        <strong>PR＝（比本人慢的人數＋0.5 × 同秒數人數）÷ 比較人數 × 100</strong>
+        <span>參考人數未達最低門檻時，畫面會顯示「參考資料累積中」。</span>
+      </div>
+      <button class="records-modal-close" type="button" data-close-modal="modal-peer-info">我知道了</button>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden-view" id="modal-badge-info" role="dialog" aria-modal="true" aria-labelledby="badge-modal-title">
+    <div class="modal-sheet records-info-sheet" onclick="event.stopPropagation()">
+      <div class="w-12 h-1 bg-slate-200 rounded-full mx-auto mb-5"></div>
+      <div class="badge-modal-icon" id="badge-modal-icon" aria-hidden="true"></div>
+      <div class="badge-modal-copy">
+        <p id="badge-modal-status">—</p>
+        <h3 id="badge-modal-title">—</h3>
+        <span id="badge-modal-description">—</span>
+      </div>
+      <div class="badge-modal-rule">
+        <strong>取得方式</strong>
+        <p id="badge-modal-rule">—</p>
+      </div>
+      <div class="badge-progress-wrap">
+        <div><span>目前進度</span><strong id="badge-modal-progress">—</strong></div>
+        <div class="badge-progress"><span id="badge-modal-progress-fill"></span></div>
+        <small id="badge-modal-earned-at"></small>
+      </div>
+      <button class="records-modal-close" type="button" data-close-modal="modal-badge-info">關閉</button>
+    </div>
+  </div>
 </div>
 <script src="assets/data.js"></script>
 <script src="assets/shared.js"></script>

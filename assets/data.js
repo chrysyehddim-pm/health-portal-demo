@@ -22,6 +22,14 @@ window.GOHEALTH_DATA = {
         icon: 'fa-eye',
         accent: 'blue',
         totalChallenges: 42,
+        peerComparison: {
+          ageBand: '55–64 歲',
+          level: 'Level 2',
+          slowerCount: 118,
+          tiedCount: 8,
+          comparisonCount: 168,
+          updatedAt: '2026/09/10'
+        },
         records: [
           { date: '2026/09/08', time: '18:40', level: 'Level 2', seconds: 68 },
           { date: '2026/09/06', time: '10:15', level: 'Level 1', seconds: 51 },
@@ -43,6 +51,14 @@ window.GOHEALTH_DATA = {
         icon: 'fa-clock-rotate-left',
         accent: 'purple',
         totalChallenges: 31,
+        peerComparison: {
+          ageBand: '55–64 歲',
+          level: 'Level 2',
+          slowerCount: 96,
+          tiedCount: 5,
+          comparisonCount: 154,
+          updatedAt: '2026/09/10'
+        },
         records: [
           { date: '2026/09/07', time: '19:20', level: 'Level 2', seconds: 82 },
           { date: '2026/09/03', time: '08:55', level: 'Level 1', seconds: 64 },
@@ -64,6 +80,14 @@ window.GOHEALTH_DATA = {
         icon: 'fa-store',
         accent: 'orange',
         totalChallenges: 26,
+        peerComparison: {
+          ageBand: '55–64 歲',
+          level: 'Level 3',
+          slowerCount: 57,
+          tiedCount: 4,
+          comparisonCount: 103,
+          updatedAt: '2026/09/10'
+        },
         records: [
           { date: '2026/09/05', time: '12:10', level: 'Level 3', seconds: 126 },
           { date: '2026/09/02', time: '18:25', level: 'Level 2', seconds: 96 },
@@ -85,6 +109,14 @@ window.GOHEALTH_DATA = {
         icon: 'fa-broom',
         accent: 'emerald',
         totalChallenges: 18,
+        peerComparison: {
+          ageBand: '55–64 歲',
+          level: 'Level 1',
+          slowerCount: 111,
+          tiedCount: 7,
+          comparisonCount: 148,
+          updatedAt: '2026/09/10'
+        },
         records: [
           { date: '2026/09/08', time: '09:05', level: 'Level 1', seconds: 58 },
           { date: '2026/09/01', time: '15:45', level: 'Level 2', seconds: 79 },
@@ -99,6 +131,91 @@ window.GOHEALTH_DATA = {
           { date: '2026/07/22', time: '14:15', level: 'Level 3', seconds: 112 },
           { date: '2026/07/18', time: '10:35', level: 'Level 1', seconds: 63 }
         ]
+      }
+    ],
+    badges: [
+      {
+        id: 'first-play',
+        name: '新手動動腦',
+        icon: 'fa-seedling',
+        tone: 'emerald',
+        description: '完成第一場動腦遊戲',
+        rule: '任一款動腦遊戲首次成功完成，即可取得。',
+        earned: true,
+        earnedAt: '2026/07/18',
+        progress: 1,
+        target: 1
+      },
+      {
+        id: 'explorer',
+        name: '健康探險家',
+        icon: 'fa-compass',
+        tone: 'blue',
+        description: '體驗 3 款不同的動腦遊戲',
+        rule: '累積成功完成 3 款不同的動腦遊戲，各款至少一次。',
+        earned: true,
+        earnedAt: '2026/08/03',
+        progress: 4,
+        target: 3
+      },
+      {
+        id: 'monthly-walker',
+        name: '本月健行者',
+        icon: 'fa-shoe-prints',
+        tone: 'amber',
+        description: '本月已有 7 天完成互動',
+        rule: '同一個月內累積 7 個不同日期，至少成功完成一場動腦遊戲。每月重新計算。',
+        earned: true,
+        earnedAt: '2026/09/07',
+        progress: 9,
+        target: 7
+      },
+      {
+        id: 'brain-10',
+        name: '動腦小步走',
+        icon: 'fa-person-walking',
+        tone: 'purple',
+        description: '累積完成 10 次動腦遊戲',
+        rule: '不分遊戲與 Level，累積成功完成 10 場動腦遊戲。',
+        earned: true,
+        earnedAt: '2026/08/12',
+        progress: 117,
+        target: 10
+      },
+      {
+        id: 'brain-30',
+        name: '動腦好習慣',
+        icon: 'fa-calendar-check',
+        tone: 'rose',
+        description: '累積完成 30 次動腦遊戲',
+        rule: '不分遊戲與 Level，累積成功完成 30 場動腦遊戲。',
+        earned: true,
+        earnedAt: '2026/08/30',
+        progress: 117,
+        target: 30
+      },
+      {
+        id: 'brain-100',
+        name: '百次動腦達人',
+        icon: 'fa-medal',
+        tone: 'orange',
+        description: '累積完成 100 次動腦遊戲',
+        rule: '不分遊戲與 Level，累積成功完成 100 場動腦遊戲。',
+        earned: true,
+        earnedAt: '2026/09/08',
+        progress: 117,
+        target: 100
+      },
+      {
+        id: 'healthy-together',
+        name: '健康同行',
+        icon: 'fa-people-group',
+        tone: 'teal',
+        description: '與至少 1 位夥伴加入同一群組',
+        rule: '成功建立群組，且至少有 1 位其他會員完成加入，即可取得；取得後永久保留。',
+        earned: false,
+        progress: 0,
+        target: 1
       }
     ]
   },

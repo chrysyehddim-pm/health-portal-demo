@@ -2,7 +2,9 @@
   const $ = (id) => document.getElementById(id);
   const recordsData = window.GOHEALTH_DATA?.brainRecords || {};
   const games = Array.isArray(recordsData.games) ? recordsData.games : [];
+  const badges = Array.isArray(recordsData.badges) ? recordsData.badges : [];
   const summary = recordsData.summary || {};
+  const stage = new URLSearchParams(window.location.search).get('stage') === 'p16' ? 'p16' : 'p15';
   let selectedGameId = games[0]?.id || '';
   let feedbackTimer = null;
 
@@ -45,6 +47,11 @@
     return { date, time: record?.time || '—' };
   }
 
+  function formatFullDate(date){
+    const parts = String(date || '').split('/');
+    return parts.length === 3 ? `${parts[0]} 年 ${Number(parts[1])} 月 ${Number(parts[2])} 日` : String(date || '—');
+  }
+
   function favoriteGameThisMonth(){
     const monthKey = String(summary.referenceDate || '').slice(0, 7);
     const ranked = games.map((game, index) => {
@@ -60,6 +67,17 @@
     return ranked[0]?.name || '本月尚無紀錄';
   }
 
+  function renderStage(){
+    const p15Link = $('stage-p15-link');
+    const p16Link = $('stage-p16-link');
+    const badgesSection = $('badges-section');
+    p15Link?.classList.toggle('active', stage === 'p15');
+    p16Link?.classList.toggle('active', stage === 'p16');
+    p15Link?.setAttribute('aria-current', stage === 'p15' ? 'page' : 'false');
+    p16Link?.setAttribute('aria-current', stage === 'p16' ? 'page' : 'false');
+    badgesSection?.classList.toggle('hidden-view', stage !== 'p16');
+  }
+
   function renderSummary(){
     $('summary-days').textContent = summary.interactionDays ?? '—';
     $('summary-games').textContent = summary.completedGames ?? '—';
@@ -68,7 +86,7 @@
   }
 
   function renderTabs(){
-    $('game-tabs').innerHTML = games.map((game, index) => `
+    $('game-tabs').innerHTML = games.map(game => `
       <button class="game-tab ${game.id === selectedGameId ? 'active' : ''}" id="game-tab-${safe(game.id)}" type="button" role="tab" aria-selected="${game.id === selectedGameId}" aria-controls="game-record-panel" data-game-id="${safe(game.id)}" tabindex="${game.id === selectedGameId ? '0' : '-1'}">
         <i class="fa-solid ${safe(game.icon)}" aria-hidden="true"></i>
         <span class="game-tab-copy">
@@ -103,6 +121,36 @@
     if(switched){
       feedbackTimer = window.setTimeout(() => setMessage('目前查看：'), 1800);
     }
+  }
+
+  function calculatePercentile(comparison){
+    const total = Number(comparison?.comparisonCount);
+    const slower = Number(comparison?.slowerCount);
+    const tied = Number(comparison?.tiedCount);
+    if(!Number.isFinite(total) || total <= 0 || !Number.isFinite(slower) || !Number.isFinite(tied)) return null;
+    return Math.max(0, Math.min(100, Math.round(((slower + 0.5 * tied) / total) * 100)));
+  }
+
+  function renderPeerComparison(game, latest){
+    const comparison = game.peerComparison || {};
+    const percentile = calculatePercentile(comparison);
+    const sameLevel = latest && comparison.level === latest.level;
+    const available = percentile !== null && sameLevel && Number(comparison.comparisonCount) >= 30;
+
+    if(!available){
+      $('peer-pr').textContent = '資料累積中';
+      $('peer-context').textContent = `${comparison.ageBand || '同齡'}・${latest?.level || '目前 Level'}`;
+      $('peer-scale-fill').style.width = '0%';
+      $('peer-scale-marker').style.left = '0%';
+      $('peer-updated').textContent = '參考資料達到最低門檻後顯示';
+      return;
+    }
+
+    $('peer-pr').textContent = `PR ${percentile}`;
+    $('peer-context').textContent = `${comparison.ageBand}・${comparison.level}`;
+    $('peer-scale-fill').style.width = `${percentile}%`;
+    $('peer-scale-marker').style.left = `${percentile}%`;
+    $('peer-updated').textContent = `同齡母體更新：${formatFullDate(comparison.updatedAt)}`;
   }
 
   function renderChart(game){
@@ -160,7 +208,8 @@
   }
 
   function renderList(game){
-    $('record-list').innerHTML = recentRecords(game).map(record => {
+    const list = recentRecords(game);
+    $('record-list').innerHTML = list.length ? list.map(record => {
       const completed = formatRecordTime(record);
       return `
       <article class="record-row" aria-label="${safe(record.date)} ${safe(record.time)}，${safe(record.level)}，完成 ${safe(record.seconds)} 秒">
@@ -168,7 +217,7 @@
         <span class="level-badge">${safe(record.level)}</span>
         <strong>${safe(record.seconds)} <span>秒</span></strong>
       </article>`;
-    }).join('');
+    }).join('') : '<p class="record-empty">最近三個月沒有完成紀錄</p>';
   }
 
   function renderGame(){
@@ -185,10 +234,57 @@
     $('latest-seconds').textContent = latest?.seconds ?? '—';
     $('latest-level').textContent = latest?.level || '尚無紀錄';
     $('best-seconds').textContent = best?.seconds ?? '—';
-    $('best-level').textContent = best ? `${best.level}・完成於 ${formatRecordTime(best).date}` : '尚無紀錄';
+    $('best-level').textContent = best ? `${best.level}・${formatRecordTime(best).date}` : '尚無紀錄';
     $('challenge-count').textContent = game.totalChallenges ?? records.length;
+    renderPeerComparison(game, latest);
     renderChart({ ...game, records });
     renderList({ ...game, records });
+  }
+
+  function renderBadges(){
+    const earnedCount = badges.filter(badge => badge.earned).length;
+    $('badge-earned-count').textContent = `已取得 ${earnedCount}／${badges.length}`;
+    $('badge-grid').innerHTML = badges.map(badge => `
+      <button class="badge-card ${badge.earned ? 'earned' : 'locked'} tone-${safe(badge.tone)}" type="button" data-badge-id="${safe(badge.id)}" aria-label="${safe(badge.name)}，${badge.earned ? '已取得' : '尚未取得'}，查看取得方式">
+        <span class="badge-icon"><i class="fa-solid ${safe(badge.icon)}" aria-hidden="true"></i></span>
+        <span class="badge-card-copy">
+          <strong>${safe(badge.name)}</strong>
+          <small>${safe(badge.earned ? '已取得' : `${Math.min(badge.progress, badge.target)}／${badge.target}`)}</small>
+        </span>
+        <i class="fa-solid fa-chevron-right badge-chevron" aria-hidden="true"></i>
+      </button>
+    `).join('');
+    document.querySelectorAll('[data-badge-id]').forEach(button => {
+      button.addEventListener('click', () => showBadgeModal(button.dataset.badgeId));
+    });
+  }
+
+  function openModal(id){
+    const modal = $(id);
+    if(!modal) return;
+    modal.classList.remove('hidden-view');
+    document.body.classList.add('modal-open');
+    modal.querySelector('button')?.focus();
+  }
+
+  function closeRecordsModal(id){
+    $(id)?.classList.add('hidden-view');
+    document.body.classList.remove('modal-open');
+  }
+
+  function showBadgeModal(badgeId){
+    const badge = badges.find(item => item.id === badgeId);
+    if(!badge) return;
+    $('badge-modal-icon').className = `badge-modal-icon tone-${badge.tone}`;
+    $('badge-modal-icon').innerHTML = `<i class="fa-solid ${safe(badge.icon)}"></i>`;
+    $('badge-modal-status').textContent = badge.earned ? '已取得徽章' : '再一起完成一小步';
+    $('badge-modal-title').textContent = badge.name;
+    $('badge-modal-description').textContent = badge.description;
+    $('badge-modal-rule').textContent = badge.rule;
+    $('badge-modal-progress').textContent = `${Math.min(badge.progress, badge.target)}／${badge.target}`;
+    $('badge-modal-progress-fill').style.width = `${Math.min(100, (badge.progress / badge.target) * 100)}%`;
+    $('badge-modal-earned-at').textContent = badge.earnedAt ? `取得日期：${formatFullDate(badge.earnedAt)}` : '完成條件後會自動取得';
+    openModal('modal-badge-info');
   }
 
   function selectGame(gameId){
@@ -200,9 +296,23 @@
   }
 
   document.addEventListener('DOMContentLoaded', () => {
+    renderStage();
     renderSummary();
+    renderBadges();
     renderTabs();
     renderGame();
     showSwitchFeedback(games.find(game => game.id === selectedGameId));
+
+    $('peer-info-button')?.addEventListener('click', () => openModal('modal-peer-info'));
+    document.querySelectorAll('[data-close-modal]').forEach(button => {
+      button.addEventListener('click', () => closeRecordsModal(button.dataset.closeModal));
+    });
+    ['modal-peer-info', 'modal-badge-info'].forEach(id => {
+      $(id)?.addEventListener('click', () => closeRecordsModal(id));
+    });
+    document.addEventListener('keydown', event => {
+      if(event.key !== 'Escape') return;
+      ['modal-peer-info', 'modal-badge-info'].forEach(closeRecordsModal);
+    });
   });
 })();
