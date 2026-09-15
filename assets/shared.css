@@ -1205,6 +1205,7 @@ body[data-page="home"] #health-articles .truncate {
   font-weight: 900;
 }
 .badge-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; margin-top: 14px; }
+.badge-preview-grid { margin-bottom: 12px; }
 .badge-card {
   position: relative;
   min-width: 0;
@@ -1233,7 +1234,8 @@ body[data-page="home"] #health-articles .truncate {
 }
 .badge-icon { width: 42px; height: 42px; font-size: 18px; }
 .badge-card-copy { min-width: 0; display: flex; flex-direction: column; }
-.badge-card-copy strong { color: #1e293b; font-size: 1.0625rem; font-weight: 900; line-height: 1.4; }
+.badge-card-copy strong { padding-right: 12px; color: #1e293b; font-size: 1.0625rem; font-weight: 900; line-height: 1.4; }
+.badge-category { margin-top: 2px; color: #64748b; font-size: .875rem; font-weight: 700; }
 .badge-card-copy small { margin-top: 2px; color: #059669; font-size: .9375rem; font-weight: 800; }
 .badge-chevron { position: absolute; top: 22px; right: 12px; color: #cbd5e1; font-size: 14px; }
 .badge-card.locked { background: #f8fafc; }
@@ -1247,6 +1249,25 @@ body[data-page="home"] #health-articles .truncate {
 .tone-orange { --badge-color: #c2410c; --badge-bg: #ffedd5; }
 .tone-teal { --badge-color: #0f766e; --badge-bg: #ccfbf1; }
 .badge-section-note { display: flex; align-items: center; gap: 7px; margin-top: 12px; color: #64748b; font-size: 1rem; font-weight: 700; }
+.badge-view-all {
+  width: 100%;
+  min-height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 15px;
+  border: 1px solid #fcd34d;
+  border-radius: 16px;
+  color: #92400e;
+  background: #fff;
+  font-size: 1.0625rem;
+  font-weight: 900;
+  text-align: left;
+}
+.badge-view-all span i { margin-right: 7px; color: #d97706; }
+.badge-view-all > i { color: #d97706; font-size: .9375rem; }
+.badge-view-all:active { background: #fffbeb; transform: scale(.99); }
 
 .records-info-sheet { max-height: 88vh; overflow-y: auto; }
 .records-modal-heading { display: flex; align-items: center; gap: 12px; }
@@ -1307,6 +1328,11 @@ body[data-page="home"] #health-articles .truncate {
 .badge-modal-copy { margin-top: 11px; text-align: center; }
 .badge-modal-copy p { color: #059669; font-size: 1rem; font-weight: 900; }
 .badge-modal-copy span { display: block; margin-top: 4px; color: #64748b; font-size: 1.0625rem; line-height: 1.55; }
+.all-badges-sheet { width: min(100%, 560px); }
+.all-badges-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.all-badges-heading h3 { color: #1e293b; font-size: 1.375rem; font-weight: 900; line-height: 1.4; }
+.all-badges-heading p { margin-top: 3px; color: #64748b; font-size: 1rem; font-weight: 600; line-height: 1.5; }
+.all-badges-grid { margin-top: 18px; }
 .badge-modal-rule { background: #f8fafc; }
 .badge-modal-rule strong { color: #334155; font-size: 1.0625rem; font-weight: 900; }
 .badge-modal-rule p { margin-top: 4px; color: #475569; font-size: 1rem; font-weight: 600; line-height: 1.6; }

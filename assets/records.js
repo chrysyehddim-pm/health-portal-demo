@@ -7,6 +7,7 @@
   const stage = new URLSearchParams(window.location.search).get('stage') === 'p16' ? 'p16' : 'p15';
   let selectedGameId = games[0]?.id || '';
   let feedbackTimer = null;
+  let lastFocusedElement = null;
 
   const safe = (value) => String(value ?? '').replace(/[&<>'"]/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[char]));
   const chartColors = {
@@ -237,32 +238,65 @@
   function renderBadges(){
     const earnedCount = badges.filter(badge => badge.earned).length;
     $('badge-earned-count').textContent = `已取得 ${earnedCount}／${badges.length}`;
-    $('badge-grid').innerHTML = badges.map(badge => `
+    $('badge-total-count').textContent = badges.length;
+    $('all-badges-count').textContent = `${earnedCount}／${badges.length}`;
+    $('all-badges-summary').textContent = `已取得 ${earnedCount} 枚，還有 ${badges.length - earnedCount} 枚等你一起收藏`;
+
+    const mostRecentEarned = badges
+      .filter(badge => badge.earned && badge.earnedAt)
+      .sort((a, b) => String(b.earnedAt).localeCompare(String(a.earnedAt)))[0];
+    const closestLocked = badges
+      .filter(badge => !badge.earned && Number(badge.target) > 0)
+      .sort((a, b) => (Number(b.progress) / Number(b.target)) - (Number(a.progress) / Number(a.target)))[0];
+    const previewBadges = [mostRecentEarned, closestLocked].filter(Boolean);
+    if(previewBadges.length < 2){
+      badges.filter(badge => !previewBadges.includes(badge)).slice(0, 2 - previewBadges.length).forEach(badge => previewBadges.push(badge));
+    }
+
+    $('badge-preview-grid').innerHTML = previewBadges.map(badgeCard).join('');
+    $('all-badges-grid').innerHTML = badges.map(badgeCard).join('');
+    document.querySelectorAll('[data-badge-id]').forEach(button => {
+      button.addEventListener('click', () => {
+        const fromAllBadges = Boolean(button.closest('#modal-all-badges'));
+        if(fromAllBadges) closeRecordsModal('modal-all-badges', false);
+        showBadgeModal(button.dataset.badgeId);
+        if(fromAllBadges) lastFocusedElement = $('badge-view-all');
+      });
+    });
+  }
+
+  function badgeCard(badge){
+    const cappedProgress = Math.min(Number(badge.progress) || 0, Number(badge.target) || 0);
+    const status = badge.cardStatus || (badge.earned ? '已取得' : `${cappedProgress}／${badge.target}`);
+    return `
       <button class="badge-card ${badge.earned ? 'earned' : 'locked'} tone-${safe(badge.tone)}" type="button" data-badge-id="${safe(badge.id)}" aria-label="${safe(badge.name)}，${badge.earned ? '已取得' : '尚未取得'}，查看取得方式">
         <span class="badge-icon"><i class="fa-solid ${safe(badge.icon)}" aria-hidden="true"></i></span>
         <span class="badge-card-copy">
           <strong>${safe(badge.name)}</strong>
-          <small>${safe(badge.earned ? '已取得' : `${Math.min(badge.progress, badge.target)}／${badge.target}`)}</small>
+          <span class="badge-category">${safe(badge.category || '健康徽章')}</span>
+          <small>${safe(status)}</small>
         </span>
         <i class="fa-solid fa-chevron-right badge-chevron" aria-hidden="true"></i>
       </button>
-    `).join('');
-    document.querySelectorAll('[data-badge-id]').forEach(button => {
-      button.addEventListener('click', () => showBadgeModal(button.dataset.badgeId));
-    });
+    `;
   }
 
   function openModal(id){
     const modal = $(id);
     if(!modal) return;
+    lastFocusedElement = document.activeElement;
     modal.classList.remove('hidden-view');
     document.body.classList.add('modal-open');
-    modal.querySelector('button')?.focus();
+    const sheet = modal.querySelector('.records-info-sheet');
+    if(sheet) sheet.scrollTop = 0;
+    (modal.querySelector('[data-modal-initial-focus]') || modal.querySelector('button'))?.focus({ preventScroll: true });
   }
 
-  function closeRecordsModal(id){
+  function closeRecordsModal(id, restoreFocus = true){
     $(id)?.classList.add('hidden-view');
-    document.body.classList.remove('modal-open');
+    const hasOpenModal = ['modal-peer-info', 'modal-badge-info', 'modal-all-badges'].some(modalId => !$(modalId)?.classList.contains('hidden-view'));
+    document.body.classList.toggle('modal-open', hasOpenModal);
+    if(restoreFocus) lastFocusedElement?.focus?.();
   }
 
   function showBadgeModal(badgeId){
@@ -276,7 +310,7 @@
     $('badge-modal-rule').textContent = badge.rule;
     $('badge-modal-progress').textContent = `${Math.min(badge.progress, badge.target)}／${badge.target}`;
     $('badge-modal-progress-fill').style.width = `${Math.min(100, (badge.progress / badge.target) * 100)}%`;
-    $('badge-modal-earned-at').textContent = badge.earnedAt ? `取得日期：${formatFullDate(badge.earnedAt)}` : '完成條件後會自動取得';
+    $('badge-modal-earned-at').textContent = badge.progressCaption || (badge.earnedAt ? `取得日期：${formatFullDate(badge.earnedAt)}・徽章永久保留` : '完成條件後會自動取得並永久保留');
     openModal('modal-badge-info');
   }
 
@@ -295,15 +329,18 @@
     renderTabs();
     renderGame();
     $('peer-info-button')?.addEventListener('click', () => openModal('modal-peer-info'));
+    $('badge-view-all')?.addEventListener('click', () => openModal('modal-all-badges'));
     document.querySelectorAll('[data-close-modal]').forEach(button => {
       button.addEventListener('click', () => closeRecordsModal(button.dataset.closeModal));
     });
-    ['modal-peer-info', 'modal-badge-info'].forEach(id => {
+    ['modal-peer-info', 'modal-badge-info', 'modal-all-badges'].forEach(id => {
       $(id)?.addEventListener('click', () => closeRecordsModal(id));
     });
     document.addEventListener('keydown', event => {
       if(event.key !== 'Escape') return;
-      ['modal-peer-info', 'modal-badge-info'].forEach(closeRecordsModal);
+      const openModalId = ['modal-badge-info', 'modal-all-badges', 'modal-peer-info']
+        .find(id => !$(id)?.classList.contains('hidden-view'));
+      if(openModalId) closeRecordsModal(openModalId);
     });
   });
 })();

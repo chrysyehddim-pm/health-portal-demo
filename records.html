@@ -52,13 +52,16 @@
     <section class="badges-section hidden-view" id="badges-section" aria-labelledby="badges-title">
       <div class="records-section-heading badges-heading">
         <div>
-          <h2 id="badges-title">我的動腦徽章</h2>
-          <p>每一次互動，都是值得收藏的小足跡</p>
+          <h2 id="badges-title">我的健康徽章</h2>
+          <p>把每一次健康互動，收藏成陪伴自己的小成就</p>
         </div>
         <span class="badge-earned-count" id="badge-earned-count">—</span>
       </div>
-      <div class="badge-grid" id="badge-grid"></div>
-      <p class="badge-section-note"><i class="fa-regular fa-hand-pointer" aria-hidden="true"></i> 點選徽章，可查看取得方式與目前進度</p>
+      <div class="badge-grid badge-preview-grid" id="badge-preview-grid"></div>
+      <button class="badge-view-all" id="badge-view-all" type="button">
+        <span><i class="fa-solid fa-award" aria-hidden="true"></i> 查看全部 <strong id="badge-total-count">8</strong> 枚徽章</span>
+        <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+      </button>
     </section>
 
     <section class="game-picker-section" aria-labelledby="game-filter-title">
@@ -171,7 +174,7 @@
       <div class="records-modal-heading">
         <span class="peer-icon" aria-hidden="true"><i class="fa-solid fa-people-arrows"></i></span>
         <div>
-          <h3 id="peer-info-title">同齡互動參考說明</h3>
+          <h3 id="peer-info-title" tabindex="-1" data-modal-initial-focus>同齡互動參考說明</h3>
           <p>這是互動紀錄的參考位置，不代表能力好壞</p>
         </div>
       </div>
@@ -192,7 +195,7 @@
       <div class="badge-modal-icon" id="badge-modal-icon" aria-hidden="true"></div>
       <div class="badge-modal-copy">
         <p id="badge-modal-status">—</p>
-        <h3 id="badge-modal-title">—</h3>
+        <h3 id="badge-modal-title" tabindex="-1" data-modal-initial-focus>—</h3>
         <span id="badge-modal-description">—</span>
       </div>
       <div class="badge-modal-rule">
@@ -205,6 +208,22 @@
         <small id="badge-modal-earned-at"></small>
       </div>
       <button class="records-modal-close" type="button" data-close-modal="modal-badge-info">關閉</button>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden-view" id="modal-all-badges" role="dialog" aria-modal="true" aria-labelledby="all-badges-title">
+    <div class="modal-sheet records-info-sheet all-badges-sheet" onclick="event.stopPropagation()">
+      <div class="w-12 h-1 bg-slate-200 rounded-full mx-auto mb-5"></div>
+      <div class="all-badges-heading">
+        <div>
+          <h3 id="all-badges-title" tabindex="-1" data-modal-initial-focus>我的健康徽章</h3>
+          <p id="all-badges-summary">—</p>
+        </div>
+        <span class="badge-earned-count" id="all-badges-count">—</span>
+      </div>
+      <div class="badge-grid all-badges-grid" id="all-badges-grid"></div>
+      <p class="badge-section-note"><i class="fa-regular fa-hand-pointer" aria-hidden="true"></i> 點選徽章，可查看取得方式與目前進度</p>
+      <button class="records-modal-close" type="button" data-close-modal="modal-all-badges">關閉</button>
     </div>
   </div>
 </div>
