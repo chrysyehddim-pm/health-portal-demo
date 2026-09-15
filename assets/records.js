@@ -68,13 +68,7 @@
   }
 
   function renderStage(){
-    const p15Link = $('stage-p15-link');
-    const p16Link = $('stage-p16-link');
     const badgesSection = $('badges-section');
-    p15Link?.classList.toggle('active', stage === 'p15');
-    p16Link?.classList.toggle('active', stage === 'p16');
-    p15Link?.setAttribute('aria-current', stage === 'p15' ? 'page' : 'false');
-    p16Link?.setAttribute('aria-current', stage === 'p16' ? 'page' : 'false');
     badgesSection?.classList.toggle('hidden-view', stage !== 'p16');
   }
 
@@ -112,15 +106,14 @@
 
   function showSwitchFeedback(game, switched = false){
     const feedback = $('game-switch-feedback');
-    if(!feedback || !game) return;
+    if(!feedback || !game || !switched) return;
     clearTimeout(feedbackTimer);
-    const setMessage = prefix => {
-      feedback.innerHTML = `<i class="fa-solid fa-circle-check" aria-hidden="true"></i> ${prefix}<strong>${safe(game.name)}</strong>`;
-    };
-    setMessage(switched ? '已切換為：' : '目前查看：');
-    if(switched){
-      feedbackTimer = window.setTimeout(() => setMessage('目前查看：'), 1800);
-    }
+    feedback.innerHTML = `<i class="fa-solid fa-circle-check" aria-hidden="true"></i> 已切換為：<strong>${safe(game.name)}</strong>`;
+    feedback.classList.remove('hidden-view');
+    feedbackTimer = window.setTimeout(() => {
+      feedback.classList.add('hidden-view');
+      feedback.textContent = '';
+    }, 1800);
   }
 
   function calculatePercentile(comparison){
@@ -150,7 +143,7 @@
     $('peer-context').textContent = `${comparison.ageBand}・${comparison.level}`;
     $('peer-scale-fill').style.width = `${percentile}%`;
     $('peer-scale-marker').style.left = `${percentile}%`;
-    $('peer-updated').textContent = `同齡母體更新：${formatFullDate(comparison.updatedAt)}`;
+    $('peer-updated').textContent = `同齡參考資料更新：${formatFullDate(comparison.updatedAt)}`;
   }
 
   function renderChart(game){
@@ -301,8 +294,6 @@
     renderBadges();
     renderTabs();
     renderGame();
-    showSwitchFeedback(games.find(game => game.id === selectedGameId));
-
     $('peer-info-button')?.addEventListener('click', () => openModal('modal-peer-info'));
     document.querySelectorAll('[data-close-modal]').forEach(button => {
       button.addEventListener('click', () => closeRecordsModal(button.dataset.closeModal));

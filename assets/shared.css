@@ -882,20 +882,29 @@ body[data-page="home"] #health-articles .truncate {
   font-size: 13px;
 }
 .game-tab.active .game-tab-status { visibility: visible; }
-.game-switch-feedback {
-  min-height: 30px;
+.game-switch-toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 108px);
+  z-index: 10000;
   display: flex;
   align-items: center;
   gap: 7px;
   margin: 0;
-  padding: 3px 2px;
-  color: #475569;
+  padding: 12px 18px;
+  border-radius: 999px;
+  color: #fff;
+  background: #065f46;
+  box-shadow: 0 8px 22px rgba(15, 23, 42, .2);
   font-size: 1rem;
-  font-weight: 700;
+  font-weight: 800;
   line-height: 1.5;
+  white-space: nowrap;
+  transform: translateX(-50%);
+  animation: fadeIn .18s ease-out;
 }
-.game-switch-feedback > i { color: #059669; font-size: 17px; }
-.game-switch-feedback strong { color: #047857; font-weight: 900; }
+.game-switch-toast > i { color: #6ee7b7; font-size: 17px; }
+.game-switch-toast strong { color: #fff; font-weight: 900; }
 
 .game-record-panel { display: flex; flex-direction: column; gap: 14px; }
 .selected-game-heading {
@@ -1062,51 +1071,6 @@ body[data-page="home"] #health-articles .truncate {
 }
 
 /* 動腦紀錄：同齡 PR 與下一階段徽章情境 */
-.prototype-switcher {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 13px;
-  border: 1px dashed #a7f3d0;
-  border-radius: 17px;
-  background: rgba(236, 253, 245, .72);
-}
-.prototype-switcher > div:first-child {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 8px;
-}
-.prototype-switcher strong { color: #065f46; font-size: 1rem; font-weight: 900; }
-.prototype-switcher > div:first-child span { color: #64748b; font-size: .9375rem; font-weight: 700; }
-.prototype-switcher-actions {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 7px;
-  padding: 4px;
-  border-radius: 14px;
-  background: #d1fae5;
-}
-.prototype-switch {
-  min-height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 9px;
-  border-radius: 11px;
-  color: #047857;
-  font-size: 1rem;
-  font-weight: 900;
-  line-height: 1.35;
-  text-align: center;
-  text-decoration: none;
-}
-.prototype-switch.active {
-  color: #fff;
-  background: #059669;
-  box-shadow: 0 3px 8px rgba(5, 150, 105, .2);
-}
-
 .game-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .game-stat {
   min-height: 130px;
@@ -1191,7 +1155,7 @@ body[data-page="home"] #health-articles .truncate {
   inset: 0 auto 0 0;
   width: 0;
   border-radius: inherit;
-  background: linear-gradient(90deg, #60a5fa, #10b981);
+  background: #60a5fa;
   transition: width .35s ease;
 }
 .peer-scale-track i {
@@ -1202,8 +1166,8 @@ body[data-page="home"] #health-articles .truncate {
   height: 22px;
   border: 4px solid #fff;
   border-radius: 50%;
-  background: #059669;
-  box-shadow: 0 2px 7px rgba(5, 150, 105, .28);
+  background: #2563eb;
+  box-shadow: 0 2px 7px rgba(37, 99, 235, .24);
   transform: translate(-50%, -50%);
   transition: left .35s ease;
 }
@@ -1224,7 +1188,6 @@ body[data-page="home"] #health-articles .truncate {
 .peer-note i { margin-top: 4px; color: #059669; }
 .peer-updated { display: block; margin-top: 8px; color: #64748b; font-size: .9375rem; font-weight: 700; text-align: right; }
 
-.section-kicker { color: #059669 !important; font-size: 1rem !important; font-weight: 900; }
 .badges-section {
   padding: 16px;
   border: 1px solid #fde68a;
@@ -1318,7 +1281,7 @@ body[data-page="home"] #health-articles .truncate {
   font-size: .875rem;
   font-weight: 900;
 }
-.peer-formula,
+.peer-modal-note,
 .badge-modal-rule,
 .badge-progress-wrap {
   margin-top: 14px;
@@ -1327,8 +1290,8 @@ body[data-page="home"] #health-articles .truncate {
   color: #475569;
   background: #ecfdf5;
 }
-.peer-formula strong { display: block; color: #065f46; font-size: .9375rem; font-weight: 900; line-height: 1.6; }
-.peer-formula span { display: block; margin-top: 5px; font-size: .9375rem; font-weight: 600; line-height: 1.55; }
+.peer-modal-note { display: flex; align-items: flex-start; gap: 8px; font-size: 1rem; font-weight: 700; line-height: 1.55; }
+.peer-modal-note i { margin-top: 4px; color: #059669; }
 .records-modal-close {
   width: 100%;
   min-height: 52px;
@@ -1356,8 +1319,6 @@ body[data-page="home"] #health-articles .truncate {
 body.modal-open { overflow: hidden; }
 
 @media (max-width: 370px) {
-  .prototype-switcher > div:first-child { align-items: flex-start; flex-direction: column; }
-  .prototype-switch { padding-inline: 5px; font-size: .9375rem; }
   .game-stat { padding: 12px; }
   .game-stat strong { font-size: 1.5rem; }
   .peer-result { align-items: flex-start; flex-direction: column; gap: 7px; }

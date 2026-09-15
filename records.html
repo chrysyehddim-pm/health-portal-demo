@@ -22,18 +22,7 @@
       <div class="records-heading-icon" aria-hidden="true"><i class="fa-solid fa-chart-line"></i></div>
       <div>
         <h1 class="records-title" id="records-title">我的動腦紀錄</h1>
-        <p class="records-subtitle">看看最近的遊戲互動與完成紀錄</p>
-      </div>
-    </section>
-
-    <section class="prototype-switcher" aria-label="Prototype 情境切換">
-      <div>
-        <strong>Prototype 情境</strong>
-        <span>切換比較兩階段畫面</span>
-      </div>
-      <div class="prototype-switcher-actions">
-        <a class="prototype-switch" id="stage-p15-link" href="records.html">紀錄＋同齡 PR</a>
-        <a class="prototype-switch" id="stage-p16-link" href="records.html?stage=p16">加入徽章</a>
+        <p class="records-subtitle">看看最近的動腦互動與完成紀錄</p>
       </div>
     </section>
 
@@ -45,7 +34,7 @@
       </article>
       <article class="overview-card overview-card-blue">
         <div class="overview-icon"><i class="fa-solid fa-gamepad"></i></div>
-        <p>本月完成遊戲次數</p>
+        <p>本月完成互動次數</p>
         <strong id="summary-games">—</strong><span>次</span>
       </article>
       <article class="overview-card overview-card-amber">
@@ -55,7 +44,7 @@
       </article>
       <article class="overview-card overview-card-purple">
         <div class="overview-icon"><i class="fa-solid fa-star"></i></div>
-        <p>本月最常玩的遊戲</p>
+        <p>本月最常互動</p>
         <strong class="overview-game" id="summary-favorite">—</strong>
       </article>
     </section>
@@ -63,7 +52,6 @@
     <section class="badges-section hidden-view" id="badges-section" aria-labelledby="badges-title">
       <div class="records-section-heading badges-heading">
         <div>
-          <p class="section-kicker">下一階段展示</p>
           <h2 id="badges-title">我的動腦徽章</h2>
           <p>每一次互動，都是值得收藏的小足跡</p>
         </div>
@@ -75,18 +63,17 @@
 
     <section class="game-picker-section" aria-labelledby="game-filter-title">
       <div class="game-picker-heading">
-        <h2 id="game-filter-title">選擇遊戲查看紀錄</h2>
-        <p>點選下方遊戲，即可查看該遊戲的近期紀錄</p>
+        <h2 id="game-filter-title">選擇互動項目</h2>
       </div>
-      <div class="game-tabs" id="game-tabs" role="tablist" aria-label="選擇遊戲"></div>
-      <p class="game-switch-feedback" id="game-switch-feedback" role="status" aria-live="polite"></p>
+      <div class="game-tabs" id="game-tabs" role="tablist" aria-label="選擇互動項目"></div>
     </section>
+
+    <p class="game-switch-toast hidden-view" id="game-switch-feedback" role="status" aria-live="polite"></p>
 
     <section class="game-record-panel" id="game-record-panel" aria-labelledby="selected-game-name">
       <div class="selected-game-heading">
         <div class="selected-game-icon" id="selected-game-icon" aria-hidden="true"></div>
         <div>
-          <p class="selected-game-kicker">目前查看</p>
           <h2 id="selected-game-name">—</h2>
         </div>
       </div>
@@ -114,24 +101,23 @@
           <div class="peer-card-title">
             <span class="peer-icon" aria-hidden="true"><i class="fa-solid fa-people-arrows"></i></span>
             <div>
-              <p>同齡參考位置</p>
-              <h3 id="peer-title">看看相同挑戰的參考位置</h3>
+              <p>同齡互動參考</p>
+              <h3 id="peer-title">看看相同動腦互動的參考位置</h3>
             </div>
           </div>
-          <button class="peer-info-button" id="peer-info-button" type="button" aria-label="查看同齡 PR 計算說明"><i class="fa-solid fa-circle-info"></i></button>
+          <button class="peer-info-button" id="peer-info-button" type="button" aria-label="查看同齡互動參考說明"><i class="fa-solid fa-circle-info"></i></button>
         </div>
         <div class="peer-result">
           <div class="peer-score"><span>約</span><strong id="peer-pr">PR —</strong></div>
           <div class="peer-context">
             <strong id="peer-context">—</strong>
-            <span>以這個 Level 的個人最佳完成時間比較</span>
           </div>
         </div>
         <div class="peer-scale" aria-hidden="true">
           <div class="peer-scale-track"><span id="peer-scale-fill"></span><i id="peer-scale-marker"></i></div>
           <div class="peer-scale-labels"><span>PR 0</span><span>PR 50</span><span>PR 100</span></div>
         </div>
-        <p class="peer-note"><i class="fa-solid fa-shield-heart" aria-hidden="true"></i><span>僅比較相同遊戲、相同 Level 與同年齡區間；不同 Level 不直接比較。</span></p>
+        <p class="peer-note"><i class="fa-solid fa-shield-heart" aria-hidden="true"></i><span>僅比較相同互動項目、相同 Level 與同年齡區間；不代表能力好壞，僅供參考。</span></p>
         <small class="peer-updated" id="peer-updated">—</small>
       </article>
 
@@ -185,20 +171,17 @@
       <div class="records-modal-heading">
         <span class="peer-icon" aria-hidden="true"><i class="fa-solid fa-people-arrows"></i></span>
         <div>
-          <h3 id="peer-info-title">同齡 PR 怎麼計算？</h3>
-          <p>這是同齡參考位置，不代表能力好壞</p>
+          <h3 id="peer-info-title">同齡互動參考說明</h3>
+          <p>這是互動紀錄的參考位置，不代表能力好壞</p>
         </div>
       </div>
       <ol class="peer-rule-list">
-        <li><strong>相同條件：</strong>只比較同一款遊戲、相同 Level 與相同年齡區間。</li>
+        <li><strong>相同條件：</strong>只比較相同互動項目、相同 Level 與相同年齡區間。</li>
         <li><strong>每人一筆：</strong>每位會員只取近 90 天內該 Level 最短的完成時間；比較人數不含本人。</li>
         <li><strong>同分處理：</strong>同秒數採共同排名，放在同分區間的中間位置。</li>
-        <li><strong>更新方式：</strong>個人紀錄完成後更新；同齡母體每日批次更新一次。</li>
+        <li><strong>更新方式：</strong>個人紀錄完成後更新；同齡參考資料每日更新一次。</li>
       </ol>
-      <div class="peer-formula">
-        <strong>PR＝（比本人慢的人數＋0.5 × 同秒數人數）÷ 比較人數 × 100</strong>
-        <span>參考人數未達最低門檻時，畫面會顯示「參考資料累積中」。</span>
-      </div>
+      <p class="peer-modal-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i><span>參考資料不足時，畫面會顯示「參考資料累積中」。</span></p>
       <button class="records-modal-close" type="button" data-close-modal="modal-peer-info">我知道了</button>
     </div>
   </div>
