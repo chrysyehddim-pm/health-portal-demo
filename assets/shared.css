@@ -643,13 +643,6 @@ body[data-page="exchange-history"] .text-xl {
 body[data-page="home"] .task-card h4 { font-size: 1.1875rem; line-height: 1.5; overflow-wrap: anywhere; }
 body[data-page="home"] .task-card p { font-size: 1.0625rem !important; line-height: 1.6 !important; overflow-wrap: anywhere; }
 body[data-page="home"] .shimmer-badge { font-size: 1rem !important; line-height: 1.4 !important; }
-body[data-page="home"] .task-card .task-limit-note {
-  margin-top: 2px;
-  color: #0891b2;
-  font-size: 1rem !important;
-  font-weight: 700;
-  line-height: 1.45 !important;
-}
 
 .announcement-bar { min-height: 50px; }
 .announcement-track { font-size: 1.125rem; line-height: 1.55; }
