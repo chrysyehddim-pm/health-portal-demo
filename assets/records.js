@@ -120,6 +120,10 @@
   function renderRecentPerformance(game){
     const pr = Number(game.recentPerformance?.pr);
     $('peer-pr').textContent = Number.isFinite(pr) ? `PR ${pr}` : 'PR —';
+    $('peer-performance-level').textContent = game.recentPerformance?.level || 'LV —';
+    $('peer-updated').textContent = game.recentPerformance?.updatedAt
+      ? `資料更新：${game.recentPerformance.updatedAt}・每日更新一次`
+      : '資料每日更新一次';
   }
 
   function renderChart(game){

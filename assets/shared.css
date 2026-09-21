@@ -1128,6 +1128,9 @@ body[data-page="home"] #health-articles .truncate {
 .peer-result { align-items: flex-end; gap: 14px; margin-top: 16px; }
 .peer-score { flex: 0 0 auto; color: #047857; }
 .peer-score strong { font-size: 2.3rem; font-weight: 900; line-height: 1; }
+.peer-context { min-width: 0; display: flex; flex-direction: column; padding-bottom: 1px; }
+.peer-context strong { color: #334155; font-size: 1.0625rem; font-weight: 900; }
+.peer-context span { margin-top: 2px; color: #64748b; font-size: 1rem; font-weight: 600; line-height: 1.45; }
 .peer-note {
   display: flex;
   align-items: flex-start;
@@ -1142,6 +1145,7 @@ body[data-page="home"] #health-articles .truncate {
   line-height: 1.55;
 }
 .peer-note i { margin-top: 4px; color: #059669; }
+.peer-updated { display: block; margin-top: 8px; color: #64748b; font-size: .9375rem; font-weight: 700; text-align: right; }
 
 .badges-section {
   padding: 16px;

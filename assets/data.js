@@ -22,7 +22,7 @@ window.GOHEALTH_DATA = {
         icon: 'fa-eye',
         accent: 'blue',
         totalChallenges: 42,
-        recentPerformance: { pr: 82 },
+        recentPerformance: { pr: 82, level: 'LV 2', updatedAt: '9/9 09:00' },
         records: [
           { date: '2026/09/08', time: '18:40', level: 'Level 2', seconds: 68 },
           { date: '2026/09/06', time: '10:15', level: 'Level 1', seconds: 51 },
@@ -44,7 +44,7 @@ window.GOHEALTH_DATA = {
         icon: 'fa-clock-rotate-left',
         accent: 'purple',
         totalChallenges: 31,
-        recentPerformance: { pr: 78 },
+        recentPerformance: { pr: 78, level: 'LV 2', updatedAt: '9/9 09:00' },
         records: [
           { date: '2026/09/07', time: '19:20', level: 'Level 2', seconds: 82 },
           { date: '2026/09/03', time: '08:55', level: 'Level 1', seconds: 64 },
@@ -66,7 +66,7 @@ window.GOHEALTH_DATA = {
         icon: 'fa-store',
         accent: 'orange',
         totalChallenges: 26,
-        recentPerformance: { pr: 76 },
+        recentPerformance: { pr: 76, level: 'LV 3', updatedAt: '9/9 09:00' },
         records: [
           { date: '2026/09/05', time: '12:10', level: 'Level 3', seconds: 126 },
           { date: '2026/09/02', time: '18:25', level: 'Level 2', seconds: 96 },
@@ -88,7 +88,7 @@ window.GOHEALTH_DATA = {
         icon: 'fa-broom',
         accent: 'emerald',
         totalChallenges: 18,
-        recentPerformance: { pr: 84 },
+        recentPerformance: { pr: 84, level: 'LV 1', updatedAt: '9/9 09:00' },
         records: [
           { date: '2026/09/08', time: '09:05', level: 'Level 1', seconds: 58 },
           { date: '2026/09/01', time: '15:45', level: 'Level 2', seconds: 79 },
