@@ -1083,19 +1083,8 @@ body[data-page="home"] #health-articles .truncate {
 .game-stat > p { min-height: 51px; }
 .game-stat > div { grid-column: auto; grid-row: auto; }
 .game-stat small { margin-top: 2px; }
-.game-stat-wide {
-  min-height: 88px;
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  grid-template-rows: auto auto;
-  column-gap: 14px;
-  align-items: center;
-}
-.game-stat-wide > p { min-height: 0; }
-.game-stat-wide > div { grid-column: 2; grid-row: 1 / span 2; }
-
 .peer-card {
+  order: -1;
   overflow: hidden;
   padding: 16px;
   border: 1px solid #a7f3d0;
@@ -1138,40 +1127,7 @@ body[data-page="home"] #health-articles .truncate {
 }
 .peer-result { align-items: flex-end; gap: 14px; margin-top: 16px; }
 .peer-score { flex: 0 0 auto; color: #047857; }
-.peer-score span { margin-right: 3px; font-size: 1rem; font-weight: 800; }
-.peer-score strong { font-size: 2rem; font-weight: 900; line-height: 1; }
-.peer-context { min-width: 0; display: flex; flex-direction: column; padding-bottom: 1px; }
-.peer-context strong { color: #334155; font-size: 1.0625rem; font-weight: 900; }
-.peer-context span { margin-top: 2px; color: #64748b; font-size: 1rem; font-weight: 600; line-height: 1.45; }
-.peer-scale { margin-top: 18px; }
-.peer-scale-track {
-  position: relative;
-  height: 10px;
-  border-radius: 999px;
-  background: #dbeafe;
-}
-.peer-scale-track span {
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 0;
-  border-radius: inherit;
-  background: #60a5fa;
-  transition: width .35s ease;
-}
-.peer-scale-track i {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 22px;
-  height: 22px;
-  border: 4px solid #fff;
-  border-radius: 50%;
-  background: #2563eb;
-  box-shadow: 0 2px 7px rgba(37, 99, 235, .24);
-  transform: translate(-50%, -50%);
-  transition: left .35s ease;
-}
-.peer-scale-labels { display: flex; justify-content: space-between; margin-top: 8px; color: #64748b; font-size: .9375rem; font-weight: 800; }
+.peer-score strong { font-size: 2.3rem; font-weight: 900; line-height: 1; }
 .peer-note {
   display: flex;
   align-items: flex-start;
@@ -1186,7 +1142,6 @@ body[data-page="home"] #health-articles .truncate {
   line-height: 1.55;
 }
 .peer-note i { margin-top: 4px; color: #059669; }
-.peer-updated { display: block; margin-top: 8px; color: #64748b; font-size: .9375rem; font-weight: 700; text-align: right; }
 
 .badges-section {
   padding: 16px;

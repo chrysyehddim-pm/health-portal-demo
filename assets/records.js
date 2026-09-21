@@ -117,34 +117,9 @@
     }, 1800);
   }
 
-  function calculatePercentile(comparison){
-    const total = Number(comparison?.comparisonCount);
-    const slower = Number(comparison?.slowerCount);
-    const tied = Number(comparison?.tiedCount);
-    if(!Number.isFinite(total) || total <= 0 || !Number.isFinite(slower) || !Number.isFinite(tied)) return null;
-    return Math.max(0, Math.min(100, Math.round(((slower + 0.5 * tied) / total) * 100)));
-  }
-
-  function renderPeerComparison(game, latest){
-    const comparison = game.peerComparison || {};
-    const percentile = calculatePercentile(comparison);
-    const sameLevel = latest && comparison.level === latest.level;
-    const available = percentile !== null && sameLevel && Number(comparison.comparisonCount) >= 30;
-
-    if(!available){
-      $('peer-pr').textContent = '資料累積中';
-      $('peer-context').textContent = `${comparison.ageBand || '同齡'}・${latest?.level || '目前 Level'}`;
-      $('peer-scale-fill').style.width = '0%';
-      $('peer-scale-marker').style.left = '0%';
-      $('peer-updated').textContent = '參考資料達到最低門檻後顯示';
-      return;
-    }
-
-    $('peer-pr').textContent = `PR ${percentile}`;
-    $('peer-context').textContent = `${comparison.ageBand}・${comparison.level}`;
-    $('peer-scale-fill').style.width = `${percentile}%`;
-    $('peer-scale-marker').style.left = `${percentile}%`;
-    $('peer-updated').textContent = `同齡參考資料更新：${formatFullDate(comparison.updatedAt)}`;
+  function renderRecentPerformance(game){
+    const pr = Number(game.recentPerformance?.pr);
+    $('peer-pr').textContent = Number.isFinite(pr) ? `PR ${pr}` : 'PR —';
   }
 
   function renderChart(game){
@@ -182,7 +157,7 @@
       const x = xAt(index);
       const y = yAt(record.seconds);
       const levelShort = String(record.level).replace('Level ', 'L');
-      return `<g>
+      return `<g tabindex="0" role="img" aria-label="${safe(record.date)} ${safe(record.time)}，${safe(record.level)}，完成 ${safe(record.seconds)} 秒">
         <title>${safe(record.date)} ${safe(record.time)}・${safe(record.level)}・${safe(record.seconds)} 秒</title>
         <text class="chart-level" x="${x}" y="${Math.max(13, y - 10)}">${safe(levelShort)}</text>
         <circle class="chart-dot" cx="${x}" cy="${y}" r="5" fill="${color}"></circle>
@@ -219,18 +194,12 @@
     if(!game) return;
     const records = Array.isArray(game.records) ? [...game.records].sort((a, b) => recordTimestamp(b) - recordTimestamp(a)) : [];
     const latest = records.find(isCompleted);
-    const sameLevelRecords = latest ? records.filter(record => isCompleted(record) && record.level === latest.level) : [];
-    const best = sameLevelRecords.reduce((result, record) => !result || Number(record.seconds) < Number(result.seconds) ? record : result, null);
-
     $('selected-game-name').textContent = game.name;
     $('selected-game-icon').className = `selected-game-icon accent-${game.accent || 'emerald'}`;
     $('selected-game-icon').innerHTML = `<i class="fa-solid ${safe(game.icon)}"></i>`;
-    $('latest-seconds').textContent = latest?.seconds ?? '—';
     $('latest-level').textContent = latest?.level || '尚無紀錄';
-    $('best-seconds').textContent = best?.seconds ?? '—';
-    $('best-level').textContent = best ? `${best.level}・${formatRecordTime(best).date}` : '尚無紀錄';
     $('challenge-count').textContent = game.totalChallenges ?? records.length;
-    renderPeerComparison(game, latest);
+    renderRecentPerformance(game);
     renderChart({ ...game, records });
     renderList({ ...game, records });
   }

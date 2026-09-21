@@ -22,14 +22,7 @@ window.GOHEALTH_DATA = {
         icon: 'fa-eye',
         accent: 'blue',
         totalChallenges: 42,
-        peerComparison: {
-          ageBand: '55–64 歲',
-          level: 'Level 2',
-          slowerCount: 118,
-          tiedCount: 8,
-          comparisonCount: 168,
-          updatedAt: '2026/09/10'
-        },
+        recentPerformance: { pr: 82 },
         records: [
           { date: '2026/09/08', time: '18:40', level: 'Level 2', seconds: 68 },
           { date: '2026/09/06', time: '10:15', level: 'Level 1', seconds: 51 },
@@ -51,14 +44,7 @@ window.GOHEALTH_DATA = {
         icon: 'fa-clock-rotate-left',
         accent: 'purple',
         totalChallenges: 31,
-        peerComparison: {
-          ageBand: '55–64 歲',
-          level: 'Level 2',
-          slowerCount: 96,
-          tiedCount: 5,
-          comparisonCount: 154,
-          updatedAt: '2026/09/10'
-        },
+        recentPerformance: { pr: 78 },
         records: [
           { date: '2026/09/07', time: '19:20', level: 'Level 2', seconds: 82 },
           { date: '2026/09/03', time: '08:55', level: 'Level 1', seconds: 64 },
@@ -80,14 +66,7 @@ window.GOHEALTH_DATA = {
         icon: 'fa-store',
         accent: 'orange',
         totalChallenges: 26,
-        peerComparison: {
-          ageBand: '55–64 歲',
-          level: 'Level 3',
-          slowerCount: 57,
-          tiedCount: 4,
-          comparisonCount: 103,
-          updatedAt: '2026/09/10'
-        },
+        recentPerformance: { pr: 76 },
         records: [
           { date: '2026/09/05', time: '12:10', level: 'Level 3', seconds: 126 },
           { date: '2026/09/02', time: '18:25', level: 'Level 2', seconds: 96 },
@@ -109,14 +88,7 @@ window.GOHEALTH_DATA = {
         icon: 'fa-broom',
         accent: 'emerald',
         totalChallenges: 18,
-        peerComparison: {
-          ageBand: '55–64 歲',
-          level: 'Level 1',
-          slowerCount: 111,
-          tiedCount: 7,
-          comparisonCount: 148,
-          updatedAt: '2026/09/10'
-        },
+        recentPerformance: { pr: 84 },
         records: [
           { date: '2026/09/08', time: '09:05', level: 'Level 1', seconds: 58 },
           { date: '2026/09/01', time: '15:45', level: 'Level 2', seconds: 79 },
