@@ -6,7 +6,7 @@
 - `app-entry.html`：HAPPY GO APP 入口模擬，點選「健康挑戰」進入首次授權頁
 - `terms.html`：首次授權／同意頁
 - `group.html`：群組頁
-- `records.html`：P1.5 我的動腦紀錄，可切換四個互動項目查看近期表現 PR、近期完成時間與 Level
+- `records.html`：P1.5 我的動腦紀錄，可切換四個互動項目查看同齡互動參考 PR、近期完成時間與 Level
 - `records.html?stage=p16`：在相同紀錄頁加入下一階段「我的健康徽章」，首頁預覽 2 枚並可展開查看全部 8 枚
 - `exchange.html`：健康點兌換 HAPPY GO 點數流程 Demo
 - `points-history.html`：三個月內最新 100 筆累點與成功兌點紀錄整合頁
@@ -32,9 +32,18 @@
 
 首頁公告文字與輪播參數集中設定於 `assets/data.js` 的 `announcement` 區塊：`messages` 管理公告內容，`pixelsPerSecond` 控制移動速度，`pauseMilliseconds` 控制每輪開始前停留時間，`messageGapPixels` 控制兩輪文字間距。使用者開啟「減少動態效果」時，公告將停止自動輪播並可手動橫向查看。
 
-動腦紀錄 Prototype 的本月總覽、互動項目清單、近期完成紀錄、近期表現 PR 與徽章集中設定於 `assets/data.js` 的 `brainRecords` 區塊；目前皆為展示用假資料，不串接 API。
+動腦紀錄 Prototype 的本月總覽、互動項目清單、近期完成紀錄、同齡互動參考 PR 與徽章集中設定於 `assets/data.js` 的 `brainRecords` 區塊；目前皆為展示用假資料，不串接 API。
 
-PR 是每個互動項目上方唯一的近期表現摘要，顯示對應 LV、近 90 天表現範圍與前一日資料更新日期；資料每日更新一次。資訊按鈕會說明：以相同遊戲、目前 LV、同年齡區間比較；每位會員各取近 90 天內一筆最佳完成表現後換算 PR。會員畫面不把 PR 稱為分數，也不顯示額外的綜合分數。完成秒數只在「近期完成時間」圖表與「最近互動紀錄」中呈現；不同挑戰強度不作進步、退步或好壞解讀。
+PR 是每個互動項目上方的同齡互動參考，顯示對應 LV 與前一日資料更新日期；資料每日更新一次。每位會員以近 90 天內最新一筆有效完成紀錄為依據，綜合參考完成狀況與完成時間，並與相同遊戲、LV 及年齡區間的會員比較。完成秒數只在「近期完成時間」圖表與「最近互動紀錄」中呈現；不同挑戰強度及 PR 變化不作進步、退步或好壞解讀。
+
+PR 卡片可透過 `prState` 網址參數檢查不同前端狀態；參數可與 `stage=p16` 同時使用：
+
+- `records.html` 或 `records.html?prState=ready`：正常顯示 PR。
+- `records.html?prState=no-record`：近 90 天沒有個人有效紀錄。
+- `records.html?prState=pending`：今日紀錄等待下一次排程納入。
+- `records.html?prState=insufficient`：個人有紀錄，但同條件參考資料不足。
+- `records.html?prState=missing-age`：缺少年齡區間資料。
+- `records.html?prState=delayed`：每日排程延遲，保留最近一次成功更新結果。
 
 徽章情境沿用同一份 HTML 與 JavaScript，透過 `stage=p16` 網址參數隱藏切換，會員畫面不提供切換按鈕，避免維護兩份重複頁面。紀錄頁只預覽「最近取得」與「最接近完成」各 1 枚；若沒有符合項目，依資料順序補足 2 枚。「查看全部」以彈出視窗呈現 8 枚徽章，點選後可再查看取得方式與進度。
 

@@ -4,7 +4,12 @@
   const games = Array.isArray(recordsData.games) ? recordsData.games : [];
   const badges = Array.isArray(recordsData.badges) ? recordsData.badges : [];
   const summary = recordsData.summary || {};
-  const stage = new URLSearchParams(window.location.search).get('stage') === 'p16' ? 'p16' : 'p15';
+  const query = new URLSearchParams(window.location.search);
+  const stage = query.get('stage') === 'p16' ? 'p16' : 'p15';
+  const requestedPrState = query.get('prState') || 'ready';
+  const prState = ['ready', 'no-record', 'pending', 'insufficient', 'missing-age', 'delayed'].includes(requestedPrState)
+    ? requestedPrState
+    : 'ready';
   let selectedGameId = games[0]?.id || '';
   let feedbackTimer = null;
   let lastFocusedElement = null;
@@ -118,12 +123,59 @@
   }
 
   function renderRecentPerformance(game){
-    const pr = Number(game.recentPerformance?.pr);
-    $('peer-pr').textContent = Number.isFinite(pr) ? `PR ${pr}` : 'PR —';
-    $('peer-performance-level').textContent = game.recentPerformance?.level || 'LV —';
-    $('peer-updated').textContent = game.recentPerformance?.updatedAt
-      ? `資料更新：${formatFullDate(game.recentPerformance.updatedAt)}・每日更新一次`
-      : '資料每日更新一次';
+    const performance = game.recentPerformance || {};
+    const pr = Number(performance.pr);
+    const updatedDate = performance.updatedAt ? formatFullDate(performance.updatedAt) : '';
+    const view = {
+      ready: {
+        pr: Number.isFinite(pr) ? `PR ${pr}` : 'PR —',
+        level: performance.level || 'LV —',
+        status: '近 90 天內最新有效紀錄',
+        note: '綜合參考完成狀況與完成時間。',
+        updated: updatedDate ? `資料更新：${updatedDate}` : '資料每日更新一次'
+      },
+      'no-record': {
+        pr: 'PR —',
+        level: 'LV —',
+        status: '近 90 天尚無可參考紀錄',
+        note: '完成一次互動後，將於資料更新後顯示。',
+        updated: updatedDate ? `資料更新：${updatedDate}` : '資料每日更新一次'
+      },
+      pending: {
+        pr: Number.isFinite(pr) ? `PR ${pr}` : 'PR —',
+        level: performance.level || 'LV —',
+        status: '今日紀錄尚待更新',
+        note: '目前顯示前一日資料；今日紀錄將於下次更新後納入。',
+        updated: updatedDate ? `資料更新：${updatedDate}` : '資料每日更新一次'
+      },
+      insufficient: {
+        pr: 'PR —',
+        level: performance.level || 'LV —',
+        status: '同條件參考資料累積中',
+        note: '已有有效完成紀錄，待參考資料足夠後顯示。',
+        updated: updatedDate ? `資料更新：${updatedDate}` : '資料每日更新一次'
+      },
+      'missing-age': {
+        pr: 'PR —',
+        level: performance.level || 'LV —',
+        status: '暫時無法建立同齡參考',
+        note: '目前缺少年齡區間資料，暫無法換算 PR。',
+        updated: updatedDate ? `資料更新：${updatedDate}` : '資料每日更新一次'
+      },
+      delayed: {
+        pr: Number.isFinite(pr) ? `PR ${pr}` : 'PR —',
+        level: performance.level || 'LV —',
+        status: '資料更新稍有延遲',
+        note: '目前顯示最近一次成功更新的參考結果。',
+        updated: updatedDate ? `目前顯示 ${updatedDate} 資料` : '資料更新稍有延遲'
+      }
+    }[prState];
+
+    $('peer-pr').textContent = view.pr;
+    $('peer-performance-level').textContent = view.level;
+    $('peer-status-text').textContent = view.status;
+    $('peer-note-text').textContent = view.note;
+    $('peer-updated').textContent = view.updated;
   }
 
   function renderChart(game){
@@ -196,7 +248,8 @@
   function renderGame(){
     const game = games.find(item => item.id === selectedGameId);
     if(!game) return;
-    const records = Array.isArray(game.records) ? [...game.records].sort((a, b) => recordTimestamp(b) - recordTimestamp(a)) : [];
+    const sourceRecords = prState === 'no-record' ? [] : game.records;
+    const records = Array.isArray(sourceRecords) ? [...sourceRecords].sort((a, b) => recordTimestamp(b) - recordTimestamp(a)) : [];
     const latest = records.find(isCompleted);
     $('selected-game-name').textContent = game.name;
     $('selected-game-icon').className = `selected-game-icon accent-${game.accent || 'emerald'}`;

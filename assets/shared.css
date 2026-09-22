@@ -1112,8 +1112,7 @@ body[data-page="home"] #health-articles .truncate {
   background: #d1fae5;
   font-size: 19px;
 }
-.peer-card-title p { color: #059669; font-size: 1rem; font-weight: 900; line-height: 1.4; }
-.peer-card-title h3 { margin-top: 1px; color: #1e293b; font-size: 1.125rem; font-weight: 900; line-height: 1.45; }
+.peer-card-title h3 { color: #1e293b; font-size: 1.125rem; font-weight: 900; line-height: 1.45; }
 .peer-info-button {
   width: 44px;
   height: 44px;

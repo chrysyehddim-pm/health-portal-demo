@@ -99,17 +99,16 @@
           <div class="peer-card-title">
             <span class="peer-icon" aria-hidden="true"><i class="fa-solid fa-people-arrows"></i></span>
             <div>
-              <p>近期表現</p>
-              <h3 id="peer-title">PR</h3>
+              <h3 id="peer-title">同齡互動參考</h3>
             </div>
           </div>
           <button class="peer-info-button" id="peer-info-button" type="button" aria-label="查看 PR 說明"><i class="fa-solid fa-circle-info"></i></button>
         </div>
         <div class="peer-result">
           <div class="peer-score"><strong id="peer-pr">PR —</strong></div>
-          <div class="peer-context"><strong id="peer-performance-level">LV —</strong><span>近 90 天表現</span></div>
+          <div class="peer-context"><strong id="peer-performance-level">LV —</strong><span id="peer-status-text">近 90 天內最新有效紀錄</span></div>
         </div>
-        <p class="peer-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i><span>PR 綜合參考遊戲完成狀況與完成時間，並以相同遊戲與挑戰強度的紀錄作為參考。</span></p>
+        <p class="peer-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i><span id="peer-note-text">綜合參考完成狀況與完成時間。</span></p>
         <small class="peer-updated" id="peer-updated">資料每日更新一次</small>
       </article>
 
@@ -164,13 +163,13 @@
         <span class="peer-icon" aria-hidden="true"><i class="fa-solid fa-people-arrows"></i></span>
         <div>
           <h3 id="peer-info-title" tabindex="-1" data-modal-initial-focus>PR 說明</h3>
-          <p>近期表現的綜合參考</p>
+          <p>了解同齡互動參考如何產生</p>
         </div>
       </div>
       <ol class="peer-rule-list">
-        <li><strong>比較條件：</strong>以相同遊戲、目前 LV 與同年齡區間的紀錄作為參考。</li>
-        <li><strong>近 90 天表現：</strong>每位會員各取近 90 天內該條件下的一筆最佳完成表現，再換算 PR。</li>
-        <li><strong>更新方式：</strong>資料每日更新一次，畫面顯示前一日更新日期；每一次完成秒數則保留在下方互動紀錄。</li>
+        <li><strong>紀錄依據：</strong>每位會員取近 90 天內最新一筆有效完成紀錄。</li>
+        <li><strong>比較條件：</strong>綜合參考完成狀況與完成時間，並與相同遊戲、LV 及年齡區間的會員比較。</li>
+        <li><strong>更新方式：</strong>資料每日更新一次，畫面顯示前一日更新日期。</li>
       </ol>
       <p class="peer-modal-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i><span>不同挑戰強度的內容不同，完成時間不作為單一好壞判斷。</span></p>
       <button class="records-modal-close" type="button" data-close-modal="modal-peer-info">我知道了</button>
