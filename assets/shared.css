@@ -1093,8 +1093,7 @@ body[data-page="home"] #health-articles .truncate {
   box-shadow: 0 4px 12px rgba(5, 150, 105, .06);
 }
 .peer-card-heading,
-.peer-card-title,
-.peer-result {
+.peer-card-title {
   display: flex;
   align-items: center;
 }
@@ -1124,12 +1123,13 @@ body[data-page="home"] #health-articles .truncate {
   font-size: 21px;
   box-shadow: 0 2px 7px rgba(15, 23, 42, .08);
 }
-.peer-result { align-items: flex-end; gap: 14px; margin-top: 16px; }
-.peer-score { flex: 0 0 auto; color: #047857; }
-.peer-score strong { font-size: 2.3rem; font-weight: 900; line-height: 1; }
-.peer-context { min-width: 0; display: flex; flex-direction: column; padding-bottom: 1px; }
+.peer-result { margin-top: 14px; }
+.peer-result-label { color: #334155; font-size: 1.0625rem; font-weight: 800; line-height: 1.45; }
+.peer-result-copy { margin-top: 1px; color: #334155; font-size: 1.125rem; font-weight: 900; line-height: 1.45; white-space: nowrap; }
+.peer-result-copy strong { color: #047857; font-size: 2rem; font-weight: 900; line-height: 1; }
+.peer-context { min-width: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 3px 9px; margin-top: 8px; }
 .peer-context strong { color: #334155; font-size: 1.0625rem; font-weight: 900; }
-.peer-context span { margin-top: 2px; color: #64748b; font-size: 1rem; font-weight: 600; line-height: 1.45; }
+.peer-context span { color: #64748b; font-size: 1rem; font-weight: 600; line-height: 1.45; }
 .peer-note {
   display: flex;
   align-items: flex-start;
@@ -1305,7 +1305,8 @@ body.modal-open { overflow: hidden; }
 @media (max-width: 370px) {
   .game-stat { padding: 12px; }
   .game-stat strong { font-size: 1.5rem; }
-  .peer-result { align-items: flex-start; flex-direction: column; gap: 7px; }
+  .peer-result-copy { font-size: 1rem; }
+  .peer-result-copy strong { font-size: 1.75rem; }
   .badge-grid { grid-template-columns: 1fr; }
   .badge-card { min-height: 84px; flex-direction: row; align-items: center; }
   .badge-chevron { top: 50%; transform: translateY(-50%); }

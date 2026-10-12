@@ -83,14 +83,14 @@
 
       <div class="game-stats">
         <article class="game-stat">
-          <p>最近挑戰強度</p>
+          <p>最近挑戰等級</p>
           <div><strong id="latest-level">—</strong></div>
           <small>最近一次完成的互動</small>
         </article>
         <article class="game-stat">
           <p>累積挑戰次數</p>
           <div><strong id="challenge-count">—</strong><span>次</span></div>
-          <small>包含不同挑戰強度</small>
+          <small>包含不同挑戰等級</small>
         </article>
       </div>
 
@@ -102,13 +102,14 @@
               <h3 id="peer-title">同齡互動參考</h3>
             </div>
           </div>
-          <button class="peer-info-button" id="peer-info-button" type="button" aria-label="查看 PR 說明"><i class="fa-solid fa-circle-info"></i></button>
+          <button class="peer-info-button" id="peer-info-button" type="button" aria-label="查看同齡互動參考說明"><i class="fa-solid fa-circle-info"></i></button>
         </div>
         <div class="peer-result">
-          <div class="peer-score"><strong id="peer-pr">PR —</strong></div>
-          <div class="peer-context"><strong id="peer-performance-level">LV —</strong><span id="peer-status-text">近 90 天內最新有效紀錄</span></div>
+          <p class="peer-result-label" id="peer-result-label">你的綜合表現</p>
+          <p class="peer-result-copy" id="peer-result-copy">—</p>
         </div>
-        <p class="peer-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i><span id="peer-note-text">綜合參考完成狀況與完成時間。</span></p>
+        <div class="peer-context"><strong id="peer-performance-level">挑戰等級 —</strong><span id="peer-status-text">近 90 天內個人最佳有效紀錄</span></div>
+        <p class="peer-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i><span id="peer-note-text">綜合參考完成時間與正確情況。</span></p>
         <small class="peer-updated" id="peer-updated">資料每日更新一次</small>
       </article>
 
@@ -116,17 +117,17 @@
         <div class="record-card-heading">
           <div>
             <h3>近期完成時間</h3>
-            <p>右側是最近一次，每個點都標示 Level</p>
+            <p>右側是最近一次，每個點都標示挑戰等級</p>
           </div>
           <div class="chart-scroll-hint">較早 → 最近</div>
         </div>
         <div class="record-chart-scroll" aria-label="最近 10 次完成時間折線圖">
           <svg id="record-chart" role="img" aria-labelledby="chart-title chart-description" viewBox="0 0 360 180" preserveAspectRatio="xMidYMid meet">
             <title id="chart-title">近期完成時間折線圖</title>
-            <desc id="chart-description">顯示最近三個月內最多十筆完成秒數，每個資料點皆標示挑戰 Level，右側為最近一次。</desc>
+            <desc id="chart-description">顯示最近三個月內最多十筆完成秒數，每個資料點皆標示挑戰等級，右側為最近一次。</desc>
           </svg>
         </div>
-        <p class="record-comparison-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> 不同挑戰強度的內容不同，完成時間僅供查看近期互動紀錄。</p>
+        <p class="record-comparison-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> 圖中的「1級、2級、3級」代表挑戰等級；不同等級的內容不同，完成時間不直接比較。</p>
       </div>
 
       <div class="record-list-card">
@@ -137,7 +138,7 @@
           </div>
         </div>
         <div class="record-list-header" aria-hidden="true">
-          <span>完成時間</span><span>Level</span><span>完成秒數</span>
+          <span>完成時間</span><span>挑戰等級</span><span>完成秒數</span>
         </div>
         <div class="record-list" id="record-list"></div>
       </div>
@@ -162,16 +163,16 @@
       <div class="records-modal-heading">
         <span class="peer-icon" aria-hidden="true"><i class="fa-solid fa-people-arrows"></i></span>
         <div>
-          <h3 id="peer-info-title" tabindex="-1" data-modal-initial-focus>PR 說明</h3>
-          <p>了解同齡互動參考如何產生</p>
+          <h3 id="peer-info-title" tabindex="-1" data-modal-initial-focus>同齡互動參考說明</h3>
+          <p>了解參考位置如何產生</p>
         </div>
       </div>
       <ol class="peer-rule-list">
-        <li><strong>紀錄依據：</strong>每位會員取近 90 天內最新一筆有效完成紀錄。</li>
-        <li><strong>比較條件：</strong>綜合參考完成狀況與完成時間，並與相同遊戲、LV 及年齡區間的會員比較。</li>
+        <li><strong>綜合參考：</strong>系統會將完成時間與正確情況一起納入，產生同齡參考位置，不是只看完成速度。</li>
+        <li><strong>比較條件：</strong>只比較相同互動項目、相同挑戰等級與相同年齡區間；每位會員採計近 90 天內綜合表現最佳的一筆有效紀錄。</li>
         <li><strong>更新方式：</strong>資料每日更新一次，畫面顯示前一日更新日期。</li>
       </ol>
-      <p class="peer-modal-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i><span>不同挑戰強度的內容不同，完成時間不作為單一好壞判斷。</span></p>
+      <p class="peer-modal-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i><span>此結果僅供互動參考，不代表認知能力或健康狀況；不同挑戰等級不直接比較。</span></p>
       <button class="records-modal-close" type="button" data-close-modal="modal-peer-info">我知道了</button>
     </div>
   </div>

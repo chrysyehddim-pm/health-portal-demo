@@ -122,56 +122,83 @@
     }, 1800);
   }
 
+  function levelNumber(value){
+    const match = String(value || '').match(/\d+/);
+    return match ? match[0] : '';
+  }
+
+  function levelContext(value){
+    const number = levelNumber(value);
+    return number ? `挑戰等級 ${number}` : '挑戰等級 —';
+  }
+
+  function levelFull(value){
+    const number = levelNumber(value);
+    return number ? `第 ${number} 級` : '—';
+  }
+
+  function levelShort(value){
+    const number = levelNumber(value);
+    return number ? `${number}級` : '—';
+  }
+
   function renderRecentPerformance(game){
     const performance = game.recentPerformance || {};
     const pr = Number(performance.pr);
     const updatedDate = performance.updatedAt ? formatFullDate(performance.updatedAt) : '';
     const view = {
       ready: {
-        pr: Number.isFinite(pr) ? `PR ${pr}` : 'PR —',
-        level: performance.level || 'LV —',
-        status: '近 90 天內最新有效紀錄',
-        note: '綜合參考完成狀況與完成時間。',
+        label: '你的綜合表現',
+        result: Number.isFinite(pr) ? `超過約 <strong>${pr}%</strong> 的同齡參考紀錄` : '目前尚無可顯示的參考結果',
+        level: levelContext(performance.level),
+        status: '近 90 天內個人最佳有效紀錄',
+        note: '綜合參考完成時間與正確情況。',
         updated: updatedDate ? `資料更新：${updatedDate}` : '資料每日更新一次'
       },
       'no-record': {
-        pr: 'PR —',
-        level: 'LV —',
+        label: '同齡互動參考',
+        result: '目前尚無可參考紀錄',
+        level: '挑戰等級 —',
         status: '近 90 天尚無可參考紀錄',
         note: '完成一次互動後，將於資料更新後顯示。',
         updated: updatedDate ? `資料更新：${updatedDate}` : '資料每日更新一次'
       },
       pending: {
-        pr: Number.isFinite(pr) ? `PR ${pr}` : 'PR —',
-        level: performance.level || 'LV —',
+        label: '你的綜合表現',
+        result: Number.isFinite(pr) ? `超過約 <strong>${pr}%</strong> 的同齡參考紀錄` : '目前尚無可顯示的參考結果',
+        level: levelContext(performance.level),
         status: '今日紀錄尚待更新',
         note: '目前顯示前一日資料；今日紀錄將於下次更新後納入。',
         updated: updatedDate ? `資料更新：${updatedDate}` : '資料每日更新一次'
       },
       insufficient: {
-        pr: 'PR —',
-        level: performance.level || 'LV —',
+        label: '同齡互動參考',
+        result: '參考資料累積中',
+        level: levelContext(performance.level),
         status: '同條件參考資料累積中',
         note: '已有有效完成紀錄，待參考資料足夠後顯示。',
         updated: updatedDate ? `資料更新：${updatedDate}` : '資料每日更新一次'
       },
       'missing-age': {
-        pr: 'PR —',
-        level: performance.level || 'LV —',
+        label: '同齡互動參考',
+        result: '暫時無法建立同齡參考',
+        level: levelContext(performance.level),
         status: '暫時無法建立同齡參考',
-        note: '目前缺少年齡區間資料，暫無法換算 PR。',
+        note: '目前缺少年齡區間資料，暫無法產生參考結果。',
         updated: updatedDate ? `資料更新：${updatedDate}` : '資料每日更新一次'
       },
       delayed: {
-        pr: Number.isFinite(pr) ? `PR ${pr}` : 'PR —',
-        level: performance.level || 'LV —',
+        label: '你的綜合表現',
+        result: Number.isFinite(pr) ? `超過約 <strong>${pr}%</strong> 的同齡參考紀錄` : '目前尚無可顯示的參考結果',
+        level: levelContext(performance.level),
         status: '資料更新稍有延遲',
         note: '目前顯示最近一次成功更新的參考結果。',
         updated: updatedDate ? `目前顯示 ${updatedDate} 資料` : '資料更新稍有延遲'
       }
     }[prState];
 
-    $('peer-pr').textContent = view.pr;
+    $('peer-result-label').textContent = view.label;
+    $('peer-result-copy').innerHTML = view.result;
     $('peer-performance-level').textContent = view.level;
     $('peer-status-text').textContent = view.status;
     $('peer-note-text').textContent = view.note;
@@ -212,24 +239,25 @@
     const dots = records.map((record, index) => {
       const x = xAt(index);
       const y = yAt(record.seconds);
-      const levelShort = String(record.level).replace('Level ', 'L');
-      return `<g tabindex="0" role="img" aria-label="${safe(record.date)} ${safe(record.time)}，${safe(record.level)}，完成 ${safe(record.seconds)} 秒">
-        <title>${safe(record.date)} ${safe(record.time)}・${safe(record.level)}・${safe(record.seconds)} 秒</title>
-        <text class="chart-level" x="${x}" y="${Math.max(13, y - 10)}">${safe(levelShort)}</text>
+      const compactLevel = levelShort(record.level);
+      const accessibleLevel = levelFull(record.level);
+      return `<g tabindex="0" role="img" aria-label="${safe(record.date)} ${safe(record.time)}，${safe(accessibleLevel)}，完成 ${safe(record.seconds)} 秒">
+        <title>${safe(record.date)} ${safe(record.time)}・${safe(accessibleLevel)}・${safe(record.seconds)} 秒</title>
+        <text class="chart-level" x="${x}" y="${Math.max(13, y - 10)}">${safe(compactLevel)}</text>
         <circle class="chart-dot" cx="${x}" cy="${y}" r="5" fill="${color}"></circle>
       </g>`;
     }).join('');
 
     chart.innerHTML = `
       <title id="chart-title">${safe(game.name)}最近十次完成時間折線圖</title>
-      <desc id="chart-description">顯示最近三個月內最多十筆完成秒數，每個資料點皆標示挑戰 Level，右側為最近一次。</desc>
+      <desc id="chart-description">顯示最近三個月內最多十筆完成秒數，每個資料點皆標示挑戰等級，右側為最近一次。</desc>
       ${grid}
       <polyline class="chart-line" points="${points}" stroke="${color}"></polyline>
       ${dots}
       <text class="chart-order-label" x="${padding.left}" y="${height - 10}" text-anchor="start">較早</text>
       <text class="chart-order-label" x="${width - padding.right}" y="${height - 10}" text-anchor="end">最近</text>
     `;
-    chart.setAttribute('aria-label', `${game.name}最近三個月內最多十筆完成秒數，每筆皆標示 Level，右側為最近一次`);
+    chart.setAttribute('aria-label', `${game.name}最近三個月內最多十筆完成秒數，每筆皆標示挑戰等級，右側為最近一次`);
   }
 
   function renderList(game){
@@ -237,9 +265,9 @@
     $('record-list').innerHTML = list.length ? list.map(record => {
       const completed = formatRecordTime(record);
       return `
-      <article class="record-row" aria-label="${safe(record.date)} ${safe(record.time)}，${safe(record.level)}，完成 ${safe(record.seconds)} 秒">
+      <article class="record-row" aria-label="${safe(record.date)} ${safe(record.time)}，${safe(levelFull(record.level))}，完成 ${safe(record.seconds)} 秒">
         <time datetime="${safe(record.date.replaceAll('/', '-'))}T${safe(record.time)}"><span>${safe(completed.date)}</span><small>${safe(completed.time)}</small></time>
-        <span class="level-badge">${safe(record.level)}</span>
+        <span class="level-badge">${safe(levelFull(record.level))}</span>
         <strong>${safe(record.seconds)} <span>秒</span></strong>
       </article>`;
     }).join('') : '<p class="record-empty">最近三個月沒有完成紀錄</p>';
@@ -254,7 +282,7 @@
     $('selected-game-name').textContent = game.name;
     $('selected-game-icon').className = `selected-game-icon accent-${game.accent || 'emerald'}`;
     $('selected-game-icon').innerHTML = `<i class="fa-solid ${safe(game.icon)}"></i>`;
-    $('latest-level').textContent = latest?.level || '尚無紀錄';
+    $('latest-level').textContent = latest ? levelFull(latest.level) : '尚無紀錄';
     $('challenge-count').textContent = game.totalChallenges ?? records.length;
     renderRecentPerformance(game);
     renderChart({ ...game, records });
