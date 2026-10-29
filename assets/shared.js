@@ -2,7 +2,23 @@
 (function(){
   const clone = (obj) => JSON.parse(JSON.stringify(obj));
   const baseState = window.GOHEALTH_DATA?.initialAppState || { group: { isBound:true, inviteCode:'839201', streak:4, maxPoints:10000, members:[] } };
-  window.appState = { group: clone(baseState.group), notifications: clone(window.GOHEALTH_DATA?.notifications || []) };
+  const notificationReadSessionKey = 'gohealth-read-notification-ids';
+  const notifications = clone(window.GOHEALTH_DATA?.notifications || []);
+
+  function getSessionReadNotificationIds(){
+    try {
+      const stored = JSON.parse(sessionStorage.getItem(notificationReadSessionKey) || '[]');
+      return new Set(Array.isArray(stored) ? stored.map(String) : []);
+    } catch {
+      return new Set();
+    }
+  }
+
+  const sessionReadNotificationIds = getSessionReadNotificationIds();
+  notifications.forEach(notification => {
+    if(sessionReadNotificationIds.has(String(notification.id))) notification.isRead = true;
+  });
+  window.appState = { group: clone(baseState.group), notifications };
   let isDemoEmpty = new URLSearchParams(window.location.search).get('state') === 'empty';
 
   let pendingWarnAction = null;
@@ -73,6 +89,13 @@
   function getTickets(pts){ return Math.floor(pts/1000); }
   function hasUnread(){ return appState.notifications.some(n=>!n.isRead); }
 
+  function rememberReadNotifications(){
+    try {
+      const readIds = appState.notifications.filter(notification => notification.isRead).map(notification => String(notification.id));
+      sessionStorage.setItem(notificationReadSessionKey, JSON.stringify(readIds));
+    } catch {}
+  }
+
   function updateBadges(){
     const show = hasUnread();
     ['bell-badge-dash','bell-badge-group'].forEach(id=>{ const el=document.getElementById(id); if(el) el.classList.toggle('hidden', !show); });
@@ -95,9 +118,14 @@
     `).join('');
   }
 
-  window.openNotifications = function(){ renderNotificationList(); openModal('modal-notifications'); };
+  window.openNotifications = function(){
+    appState.notifications.forEach(notification => { notification.isRead = true; });
+    rememberReadNotifications();
+    updateBadges();
+    renderNotificationList();
+    openModal('modal-notifications');
+  };
   window.closeNotifications = function(){ closeModal('modal-notifications'); };
-  window.markAllRead = function(){ appState.notifications.forEach(n=>n.isRead=true); updateBadges(); renderNotificationList(); showToast('✅ 全部通知已設為已讀'); };
 
   window.showCopyToast = function(){ const el=document.getElementById('toast-copy-success'); if(!el) return; el.classList.remove('hidden'); setTimeout(()=>el.classList.add('hidden'),2000); };
   window.copyInviteCode = function(){

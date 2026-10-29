@@ -928,10 +928,10 @@ body[data-page="home"] #health-articles .truncate {
   font-weight: 900;
   letter-spacing: .04em;
 }
-.accent-blue { color: #2563eb; background: #dbeafe; }
-.accent-purple { color: #7c3aed; background: #ede9fe; }
-.accent-orange { color: #c2410c; background: #ffedd5; }
-.accent-emerald { color: #047857; background: #d1fae5; }
+.accent-blue { color: #3b82f6; background: #eff6ff; }
+.accent-purple { color: #a855f7; background: #faf5ff; }
+.accent-orange { color: #f97316; background: #fff7ed; }
+.accent-emerald { color: #10b981; background: #ecfdf5; }
 
 .game-stats {
   display: grid;

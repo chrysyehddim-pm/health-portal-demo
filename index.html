@@ -13,9 +13,9 @@
 <div class="mobile-container" id="app-root">
 
 <header class="bg-white/96 backdrop-blur px-4 py-3 border-b border-slate-100 sticky top-0 z-50 flex items-center justify-center">
-<button aria-label="GO HEALTH Logo" class="inline-flex items-center justify-center active:opacity-80 transition" type="button">
+<div class="inline-flex items-center justify-center">
 <img alt="GO HEALTH" class="h-8 w-auto object-contain" onerror="this.outerHTML='&lt;h1 class=&quot;text-lg font-black text-green-700 tracking-wider&quot;&gt;GO HEALTH&lt;/h1&gt;'" src="images/logo.png">
-</img></button>
+</img></div>
 </header>
 <div class="announcement-bar bg-amber-50 text-amber-800 px-4 py-2 border-b border-amber-100">
 <i class="fas fa-bullhorn text-amber-500 shrink-0" aria-hidden="true"></i>
@@ -137,7 +137,7 @@
 <i class="fa-solid fa-store text-orange-500 text-lg"></i>
 </div>
 <div class="flex-1 min-w-0">
-<h4 class="font-bold text-gray-800 text-base">24H一日店長</h4>
+<h4 class="font-bold text-gray-800 text-base">24H 一日店長</h4>
 <p class="text-xs text-slate-400 mt-0.5">完成情境互動與反應挑戰</p>
 </div>
 <div class="flex flex-col items-end shrink-0 gap-1.5">
@@ -277,9 +277,8 @@
 </div><div class="modal-overlay hidden-view" id="modal-notifications" onclick="closeNotifications()" style="align-items:flex-end;">
 <div class="modal-sheet" onclick="event.stopPropagation()" style="max-height:85vh; overflow-y:auto; padding-bottom:2.5rem;">
 <div class="w-12 h-1 bg-slate-200 rounded-full mx-auto mb-4"></div>
-<div class="flex items-center justify-between mb-4">
+<div class="mb-4">
 <h3 class="text-lg font-black text-gray-800">通知中心</h3>
-<button class="text-xs text-emerald-600 font-bold active:opacity-60 transition px-2 py-1" onclick="markAllRead()">全部設為已讀</button>
 </div>
 <div class="space-y-2" id="notification-list"></div>
 <button class="w-full text-slate-400 text-sm py-3 mt-3 active:opacity-60" onclick="closeNotifications()">關閉</button>
