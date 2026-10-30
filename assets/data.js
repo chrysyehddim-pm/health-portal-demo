@@ -253,7 +253,7 @@ window.GOHEALTH_DATA = {
       points: 300,
       balanceAfter: 900,
       expiresAt: '2027/12/31',
-      note: '完成新手賺點任務。'
+      note: '完成定期賺點任務。'
     }
   ],
   exchangeHistory: [
